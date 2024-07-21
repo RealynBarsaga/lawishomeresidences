@@ -1,6 +1,0 @@
-# Restrict access to admin/login.php
-<Files "login.php">
-    Order Deny,Allow
-    Deny from all
-    Allow from lawishomeresidences.com
-</Files>
