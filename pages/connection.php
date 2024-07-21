@@ -15,5 +15,4 @@ if (!$con) {
 // Setting the default timezone
 date_default_timezone_set("Asia/Manila");
 
-echo "Connected successfully";
 ?>
