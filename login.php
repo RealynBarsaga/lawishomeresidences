@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
 <?php
-if ($_SERVER['HTTP_REFERER'] != 'lawishomeresidences.com') {
+if ($_SERVER['HTTP_REFERER'] != 'https://lawishomeresidences.com') {
     // Redirect or show an error
-    header('Location: lawishomeresidences.com');
+    header('Location: https://lawishomeresidences.com');
     exit();
 }
+
 session_start();
 $error = false;
 //$success = false;
