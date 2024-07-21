@@ -4,8 +4,6 @@
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- sidebar menu: : style can be found in sidebar.less -->
-                    ';
-                        echo '
                     <ul class="sidebar-menu">
                             <li>
                                 <a href="../../admin/dashboard/dashboard.php">
@@ -20,6 +18,11 @@
                             <li>
                                 <a href="../../admin/staff/staff.php">
                                     <i class="fa fa-university"></i> <span>List Of Barangay</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../householdlist/householdlist.php">
+                                    <i class="fa fa-user"></i> <span>List Of Household</span>
                                 </a>
                             </li>
                              <li>
@@ -37,8 +40,7 @@
                                     <i class="fa fa-history"></i> <span>Logs</span>
                                 </a>
                             </li>                             
-                    </ul>';
-                echo '
+                    </ul>
                 </section>
                 <!-- /.sidebar -->
             </aside>

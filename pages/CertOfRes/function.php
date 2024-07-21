@@ -24,7 +24,7 @@ if(isset($_POST['btn_add'])){
     }
     else{
         $_SESSION['duplicate'] = 1;
-        header("location: ".$_SERVER['REQUEST_URI']);
+        header ("location: ".$_SERVER['REQUEST_URI']);
     }
 }
 

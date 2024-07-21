@@ -8,7 +8,6 @@ $error = false;
 
 if (isset($_POST['btn_login'])) {
     include "pages/connection.php";
-    include 'config.php';
 
     $username = $_POST['txt_username'];
     $password = $_POST['txt_password'];

@@ -13,8 +13,10 @@ if (!isset($_SESSION['role'])) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="skin-black">
-    <?php include "../../admin/connection.php"; ?>
-    <?php include('../../admin/header.php');  ?>
+    <?php
+    include "../../admin/connection.php";
+    include('../../admin/header.php');
+    ?>
 
     <style>
         .info-box {
@@ -133,7 +135,7 @@ if (!isset($_SESSION['role'])) {
     </div><!-- ./wrapper -->
 
     <script>
-       const ctx = document.getElementById('myBarChart').getContext('2d');
+     const ctx = document.getElementById('myBarChart').getContext('2d');
 const myBarChart = new Chart(ctx, {
     type: 'bar',
     data: {
@@ -174,12 +176,12 @@ const myBarChart = new Chart(ctx, {
         },
         scales: {
             y: {
-                beginAtZero: true
+                beginAtZero: true,
+                min: 1 // This sets the y-axis to start at 1
             }
         }
     }
 });
-
     </script>
 
     <?php } include "../../admin/footer.php"; ?>

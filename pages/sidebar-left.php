@@ -4,8 +4,6 @@
                 <!-- sidebar: style can be found in sidebar.less -->
                 <section class="sidebar">
                     <!-- sidebar menu: : style can be found in sidebar.less -->
-                    ';
-                        echo '
                         <ul class="sidebar-menu">
                             <li>
                                 <a href="../household/household.php">
@@ -32,8 +30,7 @@
                                     <i class="fa fa-file"></i> <span>Certificate Of Indigency</span>
                                 </a>
                             </li>
-                        </ul>';
-                echo '
+                        </ul>
                 </section>
                 <!-- /.sidebar -->
             </aside>

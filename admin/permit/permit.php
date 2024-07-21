@@ -91,6 +91,7 @@
                                         </table>
                                         </div>
                                     </div>
+
                                     <?php include "../deleteModal.php"; ?>
 
                                     </form>
