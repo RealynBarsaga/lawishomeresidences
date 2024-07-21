@@ -13,10 +13,8 @@ if (!isset($_SESSION['role'])) {
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="skin-black">
-    <?php
-    include "../../admin/connection.php";
-    include('../../admin/header.php');
-    ?>
+    <?php include "../../admin/connection.php"; ?>
+    <?php include('../../admin/header.php');  ?>
 
     <style>
         .info-box {
