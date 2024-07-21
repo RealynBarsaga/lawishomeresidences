@@ -1,9 +1,20 @@
 <?php
+// Database credentials
+$db_server = "localhost";
 $MySQL_username = "u510162695_db_barangay";
-$Password = "1Db_barangay";	
+$Password = "1Db_barangay";    
 $MySQL_database_name = "u510162695_db_barangay";
 
-			// Establishing Connection with Server by passing inputs as a parameter
- $con = mysqli_connect('localhost','u510162695_db_barangay','1Db_barangay','u510162695_db_barangay') or die(mysqli_error());
-			date_default_timezone_set("Asia/Manila");
+// Establishing connection with server
+$con = mysqli_connect($db_server, $MySQL_username, $Password, $MySQL_database_name);
+
+// Checking connection
+if (!$con) {
+    die("Connection failed: " . mysqli_connect_error());
+}
+
+// Setting the default timezone
+date_default_timezone_set("Asia/Manila");
+
+echo "Connected successfully";
 ?>
