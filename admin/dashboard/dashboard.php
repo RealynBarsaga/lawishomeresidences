@@ -135,53 +135,55 @@ if (!isset($_SESSION['role'])) {
     </div><!-- ./wrapper -->
 
     <script>
-     const ctx = document.getElementById('myBarChart').getContext('2d');
-const myBarChart = new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Officials', 'Barangay', 'Permits', 'Households'],
-        datasets: [{
-            label: 'Count',
-            data: [
-                <?php echo $num_rows_officials; ?>,
-                <?php echo $num_rows_staff; ?>,
-                <?php echo $num_rows_permit; ?>,
-                <?php echo $num_rows_household; ?>
-            ],
-            backgroundColor: [
-                'rgba(0, 192, 239, 0.6)',
-                'rgba(0, 115, 86, 0.6)',
-                'rgba(189, 30, 36, 0.6)',
-                'rgba(229, 199, 7, 0.6)'
-            ],
-            borderColor: [
-                'rgba(0, 192, 239, 1)',
-                'rgba(0, 115, 86, 1)',
-                'rgba(189, 30, 36, 1)',
-                'rgba(229, 199, 7, 1)'
-            ],
-            borderWidth: 1
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: {
-            title: {
-                display: true,
-                text: 'Household Overview',
-                font: {
-                    size: 18
+        const ctx = document.getElementById('myBarChart').getContext('2d');
+        const myBarChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Officials', 'Barangay', 'Permits', 'Households'],
+                datasets: [{
+                    label: 'Count',
+                    data: [
+                        <?php echo $num_rows_officials; ?>,
+                        <?php echo $num_rows_staff; ?>,
+                        <?php echo $num_rows_permit; ?>,
+                        <?php echo $num_rows_household; ?>
+                    ],
+                    backgroundColor: [
+                        'rgba(0, 192, 239, 0.6)',
+                        'rgba(0, 115, 86, 0.6)',
+                        'rgba(189, 30, 36, 0.6)',
+                        'rgba(229, 199, 7, 0.6)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 192, 239, 1)',
+                        'rgba(0, 115, 86, 1)',
+                        'rgba(189, 30, 36, 1)',
+                        'rgba(229, 199, 7, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Household Overview',
+                        font: {
+                            size: 18
+                        }
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1
+                        }
+                    }
                 }
             }
-        },
-        scales: {
-            y: {
-                beginAtZero: true,
-                min: 1 // This sets the y-axis to start at 1
-            }
-        }
-    }
-});
+        });
     </script>
 
     <?php } include "../../admin/footer.php"; ?>
