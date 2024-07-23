@@ -12,7 +12,7 @@
                             </li>
                             <li>
                                 <a href="../../admin/officials/officials.php">
-                                    <i class="fa fa-users"></i> <span>Madridejos Officials</span>
+                                    <i class="fa fa-user"></i> <span>Madridejos Officials</span>
                                 </a>
                             </li>
                             <li>
@@ -22,7 +22,7 @@
                             </li>
                             <li>
                                 <a href="../householdlist/householdlist.php">
-                                    <i class="fa fa-user"></i> <span>List Of Household</span>
+                                    <i class="fa fa-users"></i> <span>List Of Household</span>
                                 </a>
                             </li>
                              <li>

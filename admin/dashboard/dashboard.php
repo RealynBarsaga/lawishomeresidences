@@ -49,6 +49,9 @@ if (!isset($_SESSION['role'])) {
                         <div class="col-md-3 col-sm-6 col-xs-12">
                             <br>
                             <div class="info-box" style="margin-left: 9px; background-color: #00c0ef !important;">
+                            <span style="background: transparent; position: absolute; top: 47%; left: 77%; transform: translate(-50%, -50%); font-size: 40px; color: #eeeeeeba; z-index: 1;">
+                                <i class="fa fa-user"></i>
+                            </span>
                                 <span class="info-box-number" style="font-size: 30px; color: #fff; margin-left: 15px; font-family: 'Source Sans Pro', sans-serif; font-weight: bold;">
                                   <?php
                                     $q = mysqli_query($con, "SELECT * FROM tblofficial");
@@ -68,6 +71,9 @@ if (!isset($_SESSION['role'])) {
                         <div class="col-md-3 col-sm-6 col-xs-12">
                             <br>
                             <div class="info-box" style="margin-left: 10px; background-color: #007256 !important;">
+                            <span style="background: transparent; position: absolute; top: 47%; left: 77%; transform: translate(-50%, -50%); font-size: 40px; color: #eeeeeeba; z-index: 1;">
+                                <i class="fa fa-university"></i>
+                            </span>
                                 <span class="info-box-number" style="font-size: 30px; color: #fff; margin-left: 15px; font-family: 'Source Sans Pro', sans-serif; font-weight: bold;">
                                     <?php
                                       $q = mysqli_query($con, "SELECT * FROM tblstaff");
@@ -87,6 +93,9 @@ if (!isset($_SESSION['role'])) {
                         <div class="col-md-3 col-sm-6 col-xs-12">
                             <br>
                             <div class="info-box" style="margin-left: 12px; background-color: #bd1e24 !important;">
+                            <span style="background: transparent; position: absolute; top: 47%; left: 77%; transform: translate(-50%, -50%); font-size: 40px; color: #eeeeeeba; z-index: 1;">
+                                <i class="fa fa-file"></i>
+                            </span>
                                   <span class="info-box-number" style="font-size: 30px; color: #fff; margin-left: 15px; font-family: 'Source Sans Pro', sans-serif; font-weight: bold;">
                                     <?php
                                       $q = mysqli_query($con, "SELECT * FROM tblpermit");
@@ -106,6 +115,9 @@ if (!isset($_SESSION['role'])) {
                         <div class="col-md-3 col-sm-6 col-xs-12">
                             <br>
                             <div class="info-box" style="margin-left: 14px; background-color: #e5c707 !important;">
+                            <span style="background: transparent; position: absolute; top: 47%; left: 77%; transform: translate(-50%, -50%); font-size: 40px; color: #eeeeeeba; z-index: 1;">
+                                <i class="fa fa-users"></i>
+                            </span>
                                   <span class="info-box-number" style="font-size: 30px; color: #fff; margin-left: 15px; font-family: 'Source Sans Pro', sans-serif; font-weight: bold;">
                                     <?php
                                       $q = mysqli_query($con, "SELECT * FROM tblhousehold");
