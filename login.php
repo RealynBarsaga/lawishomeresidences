@@ -2,20 +2,17 @@
 session_start();
 $error = false;
 
-if (!isset($_POST['btn_login'])) {
+if (isset($_POST['btn_login'])) {
     include "pages/connection.php";
 
     $username = $_POST['txt_username'];
     $password = $_POST['txt_password'];
 
-    // Use prepared statements to prevent SQL injection
-    $stmt = $con->prepare("SELECT * FROM tblstaff WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
+    $staff = mysqli_query($con, "SELECT * from tblstaff where username = '$username' and password = '$password'");
+    $numrow_staff = mysqli_num_rows($staff);
 
-    if ($result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
+    if ($numrow_staff > 0) {
+        while ($row = mysqli_fetch_array($staff)) {
             $_SESSION['role'] = "Staff";
             $_SESSION['staff'] = $row['name'];
             $_SESSION['userid'] = $row['id'];
