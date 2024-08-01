@@ -3,10 +3,6 @@
 <head>
     <?php
     session_start();
-    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-        header("Location: login.php");
-        exit;
-    }
     if (!isset($_SESSION['role'])) {
         header("Location: ../../login.php");
         exit; // Ensure no further execution after redirect
