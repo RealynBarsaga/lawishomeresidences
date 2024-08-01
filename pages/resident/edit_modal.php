@@ -25,12 +25,15 @@
                             <input type="hidden" value="'.$erow['id'].'" name="hidden_id" id="hidden_id"/>
                             <label class="control-label">Name:</label><br>
                             <div class="col-sm-4">
+                            Lastname:
                                 <input name="txt_edit_lname" class="form-control input-sm" type="text" value="'.$erow['lname'].'"/>
                             </div> 
                             <div class="col-sm-4">
+                            Firstname:
                                 <input name="txt_edit_fname" class="form-control input-sm" type="text" value="'.$erow['fname'].'"/>
                             </div> 
                             <div class="col-sm-4">
+                            Middlename:
                                 <input name="txt_edit_mname" class="form-control input-sm" type="text" value="'.$erow['mname'].'"/>
                             </div> <br>
                         </div>
