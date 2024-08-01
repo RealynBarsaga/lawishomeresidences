@@ -4,7 +4,7 @@
     <?php
     session_start();
     if (!isset($_SESSION['btn_login']) || $_SESSION['btn_login'] !== true) {
-        header('Location: ../login.php');
+        header('Location: login.php');
         exit();
     }
     ob_start();
