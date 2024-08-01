@@ -24,7 +24,7 @@ if (isset($_POST['btn_login'])) {
             //$_SESSION['login_success'] = true;
             //$_SESSION['redirect'] = 'pages/dashboard/dashboard.php';
         }
-        header('location: admin/dashboard/dashboard.php');
+        header('location: ../admin/dashboard/dashboard.php');
         exit();
     } else {
         $error = true;

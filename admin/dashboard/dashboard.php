@@ -3,10 +3,10 @@
 <?php
     session_start();
     if (!isset($_SESSION['userid'])) {
-        header('Location: ../../login.php');
+        header('Location: ../../admin/login.php');
         exit; // Ensure no further execution after redirect
     }
-    include('../head_css.php'); // Removed ob_start() since it's not needed here
+    include('../../admin/head_css.php'); // Removed ob_start() since it's not needed here
 ?>
 <head>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -197,6 +197,6 @@
         });
     </script>
 
-    <?php } include "../../admin/footer.php"; ?>
+    <?php  include "../../admin/footer.php"; ?>
 </body>
 </html>
