@@ -50,31 +50,6 @@
                                             <th>Report Type</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <?php
-                                        // Fetching data from the database
-                                        $squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
-                                        while ($row = mysqli_fetch_assoc($squery)) {
-                                            // Escaping output for security
-                                            $id = htmlspecialchars($row['id']);
-                                            $residentName = htmlspecialchars($row['resident_name']);
-                                            $permitId = htmlspecialchars($row['permit_id']);
-                                            $date = htmlspecialchars($row['date']);
-                                            $barangay = htmlspecialchars($row['barangay']);
-                                            $reportType = htmlspecialchars($row['report_type']);
-
-                                            echo "
-                                            <tr>
-                                                <td>{$id}</td>
-                                                <td>{$residentName}</td>
-                                                <td>{$permitId}</td>
-                                                <td>{$date}</td>
-                                                <td>{$barangay}</td>
-                                                <td>{$reportType}</td>
-                                            </tr>";
-                                        }
-                                        ?>
-                                    </tbody>
                                 </table>
                             </form>
                         </div><!-- /.box-body -->
