@@ -8,29 +8,21 @@ if (isset($_POST['btn_login'])) {
     $username = $_POST['txt_username'];
     $password = $_POST['txt_password'];
 
-    // Use prepared statements to prevent SQL injection
-    $stmt = $con->prepare("SELECT * FROM tblstaff WHERE username = ? AND password = ?");
-    $stmt->bind_param("ss", $username, $password);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $numrow_staff = $result->num_rows;
+    $staff = mysqli_query($con, "SELECT * from tblstaff where username = '$username' and password = '$password'");
+    $numrow_staff = mysqli_num_rows($staff);
 
-    if ($numrow_staff > 0) {
-        while ($row = $result->fetch_assoc()) {
+    if ($numrow_staff > 1) {
+        while ($row = mysqli_fetch_array($staff)) {
             $_SESSION['role'] = "Staff";
             $_SESSION['staff'] = $row['name'];
             $_SESSION['userid'] = $row['id'];
             $_SESSION['username'] = $row['username'];
         }
-        $_SESSION['btn_login'] = true;
         header('Location: pages/household/household.php');
         exit();
     } else {
         $error = true;
     }
-
-    $stmt->close();
-    $con->close();
 }
 ?>
 <!DOCTYPE html>
@@ -83,11 +75,13 @@ if (isset($_POST['btn_login'])) {
                 <form role="form" method="post">
                     <div class="form-group">
                         <label for="txt_username">Username</label>
-                        <input type="text" class="form-control" style="border-radius:0px" name="txt_username" placeholder="Enter Username">
+                        <input type="text" class="form-control" style="border-radius:0px" name="txt_username"
+                               placeholder="Enter Username">
                     </div>
                     <div class="form-group">
                         <label for="txt_password">Password</label>
-                        <input type="password" class="form-control" style="border-radius:0px" name="txt_password" placeholder="Enter Password">
+                        <input type="password" class="form-control" style="border-radius:0px" name="txt_password"
+                               placeholder="Enter Password">
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary" name="btn_login">Login</button>
                 </form>
