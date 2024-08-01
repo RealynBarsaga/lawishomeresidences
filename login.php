@@ -18,6 +18,7 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['userid'] = $row['id'];
             $_SESSION['username'] = $row['username'];
         }
+        $_SESSION['btn_login'] = true;
         header('Location: pages/household/household.php');
         exit();
     } else {
