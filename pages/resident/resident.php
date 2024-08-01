@@ -2,14 +2,12 @@
 <html>
 
 <?php
-session_start();
-if (!isset($_SESSION['role'])) {
-    header("Location: ../login.php");
-    exit();
-}
-
-ob_start();
-include('../head_css.php');
+    session_start();
+    if (!isset($_SESSION['userid'])) {
+        header('Location: ../../login.php');
+        exit; // Ensure no further execution after redirect
+    }
+    include('../head_css.php'); // Removed ob_start() since it's not needed here
 ?>
 
 <style>
@@ -105,7 +103,7 @@ include('../head_css.php');
         $("#table").dataTable({
             "aoColumnDefs": [{
                 "bSortable": false,
-                "aTargets": [0, 6]
+                "aTargets": [0, 5]
             }],
             "aaSorting": []
         });

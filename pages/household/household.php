@@ -1,16 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <?php
+<?php
     session_start();
-    if (!isset($_SESSION['role'])) {
-        header('Location: login.php'); // Redirect to the login page if not logged in
-        exit();
-    } else {
-        ob_start();
-        include('../head_css.php');
+    if (!isset($_SESSION['userid'])) {
+        header('Location: ../../login.php');
+        exit; // Ensure no further execution after redirect
     }
-    ?>
+    include('../head_css.php'); // Removed ob_start() since it's not needed here
+?>
 </head>
 <body class="skin-black">
     <!-- header logo: style can be found in header.less -->
@@ -104,7 +102,7 @@
     <script type="text/javascript">
         $(function() {
             $("#table").dataTable({
-                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0, 4] }],
+                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0, 5] }],
                 "aaSorting": []
             });
             $(".select2").select2();
