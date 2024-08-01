@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
 <?php
 
@@ -8,7 +9,7 @@ $error = false;
 //$redirect_url = '';
 
 if (isset($_POST['btn_login'])) {
-    include "admin/connection.php";
+    include "connection.php";
 
     $username = $_POST['txt_username'];
     $password = $_POST['txt_password'];
