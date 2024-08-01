@@ -5,22 +5,21 @@ $error = false;
 if (isset($_POST['btn_login'])) {
     include "pages/connection.php";
 
-    $username = mysqli_real_escape_string($con, $_POST['txt_username']);
+    $username = $_POST['txt_username'];
     $password = $_POST['txt_password'];
 
-    $staff = mysqli_query($con, "SELECT * from tblstaff where username = '$username'");
-    if ($staff && mysqli_num_rows($staff) > 0) {
-        $row = mysqli_fetch_array($staff);
-        if (password_verify($password, $row['password'])) {
+    $staff = mysqli_query($con, "SELECT * from tblstaff where username = '$username' and password = '$password'");
+    $numrow_staff = mysqli_num_rows($staff);
+
+    if ($numrow_staff > 0) {
+        while ($row = mysqli_fetch_array($staff)) {
             $_SESSION['role'] = "Staff";
             $_SESSION['staff'] = $row['name'];
             $_SESSION['userid'] = $row['id'];
             $_SESSION['username'] = $row['username'];
-            header('Location: /pages/household/household.php');
-            exit();
-        } else {
-            $error = true;
         }
+        header('Location: /pages/household/household.php');
+        exit();
     } else {
         $error = true;
     }
@@ -77,12 +76,12 @@ if (isset($_POST['btn_login'])) {
                     <div class="form-group">
                         <label for="txt_username">Username</label>
                         <input type="text" class="form-control" style="border-radius:0px" name="txt_username"
-                               placeholder="Enter Username" required>
+                               placeholder="Enter Username">
                     </div>
                     <div class="form-group">
                         <label for="txt_password">Password</label>
                         <input type="password" class="form-control" style="border-radius:0px" name="txt_password"
-                               placeholder="Enter Password" required>
+                               placeholder="Enter Password">
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary" name="btn_login">Login</button>
                 </form>
