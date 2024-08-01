@@ -11,7 +11,7 @@ if (isset($_POST['btn_login'])) {
     $staff = mysqli_query($con, "SELECT * from tblstaff where username = '$username' and password = '$password'");
     $numrow_staff = mysqli_num_rows($staff);
 
-    if ($numrow_staff > 1) {
+    if ($numrow_staff > 0) {
         while ($row = mysqli_fetch_array($staff)) {
             $_SESSION['role'] = "Staff";
             $_SESSION['staff'] = $row['name'];
