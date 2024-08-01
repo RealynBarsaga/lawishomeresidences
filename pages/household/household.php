@@ -3,7 +3,7 @@
 <head>
     <?php
     session_start();
-    if (!isset($_SESSION['Staff'])) {
+    if (!isset($_SESSION['role'])) {
         header('Location: /login.php'); // Redirect to the login page if not logged in
         exit();
     } else {
