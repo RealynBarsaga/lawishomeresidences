@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <html>
+
 <?php
     session_start();
     if (!isset($_SESSION['userid'])) {
@@ -77,7 +78,7 @@
             </aside><!-- /.right-side -->
         </div><!-- ./wrapper -->
         <!-- jQuery 2.0.2 -->
-        <?php }
+        <?php 
         include "../footer.php"; ?>
 <script type="text/javascript">
         $(function() {
