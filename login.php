@@ -1,8 +1,7 @@
 <?php
 session_start();
 $error = false;
-
-if (isset($_POST['btn_login'])) {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     include "pages/connection.php";
 
     $username = $_POST['txt_username'];
@@ -18,7 +17,7 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['userid'] = $row['id'];
             $_SESSION['username'] = $row['username'];
         }
-        header('Location: /pages/household/household.php');
+        header('Location: ../pages/household/household.php');
         exit();
     } else {
         $error = true;
