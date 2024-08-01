@@ -1,8 +1,6 @@
 <?php
 session_start();
 $error = false;
-//$success = false;
-//$redirect_url = '';
 
 if (isset($_POST['btn_login'])) {
     include "pages/connection.php";
@@ -19,21 +17,12 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['staff'] = $row['name'];
             $_SESSION['userid'] = $row['id'];
             $_SESSION['username'] = $row['username'];
-            //$_SESSION['login_success'] = true;
-            //$_SESSION['redirect'] = 'pages/officials/officials.php';
         }
-        header('location: pages/household/household.php');
+        header('location: /pages/household/household.php');
         exit();
     } else {
         $error = true;
     }
-    // Check for login success
-    //if (isset($_SESSION['login_success']) && $_SESSION['login_success']) {
-     // $success = true;
-     // $redirect_url = $_SESSION['redirect'];
-    //  unset($_SESSION['login_success']);
-    //  unset($_SESSION['redirect']);
-    //}
 }
 ?>
 <!DOCTYPE html>
