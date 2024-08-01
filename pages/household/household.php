@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<?php
+    <?php
     session_start();
     if (!isset($_SESSION['userid'])) {
         header('Location: ../../login.php');
         exit; // Ensure no further execution after redirect
     }
     include('../head_css.php'); // Removed ob_start() since it's not needed here
-?>
+    ?>
 </head>
 <body class="skin-black">
     <!-- header logo: style can be found in header.less -->
@@ -23,9 +23,7 @@
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
-                    Household
-                </h1>
+                <h1>Household</h1>
             </section>
 
             <!-- Main content -->
@@ -54,23 +52,26 @@
                                             <th>Household #</th>
                                             <th>Total Members</th>
                                             <th>Head of Family</th>
+                                            <th>Purok</th>
                                             <th style="width: 40px !important;">Option</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $squery = mysqli_query($con, "SELECT *, h.id as id, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily");
-                                        if (!$squery) {
-                                            die('MySQL Error: ' . mysqli_error($con));
-                                        }
-                                        while ($row = mysqli_fetch_array($squery)) {
+                                        // Use prepared statements to prevent SQL injection
+                                        $stmt = $con->prepare("SELECT *, h.id as id, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily");
+                                        $stmt->execute();
+                                        $result = $stmt->get_result();
+
+                                        while ($row = $result->fetch_assoc()) {
                                             echo '
                                             <tr>
-                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['id'] . '" /></td>
-                                                <td><a href="../resident/resident.php?resident=' . $row['householdno'] . '">' . $row['householdno'] . '</a></td>
-                                                <td>' . $row['totalhousehold'] . '</td>
-                                                <td>' . $row['name'] . '</td>
-                                                <td><button class="btn btn-primary btn-sm" data-target="#editModal' . $row['id'] . '" data-toggle="modal">
+                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" /></td>
+                                                <td><a href="../resident/resident.php?resident=' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '</a></td>
+                                                <td>' . htmlspecialchars($row['totalhousehold'], ENT_QUOTES, 'UTF-8') . '</td>
+                                                <td>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</td>
+                                                <td>' . htmlspecialchars($row['purok'], ENT_QUOTES, 'UTF-8') . '</td>
+                                                <td><button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" data-toggle="modal">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                                     </button></td>
                                             </tr>';
