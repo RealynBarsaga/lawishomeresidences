@@ -8,7 +8,7 @@ if (isset($_POST['btn_login'])) {
     $username = $_POST['txt_username'];
     $password = $_POST['txt_password'];
 
-    $staff = mysqli_query($con, "SELECT * from tblstaff where username = '$username' and password = '$password' ");
+    $staff = mysqli_query($con, "SELECT * from tblstaff where username = '$username' and password = '$password'");
     $numrow_staff = mysqli_num_rows($staff);
 
     if ($numrow_staff > 0) {
@@ -18,7 +18,7 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['userid'] = $row['id'];
             $_SESSION['username'] = $row['username'];
         }
-        header('location: /pages/household/household.php');
+        header('Location: /pages/household/household.php');
         exit();
     } else {
         $error = true;
