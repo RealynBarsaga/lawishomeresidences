@@ -1,7 +1,8 @@
 <?php
 session_start();
 $error = false;
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+if (isset($_POST['btn_login'])) {
     include "pages/connection.php";
 
     $username = $_POST['txt_username'];
