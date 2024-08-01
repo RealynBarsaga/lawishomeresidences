@@ -3,9 +3,9 @@
 <head>
     <?php
     session_start();
-    if (empty($_SESSION['role'])) {
-        header("Location: login.php");
-        exit;
+    if (!isset($_SESSION['name'])) {
+        header('Location: /login.php'); // Redirect to the login page if not logged in
+        exit();
     } else {
         ob_start();
         include('../head_css.php');
