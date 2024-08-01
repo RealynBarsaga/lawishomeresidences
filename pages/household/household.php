@@ -3,7 +3,7 @@
 <head>
     <?php
     session_start();
-    if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+    if (isset($_SESSION['btn_login']) || $_SESSION['btn_login'] !== true) {
         header('Location: /login.php');
         exit();
     } else {
