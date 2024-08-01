@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['userid'] = $row['id'];
             $_SESSION['username'] = $row['username'];
         }
-        header('Location: ../pages/household/household.php');
+        header('Location: /pages/household/household.php');
         exit();
     } else {
         $error = true;
