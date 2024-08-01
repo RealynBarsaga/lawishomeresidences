@@ -3,24 +3,20 @@
 <head>
     <?php
     session_start();
-    if(empty($_SESSION['role']))
-    {
+    if (empty($_SESSION['role'])) {
         header("Location: ../../login.php");
         exit;
     }
-    if (!isset($_SESSION['role'])) {
-        header("Location: ../../login.php");
-        exit; // Ensure no further execution after redirect
-    } else {
-        ob_start();
-        include('../head_css.php');
-    }
+    ob_start();
+    include('../head_css.php');
     ?>
 </head>
 <body class="skin-black">
     <!-- header logo: style can be found in header.less -->
-    <?php include "../connection.php"; ?>
-    <?php include('../header.php'); ?>
+    <?php 
+    include "../connection.php"; 
+    include('../header.php'); 
+    ?>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <!-- Left side column. contains the logo and sidebar -->
@@ -30,9 +26,7 @@
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             <section class="content-header">
-                <h1>
-                    Household
-                </h1>
+                <h1>Household</h1>
             </section>
 
             <!-- Main content -->
@@ -66,7 +60,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $squery = mysqli_query($con, "SELECT *, h.id as id, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily");
+                                        $squery = mysqli_query($con, "SELECT h.id as id, h.householdno, h.totalhousehold, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily");
                                         if (!$squery) {
                                             die('MySQL Error: ' . mysqli_error($con));
                                         }
@@ -81,7 +75,6 @@
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                                     </button></td>
                                             </tr>';
-
                                             include "edit_modal.php";
                                         }
                                         ?>
@@ -92,12 +85,14 @@
                             </form>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
-                    <?php include "../edit_notif.php"; ?>
-                    <?php include "../added_notif.php"; ?>
-                    <?php include "../delete_notif.php"; ?>
-                    <?php include "../duplicate_error.php"; ?>
-                    <?php include "add_modal.php"; ?>
-                    <?php include "function.php"; ?>
+                    <?php 
+                    include "../edit_notif.php"; 
+                    include "../added_notif.php"; 
+                    include "../delete_notif.php"; 
+                    include "../duplicate_error.php"; 
+                    include "add_modal.php"; 
+                    include "function.php"; 
+                    ?>
                 </div> <!-- /.row -->
             </section><!-- /.content -->
         </aside><!-- /.right-side -->
