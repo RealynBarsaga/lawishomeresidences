@@ -22,4 +22,3 @@ if (strpos($requestPath, $basePath) !== 0) {
     // Serve the request as it is within the public directory
     require __DIR__ . $requestPath;
 }
-
