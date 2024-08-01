@@ -101,12 +101,6 @@
     </div><!-- ./wrapper -->
 
     <?php include "../../admin/footer.php"; ?>
-
-    <!-- jQuery and DataTables script -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-
     <script type="text/javascript">
         $(document).ready(function() {
             $("#table").DataTable({

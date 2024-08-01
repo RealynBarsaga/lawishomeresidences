@@ -115,13 +115,7 @@
             </section><!-- /.content -->
         </aside><!-- /.right-side -->
     </div><!-- ./wrapper -->
-
     <?php include "../footer.php"; ?>
-
-    <!-- DataTables script -->
-    <script src="https://cdn.datatables.net/1.10.24/js/jquery.dataTables.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
-
     <script type="text/javascript">
         $(document).ready(function() {
             $("#table").DataTable({
