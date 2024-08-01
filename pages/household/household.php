@@ -4,7 +4,7 @@
     <?php
     session_start();
     if (empty($_SESSION['role'])) {
-        header("Location: ../../login.php");
+        header("Location: login.php");
         exit;
     } else {
         ob_start();
