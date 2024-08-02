@@ -71,7 +71,7 @@ echo '<header class="header">
                     </li>
                 </ul>
             </div>
-            <div class="navbar-right" style="margin-left: 50px;">
+            <div class="navbar-right" style="margin-right: 50px;">
                 <ul class="nav navbar-nav">
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
