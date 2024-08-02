@@ -24,6 +24,10 @@
                                 <label>Total Number of Members:</label>
                                 <input id="txt_totalmembers" disabled name="txt_totalmembers" class="form-control input-sm" type="text" placeholder="Total Number of Members" />
                             </div>
+                            <div class="form-group">
+                                <label>Purok:</label>
+                                <input id="txt_purok" disabled name="txt_purok" class="form-control input-sm" type="text" placeholder="Purok" />
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -54,17 +58,28 @@
     }
 
     function show_total() {
-        var totalID = $('#txt_hof').val();
-        console.log(totalID);
-        if (totalID) {
-            $.ajax({
-                type: 'POST',
-                url: 'household_dropdown.php',
-                data: 'total_id=' + totalID,
-                success: function (html) {
-                    $('#txt_totalmembers').html(html);
-                }
-            });
-        }
+    var totalID = $('#txt_hof').val();
+    console.log(totalID);
+    if (totalID) {
+        // Fetch total number of members
+        $.ajax({
+            type: 'POST',
+            url: 'household_dropdown.php',
+            data: { total_id: totalID },
+            success: function (html) {
+                $('#txt_totalmembers').val(html); // Assuming html contains the total number
+            }
+        });
+
+        // Fetch Purok value
+        $.ajax({
+            type: 'POST',
+            url: 'household_dropdown.php',
+            data: { purok_id: totalID },
+            success: function (html) {
+                $('#txt_purok').val(html); // Assuming html contains the Purok value
+            }
+        });
     }
+}
 </script>
