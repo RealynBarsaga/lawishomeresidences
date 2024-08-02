@@ -51,6 +51,28 @@ echo '<header class="header">
             </a>
             <div class="navbar-right">
                 <ul class="nav navbar-nav">
+                    <li class="dropdown user user-menu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <i class="glyphicon glyphicon-user"></i><span>Administrator <i class="caret"></i></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header bg-light-blue">
+                                <p>Administrator</p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="#" class="btn btn-default btn-flat" data-toggle="modal" data-target="#editProfileModal">Change Account</a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="../../admin/logout.php" class="btn btn-default btn-flat">Sign out</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav">
                     <li class="dropdown notifications-menu">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                             <i class="glyphicon glyphicon-bell"></i><span class="label label-warning">'.$notificationCount.'</span>
@@ -74,28 +96,6 @@ echo '<header class="header">
                                 echo '</ul>
                             </li>
                             <li class="footer"><a href="../view_all_notifications.php">View all</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </div>
-            <div class="navbar-right">
-                <ul class="nav navbar-nav">
-                    <li class="dropdown user user-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="glyphicon glyphicon-user"></i><span>Administrator <i class="caret"></i></span>
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="user-header bg-light-blue">
-                                <p>Administrator</p>
-                            </li>
-                            <li class="user-footer">
-                                <div class="pull-left">
-                                    <a href="#" class="btn btn-default btn-flat" data-toggle="modal" data-target="#editProfileModal">Change Account</a>
-                                </div>
-                                <div class="pull-right">
-                                    <a href="../../admin/logout.php" class="btn btn-default btn-flat">Sign out</a>
-                                </div>
-                            </li>
                         </ul>
                     </li>
                 </ul>
