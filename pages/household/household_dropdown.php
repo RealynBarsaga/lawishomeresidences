@@ -18,7 +18,7 @@ if (isset($_POST['hhold_id'])) {
 
 if (isset($_POST['total_id'])) {
     $total_id = $_POST['total_id'];
-    $query = mysqli_query($con, "SELECT *, id as resID FROM tblresident WHERE id = '$total_id'") or die('Error: ' . mysqli_error($con));
+    $query = mysqli_query($con, "SELECT * FROM tblresident WHERE id = '$total_id'") or die('Error: ' . mysqli_error($con));
     $rowCount = mysqli_num_rows($query);
 
     if ($rowCount > 0) {
@@ -27,6 +27,20 @@ if (isset($_POST['total_id'])) {
         }
     } else {
         echo '0'; // Assuming '0' as default for no data
+    }
+}
+
+if (isset($_POST['purok_id'])) {
+    $purok_id = $_POST['purok_id'];
+    $query = mysqli_query($con, "SELECT * FROM tblresident WHERE id = '$purok_id'") or die('Error: ' . mysqli_error($con));
+    $rowCount = mysqli_num_rows($query);
+
+    if ($rowCount > 0) {
+        while ($row = mysqli_fetch_array($query)) {
+            echo $row['purok'];
+        }
+    } else {
+        echo ''; // Assuming empty string as default for no data
     }
 }
 ?>

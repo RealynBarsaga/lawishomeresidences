@@ -52,6 +52,7 @@
                                             <th>Household #</th>
                                             <th>Total Members</th>
                                             <th>Head of Family</th>
+                                            <th>Barangay</th>
                                             <th>Purok</th>
                                             <th style="width: 40px !important;">Option</th>
                                         </tr>
@@ -70,6 +71,7 @@
                                                 <td><a href="../resident/resident.php?resident=' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '</a></td>
                                                 <td>' . htmlspecialchars($row['totalhousehold'], ENT_QUOTES, 'UTF-8') . '</td>
                                                 <td>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</td>
+                                                <td>' . htmlspecialchars($row['barangay'], ENT_QUOTES, 'UTF-8') . '</td>
                                                 <td>' . htmlspecialchars($row['purok'], ENT_QUOTES, 'UTF-8') . '</td>
                                                 <td><button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" data-toggle="modal">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View

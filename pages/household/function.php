@@ -1,9 +1,11 @@
 <?php
+ob_start();
 
 if(isset($_POST['btn_add'])){
     $txt_householdno = $_POST['txt_householdno'];
     $txt_totalmembers = $_POST['txt_totalmembers'];
     $txt_hof = $_POST['txt_hof'];
+    $txt_purok = $_POST['txt_purok'];
 
     $chkdup = mysqli_query($con, "SELECT * from tblhousehold where householdno = ".$txt_householdno."");
     $rows = mysqli_num_rows($chkdup);
@@ -14,19 +16,19 @@ if(isset($_POST['btn_add'])){
     }
 
     if($rows == 0){
-        $query = mysqli_query($con,"INSERT INTO tblhousehold (householdno, totalhouseholdmembers, headoffamily) 
-            values ('$txt_householdno', '$txt_totalmembers', '$txt_hof')") or die('Error: ' . mysqli_error($con));
+        $query = mysqli_query($con,"INSERT INTO tblhousehold (householdno, totalhouseholdmembers, headoffamily, purok) 
+            values ('$txt_householdno', '$txt_totalmembers', '$txt_hof', '$txt_purok')") or die('Error: ' . mysqli_error($con));
         if($query == true)
         {
             $_SESSION['added'] = 1;
             header("location: ".$_SERVER['REQUEST_URI']);
-            exit();
+            ob_end_flush();
         }     
     }
     else {
         $_SESSION['duplicate'] = 1;
         header("location: ".$_SERVER['REQUEST_URI']);
-        exit();
+        ob_end_flush();
     }
 }
 
@@ -35,20 +37,21 @@ if (isset($_POST['btn_save'])) {
     $txt_edit_householdno = $_POST['txt_edit_householdno'];
     $txt_edit_totalmembers = $_POST['txt_edit_totalmembers'];
     $txt_edit_name = $_POST['txt_edit_name'];
+    $txt_edit_purok = $_POST['txt_edit_purok'];
 
     // Check if columns exist in the table
-    $columns = array('householdno', 'totalhouseholdmembers'); // Modify these as per your table structure
+    $columns = array('householdno', 'totalhouseholdmembers', 'purok'); // Modify these as per your table structure
     $result = mysqli_query($con, "SHOW COLUMNS FROM tblhousehold");
     $valid_columns = [];
     while ($row = mysqli_fetch_assoc($result)) {
         $valid_columns[] = $row['Field'];
     }
 
-    // Make sure 'headoffamily' column exists in tblhousehold table
-    if (in_array('householdno', $valid_columns) && in_array('totalhouseholdmembers', $valid_columns)) {
+    // Make sure columns exist in tblhousehold table
+    if (in_array('householdno', $valid_columns) && in_array('totalhouseholdmembers', $valid_columns) && in_array('purok', $valid_columns)) {
         // Update query using prepared statements
-        $stmt = $con->prepare("UPDATE tblhousehold SET householdno = ?, totalhouseholdmembers = ? WHERE id = ?");
-        $stmt->bind_param("ssi", $txt_edit_householdno, $txt_edit_totalmembers, $txt_id);
+        $stmt = $con->prepare("UPDATE tblhousehold SET householdno = ?, totalhouseholdmembers = ?, purok = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $txt_edit_householdno, $txt_edit_totalmembers, $txt_edit_purok, $txt_id);
         $update_query = $stmt->execute();
 
         // Log action
@@ -61,7 +64,7 @@ if (isset($_POST['btn_save'])) {
         if ($update_query) {
             $_SESSION['edited'] = 1;
             header("location: " . $_SERVER['REQUEST_URI']);
-            exit();
+            exit(); // Ensure no further execution after redirect
         } else {
             die('Error: ' . $stmt->error);
         }
@@ -83,7 +86,7 @@ if(isset($_POST['btn_delete']))
             {
                 $_SESSION['delete'] = 1;
                 header("location: ".$_SERVER['REQUEST_URI']);
-                exit();
+                ob_end_flush();
             }
         }
     }
