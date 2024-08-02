@@ -65,11 +65,11 @@
                                         while ($row = $result->fetch_assoc()) {
                                             echo '
                                             <tr>
-                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" /></td>
-                                                <td><a href="../resident/resident.php?resident=' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '</a></td>
-                                                <td>' . htmlspecialchars($row['totalhousehold'], ENT_QUOTES, 'UTF-8') . '</td>
-                                                <td>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</td>
-                                                <td><button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" data-toggle="modal">
+                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['id'] . '" /></td>
+                                                <td><a href="../resident/resident.php?resident=' . $row['householdno']. '">' . $row['householdno'] . '</a></td>
+                                                <td>' . $row['totalhousehold']. '</td>
+                                                <td>' . $row['name'] . '</td>
+                                                <td><button class="btn btn-primary btn-sm" data-target="#editModal' . $row['id'] . '" data-toggle="modal">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                                     </button></td>
                                             </tr>';
