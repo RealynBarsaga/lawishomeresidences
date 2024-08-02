@@ -40,6 +40,7 @@
     </form>
 </div>
 
+
 <script>
     function show_head() {
         var householdID = $('#txt_householdno').val();
@@ -48,42 +49,37 @@
             $.ajax({
                 type: 'POST',
                 url: 'household_dropdown.php',
-                data: { hhold_id: householdID },
+                data: 'hhold_id=' + householdID,
                 success: function (html) {
                     $('#txt_hof').html(html);
-                    show_purok();  // Fetch Purok after setting the Head of Family
                 }
             });
         }
     }
 
     function show_total() {
-        var totalID = $('#txt_hof').val();
-        console.log(totalID);
-        if (totalID) {
-            $.ajax({
-                type: 'POST',
-                url: 'household_dropdown.php',
-                data: { total_id: totalID },
-                success: function (html) {
-                    $('#txt_totalmembers').val(html);
-                }
-            });
-        }
-    }
+    var totalID = $('#txt_hof').val();
+    console.log(totalID);
+    if (totalID) {
+        // Fetch total number of members
+        $.ajax({
+            type: 'POST',
+            url: 'household_dropdown.php',
+            data: { total_id: totalID },
+            success: function (html) {
+                $('#txt_totalmembers').val(html); // Assuming html contains the total number
+            }
+        });
 
-    function show_purok() {
-        var householdID = $('#txt_householdno').val();
-        console.log(householdID);
-        if (householdID) {
-            $.ajax({
-                type: 'POST',
-                url: 'household_dropdown.php',
-                data: { hhold_id: householdID },
-                success: function (html) {
-                    $('#txt_purok').val(html);
-                }
-            });
-        }
+        // Fetch Purok value
+        $.ajax({
+            type: 'POST',
+            url: 'household_dropdown.php',
+            data: { purok_id: totalID },
+            success: function (html) {
+                $('#txt_purok').val(html); // Assuming html contains the Purok value
+            }
+        });
     }
+}
 </script>
