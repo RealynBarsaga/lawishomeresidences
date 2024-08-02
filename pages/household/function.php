@@ -38,9 +38,10 @@ if (isset($_POST['btn_save'])) {
     $txt_edit_totalmembers = $_POST['txt_edit_totalmembers'];
     $txt_edit_name = $_POST['txt_edit_name'];
     $txt_edit_purok = $_POST['txt_edit_purok'];
+    $txt_edit_brgy = $_POST['txt_edit_brgy'];
 
     // Check if columns exist in the table
-    $columns = array('householdno', 'totalhouseholdmembers', 'purok'); // Modify these as per your table structure
+    $columns = array('householdno', 'totalhouseholdmembers', 'barangay', 'purok'); // Modify these as per your table structure
     $result = mysqli_query($con, "SHOW COLUMNS FROM tblhousehold");
     $valid_columns = [];
     while ($row = mysqli_fetch_assoc($result)) {
@@ -48,10 +49,10 @@ if (isset($_POST['btn_save'])) {
     }
 
     // Make sure columns exist in tblhousehold table
-    if (in_array('householdno', $valid_columns) && in_array('totalhouseholdmembers', $valid_columns) && in_array('purok', $valid_columns)) {
+    if (in_array('householdno', $valid_columns) && in_array('totalhouseholdmembers', $valid_columns) && in_array('barangay', $valid_columns) && in_array('purok', $valid_columns)) {
         // Update query using prepared statements
-        $stmt = $con->prepare("UPDATE tblhousehold SET householdno = ?, totalhouseholdmembers = ?, purok = ? WHERE id = ?");
-        $stmt->bind_param("sssi", $txt_edit_householdno, $txt_edit_totalmembers, $txt_edit_purok, $txt_id);
+        $stmt = $con->prepare("UPDATE tblhousehold SET householdno = ?, totalhouseholdmembers = ?, barangay = ?, purok = ? WHERE id = ?");
+        $stmt->bind_param("sssi", $txt_edit_householdno, $txt_edit_totalmembers, $txt_edit_brgy, $txt_edit_purok, $txt_id);
         $update_query = $stmt->execute();
 
         // Log action

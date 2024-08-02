@@ -29,6 +29,10 @@ echo '<div id="editModal' . $row['id'] . '" class="modal fade">
                                 <input id="txt_edit_totalmembers" name="txt_edit_totalmembers" class="form-control input-sm" type="number" value="' . htmlspecialchars($row['totalhousehold'], ENT_QUOTES, 'UTF-8') . '" readonly/>
                             </div>
                             <div class="form-group">
+                                <label>Barangay: </label>
+                                <input id="txt_edit_brgy" name="txt_edit_brgy" class="form-control input-sm" type="text" value="' . htmlspecialchars($row['barangay'], ENT_QUOTES, 'UTF-8') . '" readonly/>
+                            </div>
+                            <div class="form-group">
                                 <label>Purok: </label>
                                 <input id="txt_edit_purok" name="txt_edit_purok" class="form-control input-sm" type="text" value="' . htmlspecialchars($row['purok'], ENT_QUOTES, 'UTF-8') . '" readonly/>
                             </div>
