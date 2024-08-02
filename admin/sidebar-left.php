@@ -34,12 +34,7 @@
                                 <a href="../generatereports/generatereports.php">
                                     <i class="fa fa-paper-plane"></i> <span>Generated Reports</span>
                                 </a>
-                            </li>
-                            <li>
-                                <a href="../../admin/logs/logs.php">
-                                    <i class="fa fa-history"></i> <span>Logs</span>
-                                </a>
-                            </li>                             
+                            </li>                        
                     </ul>
                 </section>
                 <!-- /.sidebar -->
