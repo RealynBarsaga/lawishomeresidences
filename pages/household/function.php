@@ -1,5 +1,4 @@
 <?php
-ob_start();
 
 if(isset($_POST['btn_add'])){
     $txt_householdno = $_POST['txt_householdno'];
@@ -21,13 +20,13 @@ if(isset($_POST['btn_add'])){
         {
             $_SESSION['added'] = 1;
             header("location: ".$_SERVER['REQUEST_URI']);
-            ob_end_flush();
+            exit();
         }     
     }
     else {
         $_SESSION['duplicate'] = 1;
         header("location: ".$_SERVER['REQUEST_URI']);
-        ob_end_flush();
+        exit();
     }
 }
 
@@ -36,7 +35,6 @@ if (isset($_POST['btn_save'])) {
     $txt_edit_householdno = $_POST['txt_edit_householdno'];
     $txt_edit_totalmembers = $_POST['txt_edit_totalmembers'];
     $txt_edit_name = $_POST['txt_edit_name'];
-    $txt_edit_purok = $_POST['txt_edit_purok'];
 
     // Check if columns exist in the table
     $columns = array('householdno', 'totalhouseholdmembers'); // Modify these as per your table structure
@@ -63,7 +61,7 @@ if (isset($_POST['btn_save'])) {
         if ($update_query) {
             $_SESSION['edited'] = 1;
             header("location: " . $_SERVER['REQUEST_URI']);
-            ob_end_flush();
+            exit();
         } else {
             die('Error: ' . $stmt->error);
         }
@@ -85,7 +83,7 @@ if(isset($_POST['btn_delete']))
             {
                 $_SESSION['delete'] = 1;
                 header("location: ".$_SERVER['REQUEST_URI']);
-                ob_end_flush();
+                exit();
             }
         }
     }

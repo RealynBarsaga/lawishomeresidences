@@ -52,7 +52,6 @@
                                             <th>Household #</th>
                                             <th>Total Members</th>
                                             <th>Head of Family</th>
-                                            <!-- <th>Purok</th> -->
                                             <th style="width: 40px !important;">Option</th>
                                         </tr>
                                     </thead>

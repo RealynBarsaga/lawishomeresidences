@@ -90,7 +90,7 @@ if(isset($_POST['btn_saveeditProfile'])){
         if($updstaff){
             // Redirect after update
             header("Location: ".$_SERVER['REQUEST_URI']);
-            ob_end_flush();
+            exit();
         }
     }
 }
