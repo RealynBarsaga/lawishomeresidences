@@ -40,7 +40,6 @@
     </form>
 </div>
 
-
 <script>
     function show_head() {
         var householdID = $('#txt_householdno').val();
@@ -49,9 +48,10 @@
             $.ajax({
                 type: 'POST',
                 url: 'household_dropdown.php',
-                data: 'hhold_id=' + householdID,
+                data: { hhold_id: householdID },
                 success: function (html) {
                     $('#txt_hof').html(html);
+                    show_purok();  // Fetch Purok after setting the Head of Family
                 }
             });
         }
@@ -64,10 +64,24 @@
             $.ajax({
                 type: 'POST',
                 url: 'household_dropdown.php',
-                data: 'total_id=' + totalID,
+                data: { total_id: totalID },
                 success: function (html) {
-                    $('#txt_totalmembers').html(html);
-                    $('#txt_purok').html(html);
+                    $('#txt_totalmembers').val(html);
+                }
+            });
+        }
+    }
+
+    function show_purok() {
+        var householdID = $('#txt_householdno').val();
+        console.log(householdID);
+        if (householdID) {
+            $.ajax({
+                type: 'POST',
+                url: 'household_dropdown.php',
+                data: { hhold_id: householdID },
+                success: function (html) {
+                    $('#txt_purok').val(html);
                 }
             });
         }
