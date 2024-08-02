@@ -24,10 +24,10 @@
                                 <label>Total Number of Members:</label>
                                 <input id="txt_totalmembers" disabled name="txt_totalmembers" class="form-control input-sm" type="text" placeholder="Total Number of Members" />
                             </div>
-                            <div class="form-group">
+                           <!--  <div class="form-group">
                                 <label>Purok:</label>
                                 <input id="txt_purok" disabled name="txt_purok" class="form-control input-sm" type="text" placeholder="Purok" />
-                            </div>
+                            </div> -->
                         </div>
                     </div>
                 </div>
@@ -71,7 +71,7 @@
             }
         });
 
-        // Fetch Purok value
+        /* // Fetch Purok value
         $.ajax({
             type: 'POST',
             url: 'household_dropdown.php',
@@ -79,7 +79,7 @@
             success: function (html) {
                 $('#txt_purok').val(html); // Assuming html contains the Purok value
             }
-        });
+        }); */
     }
 }
 </script>
