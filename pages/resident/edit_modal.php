@@ -40,7 +40,7 @@
 
                         <div class="form-group">
                             <label class="control-label">Age:</label>
-                            <input name="txt_edit_age" id="txt_edit_age" class="form-control input-sm" type="text" value="'.$age.'" readonly/>;
+                            <input name="txt_edit_age" id="txt_edit_age" class="form-control input-sm" type="text" value="'.$age.'" readonly/>
                             <label class="control-label" style="margin-top:10px;">Birthdate:</label>
                             <input name="txt_edit_bdate" id="txt_edit_bdate" class="form-control input-sm" type="date" value="'.$erow['bdate'].'" onchange="calculateAge()"/>
                         </div>
