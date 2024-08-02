@@ -89,7 +89,7 @@ echo '<header class="header">
                                     $action = isset($notif['action']) ? htmlspecialchars($notif['action']) : 'No action available';
                                     
                                     echo '<li style="margin-bottom: 2px;">
-                                            <span class="notification">'.$user.'<br>'.$action.'</span>
+                                            <span class="notification">'.$user.'<br>'.$action.'.</span>
                                           </li>';
                                 }
                                 
