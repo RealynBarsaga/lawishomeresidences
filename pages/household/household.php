@@ -70,7 +70,6 @@
                                                 <td><a href="../resident/resident.php?resident=' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '</a></td>
                                                 <td>' . htmlspecialchars($row['totalhousehold'], ENT_QUOTES, 'UTF-8') . '</td>
                                                 <td>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</td>
-                                                <td>' . htmlspecialchars($row['purok'], ENT_QUOTES, 'UTF-8') . '</td>
                                                 <td><button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" data-toggle="modal">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                                     </button></td>

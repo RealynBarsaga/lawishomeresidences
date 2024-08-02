@@ -30,7 +30,7 @@ if (isset($_POST['total_id'])) {
     }
 }
 
-if (isset($_POST['purok_id'])) {
+/* if (isset($_POST['purok_id'])) {
     $purok_id = $_POST['purok_id'];
     $query = mysqli_query($con, "SELECT purok FROM tblresident WHERE id = '$purok_id'") or die('Error: ' . mysqli_error($con));
     $rowCount = mysqli_num_rows($query);
@@ -42,5 +42,5 @@ if (isset($_POST['purok_id'])) {
     } else {
         echo ''; // Assuming empty as default for no data
     }
-}
+} */
 ?>

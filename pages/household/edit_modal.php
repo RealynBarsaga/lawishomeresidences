@@ -28,10 +28,6 @@ echo '<div id="editModal' . $row['id'] . '" class="modal fade">
                                 <label>Total Household Members : </label>
                                 <input id="txt_edit_totalmembers" name="txt_edit_totalmembers" class="form-control input-sm" type="number" value="' . $row['totalhousehold'] . '" readonly/>
                             </div>
-                            <div class="form-group">
-                                <label>Purok : </label>
-                                <input id="txt_edit_purok" name="txt_edit_purok" class="form-control input-sm" type="number" value="' . $row['purok'] . '" readonly/>
-                            </div>
                         </div>
                     </div>
                 </div>

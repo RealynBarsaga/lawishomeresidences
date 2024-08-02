@@ -5,7 +5,6 @@ if(isset($_POST['btn_add'])){
     $txt_householdno = $_POST['txt_householdno'];
     $txt_totalmembers = $_POST['txt_totalmembers'];
     $txt_hof = $_POST['txt_hof'];
-    $txt_purok = $_POST['txt_purok'];
 
     $chkdup = mysqli_query($con, "SELECT * from tblhousehold where householdno = ".$txt_householdno."");
     $rows = mysqli_num_rows($chkdup);
@@ -16,8 +15,8 @@ if(isset($_POST['btn_add'])){
     }
 
     if($rows == 0){
-        $query = mysqli_query($con,"INSERT INTO tblhousehold (householdno, totalhouseholdmembers, headoffamily, purok) 
-            values ('$txt_householdno', '$txt_totalmembers', '$txt_hof', '$txt_purok')") or die('Error: ' . mysqli_error($con));
+        $query = mysqli_query($con,"INSERT INTO tblhousehold (householdno, totalhouseholdmembers, headoffamily) 
+            values ('$txt_householdno', '$txt_totalmembers', '$txt_hof')") or die('Error: ' . mysqli_error($con));
         if($query == true)
         {
             $_SESSION['added'] = 1;
