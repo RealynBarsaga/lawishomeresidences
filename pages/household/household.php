@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <?php
     session_start();
@@ -7,11 +7,10 @@
         header('Location: ../../login.php');
         exit; // Ensure no further execution after redirect
     }
-    include('../head_css.php'); // Removed ob_start() since it's not needed here
+    include('../head_css.php'); // Include CSS files
     ?>
 </head>
 <body class="skin-black">
-    <!-- header logo: style can be found in header.less -->
     <?php include "../connection.php"; ?>
     <?php include('../header.php'); ?>
 
@@ -58,24 +57,28 @@
                                     <tbody>
                                         <?php
                                         // Use prepared statements to prevent SQL injection
-                                        $stmt = $con->prepare("SELECT *, h.id as id, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily");
+                                        $stmt = $con->prepare("SELECT h.id as id, h.householdno, h.totalhousehold, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily");
+                                        if (!$stmt) {
+                                            die('Prepare failed: ' . htmlspecialchars($con->error));
+                                        }
                                         $stmt->execute();
                                         $result = $stmt->get_result();
-
+                                        
                                         while ($row = $result->fetch_assoc()) {
                                             echo '
                                             <tr>
-                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['id'] . '" /></td>
-                                                <td><a href="../resident/resident.php?resident=' . $row['householdno']. '">' . $row['householdno'] . '</a></td>
-                                                <td>' . $row['totalhousehold']. '</td>
-                                                <td>' . $row['name'] . '</td>
-                                                <td><button class="btn btn-primary btn-sm" data-target="#editModal' . $row['id'] . '" data-toggle="modal">
+                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id']) . '" /></td>
+                                                <td><a href="../resident/resident.php?resident=' . htmlspecialchars($row['householdno']) . '">' . htmlspecialchars($row['householdno']) . '</a></td>
+                                                <td>' . htmlspecialchars($row['totalhousehold']) . '</td>
+                                                <td>' . htmlspecialchars($row['name']) . '</td>
+                                                <td><button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id']) . '" data-toggle="modal">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                                     </button></td>
                                             </tr>';
 
                                             include "edit_modal.php";
                                         }
+                                        $stmt->close();
                                         ?>
                                     </tbody>
                                 </table>
@@ -99,10 +102,12 @@
     <?php include "../footer.php"; ?>
 
     <script type="text/javascript">
-        $(function() {
-            $("#table").dataTable({
-                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0, 5] }],
-                "aaSorting": []
+        $(document).ready(function() {
+            $("#table").DataTable({
+                "columnDefs": [
+                    { "orderable": false, "targets": [0, 4] }
+                ],
+                "order": []
             });
             $(".select2").select2();
         });
