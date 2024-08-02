@@ -36,11 +36,13 @@ echo '<div id="editModal' . $row['id'] . '" class="modal fade">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <input type="button" class="btn btn-default btn-sm" data-dismiss="modal" value="Cancel"/>
-                    <input type="submit" class="btn btn-primary btn-sm" name="btn_save" value="Save"/>
+                   
                 </div>
             </div>
         </div>
     </form>
 </div>';
 ?>
+
+<!-- <input type="button" class="btn btn-default btn-sm" data-dismiss="modal" value="Cancel"/>
+<input type="submit" class="btn btn-primary btn-sm" name="btn_save" value="Save"/> -->

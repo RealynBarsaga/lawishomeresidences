@@ -1,6 +1,4 @@
 <?php
-ob_start();
-
 if(isset($_POST['btn_add'])){
     $txt_householdno = $_POST['txt_householdno'];
     $txt_totalmembers = $_POST['txt_totalmembers'];
@@ -22,13 +20,11 @@ if(isset($_POST['btn_add'])){
         {
             $_SESSION['added'] = 1;
             header("location: ".$_SERVER['REQUEST_URI']);
-            ob_end_flush();
         }     
     }
-    else {
+    else{
         $_SESSION['duplicate'] = 1;
         header("location: ".$_SERVER['REQUEST_URI']);
-        ob_end_flush();
     }
 }
 
@@ -64,7 +60,7 @@ if (isset($_POST['btn_save'])) {
         if ($update_query) {
             $_SESSION['edited'] = 1;
             header("location: " . $_SERVER['REQUEST_URI']);
-            ob_end_flush();
+            exit();
         } else {
             die('Error: ' . $stmt->error);
         }
@@ -86,7 +82,6 @@ if(isset($_POST['btn_delete']))
             {
                 $_SESSION['delete'] = 1;
                 header("location: ".$_SERVER['REQUEST_URI']);
-                ob_end_flush();
             }
         }
     }
