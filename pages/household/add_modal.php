@@ -71,7 +71,7 @@
             }
         });
 
-      /*   // Fetch Purok value
+      /* /*   // Fetch Purok value
         $.ajax({
             type: 'POST',
             url: 'household_dropdown.php',
@@ -79,7 +79,7 @@
             success: function (html) {
                 $('#txt_purok').val(html); // Assuming html contains the Purok value
             }
-        });
-    } */
+        }); */
+    }
 }
 </script>
