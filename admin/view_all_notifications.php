@@ -1,15 +1,19 @@
 <?php
 include "connection.php"; // Ensure you include your database connection
 
-// Handle deletion
-if (isset($_GET['delete_id'])) {
-    $delete_id = intval($_GET['delete_id']);
-    $delete_query = mysqli_query($con, "DELETE FROM tbllogs WHERE id = $delete_id");
-    if ($delete_query) {
-        header("Location: view_all_notifications.php");
-        exit();
-    } else {
-        echo "Error deleting notification.";
+// Handle deletion of selected notifications
+if (isset($_POST['delete_selected'])) {
+    $ids_to_delete = $_POST['notification_ids'];
+    if (!empty($ids_to_delete)) {
+        $ids_to_delete = array_map('intval', $ids_to_delete); // Sanitize IDs
+        $ids_string = implode(',', $ids_to_delete);
+        $delete_query = mysqli_query($con, "DELETE FROM tbllogs WHERE id IN ($ids_string)");
+        if ($delete_query) {
+            header("Location: view_all_notifications.php");
+            exit();
+        } else {
+            echo "Error deleting notifications.";
+        }
     }
 }
 
@@ -107,6 +111,15 @@ $squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
         .footer a:hover {
             text-decoration: underline;
         }
+        .select-all-container {
+            margin-bottom: 20px;
+            text-align: right;
+        }
+        .select-all {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
     </style>
     <script>
         function toggleMenu(id) {
@@ -122,31 +135,46 @@ $squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
                 }
             });
         });
+
+        function toggleSelectAll(source) {
+            checkboxes = document.querySelectorAll('input[name="notification_ids[]"]');
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = source.checked;
+            }
+        }
     </script>
 </head>
 <body>
     <div class="container">
         <h1>All Notifications</h1>
-        <ul>
-            <?php
-            while($notif = mysqli_fetch_assoc($squery)){
-                $user = isset($notif['user']) ? htmlspecialchars($notif['user']) : 'Unknown user';
-                $action = isset($notif['action']) ? htmlspecialchars($notif['action']) : 'No action available';
-                $message = sprintf(
-                    '<span class="notification">%s <br> %s.</span>',
-                    $user,
-                    $action
-                );
+        <form method="post" action="view_all_notifications.php">
+            <div class="select-all-container">
+                <input type="checkbox" onclick="toggleSelectAll(this)"> Select All
+            </div>
+            <ul>
+                <?php
+                while($notif = mysqli_fetch_assoc($squery)){
+                    $user = isset($notif['user']) ? htmlspecialchars($notif['user']) : 'Unknown user';
+                    $action = isset($notif['action']) ? htmlspecialchars($notif['action']) : 'No action available';
+                    $message = sprintf(
+                        '<span class="notification">%s <br> %s.</span>',
+                        $user,
+                        $action
+                    );
 
-                echo '<li>' . $message . '
-                        <button class="menu-button" onclick="toggleMenu('.$notif['id'].')"></button>
-                        <div id="menu-'.$notif['id'].'" class="dropdown-menu">
-                            <a href="view_all_notifications.php?delete_id='.$notif['id'].'">Delete</a>
-                        </div>
-                      </li>';
-            }
-            ?>
-        </ul>
+                    echo '<li><input type="checkbox" name="notification_ids[]" value="'.$notif['id'].'"> ' . $message . '
+                            <button class="menu-button" onclick="toggleMenu('.$notif['id'].')"></button>
+                            <div id="menu-'.$notif['id'].'" class="dropdown-menu">
+                                <a href="view_all_notifications.php?delete_id='.$notif['id'].'">Delete</a>
+                            </div>
+                          </li>';
+                }
+                ?>
+            </ul>
+            <div>
+                <button type="submit" name="delete_selected" class="delete-button">Delete Selected</button>
+            </div>
+        </form>
         <div class="footer">
             <a href="dashboard/dashboard.php">Back to Home</a>
         </div>
