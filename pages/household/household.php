@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <?php
     session_start();
@@ -7,10 +7,11 @@
         header('Location: ../../login.php');
         exit; // Ensure no further execution after redirect
     }
-    include('../head_css.php'); // Include CSS files
+    include('../head_css.php'); // Removed ob_start() since it's not needed here
     ?>
 </head>
 <body class="skin-black">
+    <!-- header logo: style can be found in header.less -->
     <?php include "../connection.php"; ?>
     <?php include('../header.php'); ?>
 
@@ -51,34 +52,32 @@
                                             <th>Household #</th>
                                             <th>Total Members</th>
                                             <th>Head of Family</th>
+                                            <th>Purok</th>
                                             <th style="width: 40px !important;">Option</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
                                         // Use prepared statements to prevent SQL injection
-                                        $stmt = $con->prepare("SELECT h.id as id, h.householdno, h.totalhousehold, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily");
-                                        if (!$stmt) {
-                                            die('Prepare failed: ' . htmlspecialchars($con->error));
-                                        }
+                                        $stmt = $con->prepare("SELECT *, h.id as id, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily");
                                         $stmt->execute();
                                         $result = $stmt->get_result();
-                                        
+
                                         while ($row = $result->fetch_assoc()) {
                                             echo '
                                             <tr>
-                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id']) . '" /></td>
-                                                <td><a href="../resident/resident.php?resident=' . htmlspecialchars($row['householdno']) . '">' . htmlspecialchars($row['householdno']) . '</a></td>
-                                                <td>' . htmlspecialchars($row['totalhousehold']) . '</td>
-                                                <td>' . htmlspecialchars($row['name']) . '</td>
-                                                <td><button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id']) . '" data-toggle="modal">
+                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" /></td>
+                                                <td><a href="../resident/resident.php?resident=' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '</a></td>
+                                                <td>' . htmlspecialchars($row['totalhousehold'], ENT_QUOTES, 'UTF-8') . '</td>
+                                                <td>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</td>
+                                                <td>' . htmlspecialchars($row['purok'], ENT_QUOTES, 'UTF-8') . '</td>
+                                                <td><button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" data-toggle="modal">
                                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                                     </button></td>
                                             </tr>';
 
                                             include "edit_modal.php";
                                         }
-                                        $stmt->close();
                                         ?>
                                     </tbody>
                                 </table>
@@ -102,12 +101,10 @@
     <?php include "../footer.php"; ?>
 
     <script type="text/javascript">
-        $(document).ready(function() {
-            $("#table").DataTable({
-                "columnDefs": [
-                    { "orderable": false, "targets": [0, 4] }
-                ],
-                "order": []
+        $(function() {
+            $("#table").dataTable({
+                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0, 5] }],
+                "aaSorting": []
             });
             $(".select2").select2();
         });
