@@ -57,11 +57,15 @@
                                     <label class="control-label">Household #:</label>
                                     <input name="txt_householdnum" class="form-control input-sm" type="number" min="1" placeholder="Household #" style="width: 419px;"/>
                                 </div>
-
-                                <!-- Civil Status -->
-                                <div class="form-group">
-                                    <label class="control-label">Civil Status:</label>
-                                    <input name="txt_cstatus" class="form-control input-sm" type="text" placeholder="Civil Status" style="width: 419px;"/>
+                               <!-- Civil Status -->
+                               <div class="form-group">
+                                   <label class="control-label">Civil Status:</label>
+                                   <select name="txt_cstatus" class="form-control input-sm" style="width: 419px;">
+                                        <option value="" disabled selected>Select Civil Status</option>
+                                        <option value="Single">Single</option>
+                                        <option value="Married">Married</option>
+                                        <option value="Widowed">Widowed</option>
+                                   </select>
                                 </div>
 
                                 <!-- Religion -->
