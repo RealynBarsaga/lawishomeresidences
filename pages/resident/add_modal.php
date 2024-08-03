@@ -42,7 +42,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Barangay:</label>
                                     <select name="txt_brgy" class="form-control input-sm" style="width: 419px;">
-                                      <option value="" disabled selected>--Select Barangay--</option>
+                                      <option value="" disabled selected>Select Barangay</option>
                                       <option value="Tabagak">Tabagak</option>
                                       <!-- Add other options here as needed -->
                                     </select>
@@ -95,7 +95,7 @@
                                 <div class="form-group">
                                     <label class="control-label">Gender:</label>
                                     <select name="ddl_gender" class="form-control input-sm">
-                                        <option selected="" disabled="">-Select Gender-</option>
+                                        <option selected="" disabled="">Select Gender</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
                                     </select>
