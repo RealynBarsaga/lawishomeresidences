@@ -60,9 +60,15 @@
                             <input name="txt_edit_householdnum" class="form-control input-sm" type="number" min="1" value="'.$erow['householdnum'].'"/>
                         </div>
 
+                        <!-- Civil Status -->
                         <div class="form-group">
                             <label class="control-label">Civil Status:</label>
-                            <input name="txt_edit_cstatus" class="form-control input-sm input-size" type="text" value="'.$erow['civilstatus'].'" style="width: 405px;"/>
+                            <select name="txt_edit_cstatus" class="form-control input-sm" style="width: 405px;">
+                                <option value="" disabled selected>Select Civil Status</option>
+                                <option value="Single" '.($erow['civilstatus'] == 'Single' ? 'selected' : '').'>Single</option>
+                                <option value="Married" '.($erow['civilstatus'] == 'Married' ? 'selected' : '').'>Married</option>
+                                <option value="Widowed" '.($erow['civilstatus'] == 'Widowed' ? 'selected' : '').'>Widowed</option>
+                            </select>
                         </div>
 
                         <div class="form-group">
