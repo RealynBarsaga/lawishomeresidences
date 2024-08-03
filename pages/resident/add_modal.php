@@ -40,11 +40,13 @@
 
                                 <!-- Barangay -->
                                 <div class="form-group">
-                                     <label class="control-label">Barangay:</label>
-                                     <input name="txt_brgy" class="form-control input-sm" type="text" placeholder="Barangay" style="width: 419px;" 
-                                     value="<?php echo htmlspecialchars($erow['barangay']); ?>" disabled />
+                                    <label class="control-label">Barangay:</label>
+                                    <select name="txt_brgy" class="form-control input-sm" style="width: 419px;">
+                                      <option value="" disabled selected>-- Select --</option>
+                                      <option value="Tabagak">Tabagak</option>
+                                      <!-- Add other options here as needed -->
+                                    </select>
                                 </div>
-
 
                                 <!-- Purok -->
                                 <div class="form-group">

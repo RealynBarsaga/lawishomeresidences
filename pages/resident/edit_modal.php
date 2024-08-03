@@ -47,7 +47,7 @@
 
                         <div class="form-group">
                             <label class="control-label">Barangay:</label>
-                            <input name="txt_edit_brgy" class="form-control input-sm input-size" type="text" value="Tabagak" style="width: 405px;" disabled/>
+                            <input name="txt_edit_brgy" class="form-control input-sm input-size" type="text" value="'.$erow['barangay'].'" style="width: 405px;" disabled/>
                         </div>
 
                          <div class="form-group">
