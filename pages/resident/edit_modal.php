@@ -1,6 +1,6 @@
 <?php echo '
 <div id="editModal'.$row['id'].'" class="modal fade" role="dialog">
-<form class="form-horizontal" method="post" enctype="multipart/form-data"">
+<form class="form-horizontal" method="post" enctype="multipart/form-data">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
         <div class="modal-header">
@@ -25,15 +25,15 @@
                             <input type="hidden" value="'.$erow['id'].'" name="hidden_id" id="hidden_id"/>
                             <label class="control-label">Name:</label><br>
                             <div class="col-sm-4">
-                            Lastname:
+                                Lastname:
                                 <input name="txt_edit_lname" class="form-control input-sm" type="text" value="'.$erow['lname'].'"/>
                             </div> 
                             <div class="col-sm-4">
-                            Firstname:
+                                Firstname:
                                 <input name="txt_edit_fname" class="form-control input-sm" type="text" value="'.$erow['fname'].'"/>
                             </div> 
                             <div class="col-sm-4">
-                            Middlename:
+                                Middlename:
                                 <input name="txt_edit_mname" class="form-control input-sm" type="text" value="'.$erow['mname'].'"/>
                             </div> <br>
                         </div>
@@ -42,12 +42,12 @@
                             <label class="control-label">Age:</label>
                             <input name="txt_edit_age" id="txt_edit_age" class="form-control input-sm" type="text" value="'.$age.'" readonly/>
                             <label class="control-label" style="margin-top:10px;">Birthdate:</label>
-                            <input name="txt_edit_bdate" id="txt_edit_bdate" class="form-control input-sm" type="date" value="'.$erow['bdate'].'" onchange="calculateAge()"/>
+                            <input name="txt_edit_bdate" id="txt_edit_bdate" class="form-control input-sm" type="date" value="'.$erow['bdate'].'" onchange="calculateAge()" min="1924-01-01" max="'.date('Y-m-d').'"/>
                         </div>
 
                         <div class="form-group">
                             <label class="control-label">Barangay:</label>
-                            <input name="txt_edit_brgy" class="form-control input-sm input-size" type="text" value="'.$erow['barangay'].'" style="width: 405px;"/>
+                            <input name="txt_edit_brgy" class="form-control input-sm input-size" type="text" value="'.$erow['barangay'].'" style="width: 405px;" readonly/>
                         </div>
 
                          <div class="form-group">
@@ -146,16 +146,20 @@
   </div>
 </form>
 </div>'; ?>
+
 <script>
 function calculateAge() {
-        var bdate = document.getElementById("txt_edit_bdate").value;
-        var today = new Date();
-        var birthDate = new Date(bdate);
-        var age = today.getFullYear() - birthDate.getFullYear();
-        var m = today.getMonth() - birthDate.getMonth();
-        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-            age--;
-        }
-        document.getElementById("txt_edit_age").value = age;
+    var dob = new Date(document.getElementById('txt_edit_bdate').value);
+    var today = new Date();
+    var age = today.getFullYear() - dob.getFullYear();
+    var m = today.getMonth() - dob.getMonth();
+    if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+        age--;
     }
+    document.getElementById('txt_edit_age').value = age;
+}
+
+// Set minimum date to January 1, 2024 and disable future years
+document.getElementById('txt_edit_bdate').setAttribute('min', '1924-01-01');
+document.getElementById('txt_edit_bdate').setAttribute('max', new Date().toISOString().split('T')[0]);
 </script>
