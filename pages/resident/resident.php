@@ -46,8 +46,8 @@
                                 <table id="table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="width: 20px !important;">
-                                                <input type="checkbox" class="cbxMain" onchange="checkMain(this)"/>
+                                            <th style="width: 90px;">
+                                               <input type="checkbox" class="cbxMain" onchange="checkMain(this)" style="margin-left: auto;" /> Select All
                                             </th>
                                             <th>Image</th>
                                             <th>Resident Name</th>
@@ -65,12 +65,12 @@
                                             echo '
                                             <tr>
                                                 <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="'.$row['id'].'" /></td>
-                                                <td style="width:70px;"><img src="image/'.basename($row['image']).'" style="width:60px;height:60px;"/></td>
-                                                <td style="width: 170.667px;">'.$row['cname'].'</td>
-                                                <td style="width: 110.667px;">'.$row['age'].'</td>
-                                                <td style="width: 110.667px;">'.$row['gender'].'</td>
-                                                <td style="width: 110.667px;">'.$row['formerAddress'].'</td>
-                                                <td style="width: 170.667px;">'.$row['purok'].'</td>
+                                                <td><img src="image/'.basename($row['image']).'" style="width:60px;height:60px;"/></td>
+                                                <td>'.$row['cname'].'</td>
+                                                <td>'.$row['age'].'</td>
+                                                <td>'.$row['gender'].'</td>
+                                                <td>'.$row['formerAddress'].'</td>
+                                                <td>'.$row['purok'].'</td>
                                                 <td>
                                                     <button class="btn btn-primary btn-sm" data-target="#editModal'.$row['id'].'" data-toggle="modal">
                                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
