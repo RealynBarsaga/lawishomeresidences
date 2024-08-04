@@ -1,11 +1,11 @@
 <!-- Bootstrap -->
-<script src="../../js/alert.js" type="text/javascript"></script>
+<script src="../../../js/alert.js" type="text/javascript"></script>
 <script src="../../js/bootstrap.min.js" type="text/javascript"></script>
 <script src="../../js/morris/raphael-2.1.0.min.js" type="text/javascript"></script>
 <script src="../../js/morris/morris.js" type="text/javascript"></script>
 <script src="../../js/select2.full.js" type="text/javascript"></script>
-<script src="../js/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="../js/dataTables.buttons.min.js" type="text/javascript"></script>
+<script src="../../js/jquery.dataTables.min.js" type="text/javascript"></script>
+<script src="../../js/dataTables.buttons.min.js" type="text/javascript"></script>
 <script src="../../js/buttons.print.min.js" type="text/javascript"></script>
 <script src="../../js/plugins/datatables/dataTables.bootstrap.js" type="text/javascript"></script>
 <!-- AdminLTE App -->
