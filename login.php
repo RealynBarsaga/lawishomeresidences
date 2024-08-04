@@ -27,7 +27,10 @@ if (isset($_POST['btn_login'])) {
                 case 2:
                     header('Location: pages1/household/household.php');
                     break;
-                //Add more if needed
+                // Add more cases if needed
+                default:
+                    $error = true;
+                    break;
             }
         }
         exit();
@@ -48,13 +51,13 @@ if (isset($_POST['btn_login'])) {
 </head>
 <style>
     body {
-      background-image: url('img/received_1185064586170879.jpeg');
-      background-attachment: fixed;
-      background-position: center center;
-      background-repeat: no-repeat;
-      background-size: cover; /* Ensures the background image covers the entire container */
-      margin: 0;
-      padding: 0;
+        background-image: url('img/received_1185064586170879.jpeg');
+        background-attachment: fixed;
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        margin: 0;
+        padding: 0;
     }
     html {
         height: 100%;
@@ -67,9 +70,9 @@ if (isset($_POST['btn_login'])) {
         width: 70px;
     }
     @media (max-width: 768px) {
-      body {
-        background-size: contain; /* Adjust the background size for smaller screens */
-      }
+        body {
+            background-size: contain;
+        }
     }
 </style>
 <body class="skin-black">
@@ -80,7 +83,7 @@ if (isset($_POST['btn_login'])) {
                 <img src="img/lg.png" style="height:100px;"/>
                 <h3 class="panel-title">
                     <strong>
-                      Madridejos Home Residence Management System
+                        Madridejos Home Residence Management System
                     </strong>
                 </h3>
             </div>
@@ -99,17 +102,11 @@ if (isset($_POST['btn_login'])) {
                     </div>
                     <button type="submit" class="btn btn-sm btn-primary" name="btn_login">Login</button>
                 </form>
-                <!-- Placeholder for alert message -->
                 <?php if($error): ?>
                     <div id="error-alert" style="margin-top: 15px;">
-                        <div class="alert alert-danger" role="alert">Invalid Account</div>
+                        <div class="alert alert-danger" role="alert">Invalid Account or Error Redirecting</div>
                     </div>
                 <?php endif; ?>
-                <!-- <?php if($success): ?>
-                    <div id="success-alert" style="margin-top: 15px;">
-                        <div class="alert alert-success" role="alert">Login Successful</div>
-                    </div>
-                <?php endif; ?> -->
             </div>
         </div>
     </div>
