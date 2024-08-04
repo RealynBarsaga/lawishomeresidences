@@ -100,7 +100,7 @@
     </div><!-- ./wrapper -->
 
     <!-- jQuery 2.0.2 -->
-    <?php include "../footer.php"; ?>
+    <?php include "../../pages1/footer.php"; ?>
 
     <script type="text/javascript">
         $(function() {
