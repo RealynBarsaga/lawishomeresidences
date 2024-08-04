@@ -7,7 +7,7 @@
         header('Location: ../../pages1/login.php');
         exit; // Ensure no further execution after redirect
     }
-    include('../../pages1/head_css.php'); // Removed ob_start() since it's not needed here
+    include('../../pages1/head_css.php');
     ?>
 </head>
 <body class="skin-black">
@@ -105,7 +105,7 @@
     <script type="text/javascript">
         $(function() {
             $("#table").dataTable({
-                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0, 5] }],
+                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0, 6] }],
                 "aaSorting": []
             });
             $(".select2").select2();
