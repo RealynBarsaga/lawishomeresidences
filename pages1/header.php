@@ -5,7 +5,7 @@ ob_start();
 
 // Your header and HTML code
 echo  '<header class="header">
-            <a href="../../household/household.php" class="logo" style="font-size: 13px; font-family: Source Sans Pro, sans-serif;">
+            <a href="pages1/household/household.php" class="logo" style="font-size: 13px; font-family: Source Sans Pro, sans-serif;">
                 Madridejos Home Residence
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
