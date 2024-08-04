@@ -78,7 +78,7 @@
                                                 while ($row = mysqli_fetch_array($squery)) {
                                                     echo '
                                                     <tr>
-                                                        <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['pid']) . '" /></td>
+                                                        <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['pid'] . '" /></td>
                                                         <td>' . $row['Name'] . '</td>
                                                         <td>' . $row['businessName'] . '</td>
                                                         <td>' . $row['businessAddress'] . '</td>
