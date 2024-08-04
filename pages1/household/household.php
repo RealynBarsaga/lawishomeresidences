@@ -84,14 +84,14 @@
                                     </tbody>
                                 </table>
 
-                                <?php include "../deleteModal.php"; ?>
+                                <?php include "../../pages1/deleteModal.php"; ?>
                             </form>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
-                    <?php include "../edit_notif.php"; ?>
-                    <?php include "../added_notif.php"; ?>
-                    <?php include "../delete_notif.php"; ?>
-                    <?php include "../duplicate_error.php"; ?>
+                    <?php include "../../pages1/edit_notif.php"; ?>
+                    <?php include "../../pages1/added_notif.php"; ?>
+                    <?php include "../../pages1/delete_notif.php"; ?>
+                    <?php include "../../pages1/duplicate_error.php"; ?>
                     <?php include "add_modal.php"; ?>
                     <?php include "function.php"; ?>
                 </div> <!-- /.row -->

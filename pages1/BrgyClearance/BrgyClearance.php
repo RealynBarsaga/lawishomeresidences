@@ -4,10 +4,10 @@
     <?php
     session_start();
     if (!isset($_SESSION['role'])) {
-        header("Location: ../../login.php");
+        header("Location: ../../pages1/login.php");
     } else {
         ob_start();
-        include('../head_css.php'); ?>
+        include('../../pages1/head_css.php'); ?>
         <head>
             <style>
                 .nav-tabs li a {
@@ -18,13 +18,13 @@
         <body class="skin-black">
             <!-- header logo: style can be found in header.less -->
             <?php
-            include "../connection.php";
+            include "../../pages1/connection.php";
             ?>
-            <?php include('../header.php'); ?>
+            <?php include('../../pages1/header.php'); ?>
 
             <div class="wrapper row-offcanvas row-offcanvas-left">
                 <!-- Left side column. contains the logo and sidebar -->
-                <?php include('../sidebar-left.php'); ?>
+                <?php include('../../pages1/sidebar-left.php'); ?>
 
                 <!-- Right side column. Contains the navbar and content of the page -->
                 <aside class="right-side">
@@ -100,19 +100,19 @@ while ($row = mysqli_fetch_array($squery)) {
                                         </div>
                                     </div>
 
-                                    <?php include "../deleteModal.php"; ?>
+                                    <?php include "../../pages1/deleteModal.php"; ?>
 
                                     </form>
                                     </div><!-- /.box-body -->
                                 </div><!-- /.box -->
 
-                                <?php include "../edit_notif.php"; ?>
+                                <?php include "../../pages1/edit_notif.php"; ?>
 
-                                <?php include "../added_notif.php"; ?>
+                                <?php include "../../pages1/added_notif.php"; ?>
 
-                                <?php include "../delete_notif.php"; ?>
+                                <?php include "../../pages1/delete_notif.php"; ?>
 
-                                <?php include "../duplicate_error.php"; ?>
+                                <?php include "../../pages1/duplicate_error.php"; ?>
 
                                 <?php include "add_modal.php"; ?>
 
@@ -122,7 +122,7 @@ while ($row = mysqli_fetch_array($squery)) {
                 </aside><!-- /.right-side -->
             </div><!-- ./wrapper -->
 
-            <?php include "../footer.php"; ?>
+            <?php include "../../pages1/footer.php"; ?>
 
             <script type="text/javascript">
                 $(function() {

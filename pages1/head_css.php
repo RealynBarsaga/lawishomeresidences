@@ -15,9 +15,9 @@
     <!-- AdminLTE Theme style -->
     <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <!-- DataTables -->
-    <link href="../../../css/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
     <!-- Select2 -->
-    <link href="../../../css/select2.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/select2.css" rel="stylesheet" type="text/css" />
     <!-- jQuery -->
-    <script src="../../../js/jquery-1.12.3.min.js" type="text/javascript"></script>
+    <script src="../../js/jquery-1.12.3.min.js" type="text/javascript"></script>
 </head>
