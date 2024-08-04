@@ -12,7 +12,7 @@
                 <input type="hidden" value="'.$row['pid'].'" name="hidden_id" id="hidden_id"/>
                 <div class="form-group">
                     <label>Resident: </label>
-                    <input class="form-control input-sm" type="text" value="'.$row['Name'].'" readonly/>
+                    <input class="form-control input-sm" type="text" value="'.$row['residentname'].'" readonly/>
                 </div>
                 <div class="form-group">
                     <label>Business Name: </label>

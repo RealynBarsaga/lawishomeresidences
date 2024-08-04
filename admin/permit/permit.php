@@ -74,12 +74,12 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $squery = mysqli_query($con, "SELECT *, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) AS Name, p.id AS pid FROM tblpermit p LEFT JOIN tblresident r ON r.id = p.id") or die('Error: ' . mysqli_error($con));
+                                                $squery = mysqli_query($con, "SELECT *, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) AS residentname, p.id AS pid FROM tblpermit p LEFT JOIN tblresident r ON r.id = p.id") or die('Error: ' . mysqli_error($con));
                                                 while ($row = mysqli_fetch_array($squery)) {
                                                     echo '
                                                     <tr>
                                                         <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['pid'] . '" /></td>
-                                                        <td>' . $row['Name'] . '</td>
+                                                        <td>' . $row['residentname'] . '</td>
                                                         <td>' . $row['businessName'] . '</td>
                                                         <td>' . $row['businessAddress'] . '</td>
                                                         <td>' . $row['typeOfBusiness'] . '</td>
