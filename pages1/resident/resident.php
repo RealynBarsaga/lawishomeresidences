@@ -4,10 +4,10 @@
 <?php
 session_start();
 if (!isset($_SESSION['userid'])) {
-    header('Location: ../../pages1/login.php');
+    header('Location: ../../login.php');
     exit; // Ensure no further execution after redirect
 }
-include('../../pages1/head_css.php'); // Removed ob_start() since it's not needed here
+include('../head_css.php'); // Removed ob_start() since it's not needed here
 ?>
 
 <style>
@@ -17,11 +17,11 @@ include('../../pages1/head_css.php'); // Removed ob_start() since it's not neede
 </style>
 
 <body class="skin-black">
-    <?php include "../../pages1/connection.php"; ?>
-    <?php include('../../pages1/header.php'); ?>
+    <?php include "../connection.php"; ?>
+    <?php include('../header.php'); ?>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
-        <?php include('../../pages1/sidebar-left.php'); ?>
+        <?php include('../sidebar-left.php'); ?>
 
         <aside class="right-side">
             <section class="content-header">
@@ -84,14 +84,14 @@ include('../../pages1/head_css.php'); // Removed ob_start() since it's not neede
                                         ?>
                                     </tbody>
                                 </table>
-                                <?php include "../../pages1/deleteModal.php"; ?>
+                                <?php include "../deleteModal.php"; ?>
                             </form>
                         </div>
                     </div>
-                    <?php include "../../pages1/edit_notif.php"; ?>
-                    <?php include "../../pages1/duplicate_error.php"; ?>
-                    <?php include "../../pages1/added_notif.php"; ?>
-                    <?php include "../../pages1/delete_notif.php"; ?>
+                    <?php include "../edit_notif.php"; ?>
+                    <?php include "../duplicate_error.php"; ?>
+                    <?php include "../added_notif.php"; ?>
+                    <?php include "../delete_notif.php"; ?>
                     <?php include "add_modal.php"; ?>
                     <?php include "function.php"; ?>
                 </div>
@@ -99,7 +99,7 @@ include('../../pages1/head_css.php'); // Removed ob_start() since it's not neede
         </aside>
     </div>
 
-    <?php include "../../pages1/footer.php"; ?>
+    <?php include "../footer.php"; ?>
 
     <script type="text/javascript">
     $(function() {
