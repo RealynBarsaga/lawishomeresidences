@@ -25,7 +25,7 @@ if (isset($_POST['btn_login'])) {
                     header('Location: pages/household/household.php');
                     break;
                 case 2:
-                    header('Location: pages1/household/household.php');
+                    header('Location: pagesbun/household/household.php');
                     break;
                 // Add more cases if needed
                 default:
