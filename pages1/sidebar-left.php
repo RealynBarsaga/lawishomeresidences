@@ -6,12 +6,12 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                         <ul class="sidebar-menu">
                             <li>
-                                <a href="../../../pages1/household/household.php">
+                                <a href="../pages1/household/household.php">
                                     <i class="fa fa-home"></i> <span>Household</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="../../../pages1/resident/resident.php">
+                                <a href="../pages1/resident/resident.php">
                                     <i class="fa fa-users"></i> <span>Resident</span>
                                 </a>
                             </li>
