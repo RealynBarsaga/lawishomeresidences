@@ -64,7 +64,7 @@
                                                       <td><a href="../resident/resident.php?resident=' . $row['householdno'] . '">' . $row['householdno'] . '</a></td>
                                                       <td>' . $row['name'] . '</td>
                                                       <td>' . $row['totalhousehold'] . '</td>
-                                                       <td>' . $row['barangay'] . '</td>
+                                                      <td>' . $row['barangay'] . '</td>
                                                   </tr>';
                                               }
                                             ?>

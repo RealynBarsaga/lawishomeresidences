@@ -14,7 +14,7 @@ if(isset($_POST['btn_add'])){
 
     if(isset($_SESSION['role'])){
         $action = 'Added Permit with business name of '.$txt_busname;
-        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('".$_SESSION['role']."', NOW(), '".$action."')");
+        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('Administrator', NOW(), '".$action."')");
     }
 
     if($num_rows == 0){
@@ -104,7 +104,7 @@ if(isset($_POST['btn_save']))
 
     if(isset($_SESSION['role'])){
         $action = 'Update Permit with business name of '.$txt_edit_busname;
-        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('".$_SESSION['role']."', NOW(), '".$action."')");
+        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('Administrator', NOW(), '".$action."')");
     }
 
     if($update_query == true){

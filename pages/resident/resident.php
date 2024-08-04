@@ -1,14 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
 <html>
 
 <?php
-    session_start();
-    if (!isset($_SESSION['userid'])) {
-        header('Location: ../../login.php');
-        exit; // Ensure no further execution after redirect
-    }
-    include('../head_css.php'); // Removed ob_start() since it's not needed here
+session_start();
+if (!isset($_SESSION['userid'])) {
+    header('Location: ../../login.php');
+    exit; // Ensure no further execution after redirect
+}
+include('../head_css.php'); // Removed ob_start() since it's not needed here
 ?>
 
 <style>
@@ -46,10 +45,13 @@
                                 <table id="table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="width: 90px;">
-                                               <input type="checkbox" class="cbxMain" onchange="checkMain(this)" style="margin-left: auto;" /> Select All
+                                            <th style="width: 100px; text-align: left;">
+                                                <label>
+                                                    <input type="checkbox" class="cbxMain" onchange="checkMain(this)" style="vertical-align: middle;" />
+                                                    <span style="vertical-align: -webkit-baseline-middle; margin-left: 5px; font-size: 13px;">Select All</span>
+                                                </label>
                                             </th>
-                                            <th>Image</th>
+                                            <th style="width: 15.6667px;">Image</th>
                                             <th>Resident Name</th>
                                             <th>Age</th>
                                             <th>Gender</th>
@@ -64,15 +66,15 @@
                                         while ($row = mysqli_fetch_array($squery)) {
                                             echo '
                                             <tr>
-                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="'.$row['id'].'" /></td>
-                                                <td><img src="image/'.basename($row['image']).'" style="width:60px;height:60px;"/></td>
-                                                <td>'.$row['cname'].'</td>
-                                                <td>'.$row['age'].'</td>
-                                                <td>'.$row['gender'].'</td>
-                                                <td>'.$row['formerAddress'].'</td>
-                                                <td>'.$row['purok'].'</td>
+                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['id'] . '" /></td>
+                                                <td><img src="image/' . basename($row['image']) . '" style="width:60px;height:60px;"/></td>
+                                                <td>' . $row['cname'] . '</td>
+                                                <td>' . $row['age'] . '</td>
+                                                <td>' . $row['gender'] . '</td>
+                                                <td>' . $row['formerAddress'] . '</td>
+                                                <td>' . $row['purok'] . '</td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm" data-target="#editModal'.$row['id'].'" data-toggle="modal">
+                                                    <button class="btn btn-primary btn-sm" data-target="#editModal' . $row['id'] . '" data-toggle="modal">
                                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                                     </button>
                                                 </td>

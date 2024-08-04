@@ -9,7 +9,7 @@ if(isset($_POST['btn_add'])){
 
     if(isset($_SESSION['role'])){
         $action = 'Added Official named '.$txt_cname;
-        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('".$_SESSION['role']."', NOW(), '".$action."')");
+        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Administrator', NOW(), '".$action."')");
     }
 
     // Check if the same name already exists
@@ -44,7 +44,7 @@ if(isset($_POST['btn_save']))
 
     if(isset($_SESSION['role'])){
         $action = 'Update Official named '.$txt_edit_cname;
-        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('".$_SESSION['role']."', NOW(), '".$action."')");
+        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('Administrator', NOW(), '".$action."')");
     }
 
     $update_query = mysqli_query($con,"UPDATE tblofficial set 

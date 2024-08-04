@@ -4,9 +4,9 @@ if(isset($_POST['btn_add'])){
     $txt_uname = $_POST['txt_uname'];
     $txt_pass = $_POST['txt_pass'];
 
-    if(isset($_SESSION['role'])){
-        $action = 'Added Staff with name of '.$txt_name;
-        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('".$_SESSION['role']."', NOW(), '".$action."')");
+    if (isset($_SESSION['role'])) {
+        $action = 'Added Staff with name of ' . $txt_name;
+        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Administrator', NOW(), '" . $action . "')");
     }
 
     $su = mysqli_query($con,"SELECT * from tblstaff where username = '".$txt_uname."' ");
@@ -37,7 +37,7 @@ if(isset($_POST['btn_save']))
 
     if(isset($_SESSION['role'])){
         $action = 'Update Staff with name of '.$txt_edit_name;
-        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('".$_SESSION['role']."', NOW(), '".$action."')");
+        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('Administrator', NOW(), '".$action."')");
     }
 
     $su = mysqli_query($con,"SELECT * from tblstaff where username = '".$txt_edit_uname."' ");
@@ -73,6 +73,4 @@ if(isset($_POST['btn_delete']))
         }
     }
 }
-
-
 ?>

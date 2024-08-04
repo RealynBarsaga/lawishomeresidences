@@ -5,8 +5,6 @@
 
 session_start();
 $error = false;
-//$success = false;
-//$redirect_url = '';
 
 if (isset($_POST['btn_login'])) {
     include "connection.php";
@@ -22,21 +20,12 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['role'] = "Administrator";
             $_SESSION['userid'] = $row['id'];
             $_SESSION['username'] = $row['username'];
-            //$_SESSION['login_success'] = true;
-            //$_SESSION['redirect'] = 'pages/dashboard/dashboard.php';
         }
         header('location: ../admin/dashboard/dashboard.php');
         exit();
     } else {
         $error = true;
     }
-    // Check for login success
-    //if (isset($_SESSION['login_success']) && $_SESSION['login_success']) {
-     // $success = true;
-     // $redirect_url = $_SESSION['redirect'];
-    //  unset($_SESSION['login_success']);
-    //  unset($_SESSION['redirect']);
-    //}
 }
 ?>
 <head>
