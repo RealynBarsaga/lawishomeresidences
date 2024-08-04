@@ -7,7 +7,7 @@
         header('Location: ../../login.php');
         exit; // Ensure no further execution after redirect
     }
-    include('../../../head_css.php'); // Removed ob_start() since it's not needed here
+    include('../../pages1/head_css.php'); // Removed ob_start() since it's not needed here
     ?>
 </head>
 <body class="skin-black">
