@@ -12,7 +12,7 @@ if(isset($_POST['btn_add'])){
     $date = date('Y-m-d H:i:s');
     
 
-    $query = mysqli_query($con,"SELECT * from tblpermit where name = ".$ddl_resident." ");
+    $query = mysqli_query($con,"SELECT * from tblpermit where Name = ".$ddl_resident." ");
     $num_rows = mysqli_num_rows($query);
 
     if(isset($_SESSION['role'])){
@@ -21,7 +21,7 @@ if(isset($_POST['btn_add'])){
     }
 
     if($num_rows == 0){
-         $query = mysqli_query($con,"INSERT INTO tblpermit (name,businessName,businessAddress,typeOfBusiness,orNo,samount,dateRecorded,recordedBy) 
+         $query = mysqli_query($con,"INSERT INTO tblpermit (Name,businessName,businessAddress,typeOfBusiness,orNo,samount,dateRecorded,recordedBy) 
         values ('$ddl_resident', '$txt_busname', '$txt_busadd', '$ddl_tob', '$txt_ornum', '$txt_amount', '$date', '".$_SESSION['username']."') ") or die('Error: ' . mysqli_error($con));
         if($query == true)
         {
