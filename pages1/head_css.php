@@ -13,7 +13,7 @@
     <link href="../js/morris/morris-0.4.3.min.css" rel="stylesheet" type="text/css" />
 
     <!-- AdminLTE Theme style -->
-    <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css" />
+    <link href="../../css/AdminLTE.css" rel="stylesheet" type="text/css" />
     <!-- DataTables -->
     <link href="../css/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
     <!-- Select2 -->
