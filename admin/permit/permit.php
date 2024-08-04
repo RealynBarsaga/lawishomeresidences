@@ -79,11 +79,11 @@
                                                     echo '
                                                     <tr>
                                                         <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['pid']) . '" /></td>
-                                                        <td>' . htmlspecialchars($row['Name']) . '</td>
-                                                        <td>' . htmlspecialchars($row['businessName']) . '</td>
-                                                        <td>' . htmlspecialchars($row['businessAddress']) . '</td>
-                                                        <td>' . htmlspecialchars($row['typeOfBusiness']) . '</td>
-                                                        <td>' . htmlspecialchars($row['orNo']) . '</td>
+                                                        <td>' . $row['Name'] . '</td>
+                                                        <td>' . $row['businessName'] . '</td>
+                                                        <td>' . $row['businessAddress'] . '</td>
+                                                        <td>' . $row['typeOfBusiness'] . '</td>
+                                                        <td>' . $row['orNo'] . '</td>
                                                         <td>₱ ' . number_format($row['samount'], 2) . '</td>
                                                         <td>
                                                             <button class="btn btn-primary btn-sm" data-target="#editModal' . $row['pid'] . '" data-toggle="modal">
