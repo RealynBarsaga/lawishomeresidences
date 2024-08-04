@@ -7,17 +7,17 @@
         header('Location: ../../pages1/login.php');
         exit; // Ensure no further execution after redirect
     }
-    include('../../pages1/head_css.php'); // Removed ob_start() since it's not needed here
+    include('../../head_css.php'); // Removed ob_start() since it's not needed here
     ?>
 </head>
 <body class="skin-black">
     <!-- header logo: style can be found in header.less -->
-    <?php include "../../pages1/connection.php"; ?>
-    <?php include('../../pages1/header.php'); ?>
+    <?php include "../../connection.php"; ?>
+    <?php include('../../header.php'); ?>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <!-- Left side column. contains the logo and sidebar -->
-        <?php include('../../pages1/sidebar-left.php'); ?>
+        <?php include('../../sidebar-left.php'); ?>
 
         <!-- Right side column. Contains the navbar and content of the page -->
         <aside class="right-side">
