@@ -96,7 +96,7 @@ if(isset($_POST['btn_save'])) {
 
 if(isset($_POST['btn_delete']) && isset($_POST['chk_delete'])) {
     foreach($_POST['chk_delete'] as $value) {
-        $delete_query = mysqli_query($con, "DELETE FROM tblpermit WHERE Name = '$value'") or die('Error: ' . mysqli_error($con));
+        $delete_query = mysqli_query($con, "DELETE FROM tblpermit WHERE id = '$value'") or die('Error: ' . mysqli_error($con));
 
         if($delete_query) {
             redirect_with_session('delete', 1);
