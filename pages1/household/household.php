@@ -7,17 +7,17 @@
         header('Location: ../pages1/login.php');
         exit; // Ensure no further execution after redirect
     }
-    include('../../head_css.php'); // Removed ob_start() since it's not needed here
+    include('../../pages1/head_css.php'); // Removed ob_start() since it's not needed here
     ?>
 </head>
 <body class="skin-black">
     <!-- header logo: style can be found in header.less -->
-    <?php include "../../connection.php"; ?>
-    <?php include('../../header.php'); ?>
+    <?php include "../../pages1/connection.php"; ?>
+    <?php include('../../pages1/header.php'); ?>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <!-- Left side column. contains the logo and sidebar -->
-        <?php include('../../sidebar-left.php'); ?>
+        <?php include('../../pages1/sidebar-left.php'); ?>
 
         <!-- Right side column. Contains the navbar and content of the page -->
         <aside class="right-side">
@@ -84,14 +84,14 @@
                                     </tbody>
                                 </table>
 
-                                <?php include "../../deleteModal.php"; ?>
+                                <?php include "../../pages1/deleteModal.php"; ?>
                             </form>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
-                    <?php include "../../edit_notif.php"; ?>
-                    <?php include "../../added_notif.php"; ?>
-                    <?php include "../../delete_notif.php"; ?>
-                    <?php include "../../duplicate_error.php"; ?>
+                    <?php include "../../pages1/edit_notif.php"; ?>
+                    <?php include "../../pages1/added_notif.php"; ?>
+                    <?php include "../../pages1/delete_notif.php"; ?>
+                    <?php include "../../pages1/duplicate_error.php"; ?>
                     <?php include "add_modal.php"; ?>
                     <?php include "function.php"; ?>
                 </div> <!-- /.row -->
