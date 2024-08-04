@@ -1,4 +1,6 @@
 <?php
+ob_start();
+
 if(isset($_POST['btn_add'])){
     $ddl_resident = $_POST['ddl_resident'];
     $txt_busname = $_POST['txt_busname'];
@@ -24,11 +26,14 @@ if(isset($_POST['btn_add'])){
         {
             $_SESSION['added'] = 1;
             header ("location: ".$_SERVER['REQUEST_URI']);
+            ob_end_flush();
+            
         }   
     }
     else{
         $_SESSION['duplicate'] = 1;
         header ("location: ".$_SERVER['REQUEST_URI']);
+        ob_end_flush();
     } // ini
 
     /*if($_SESSION['role'])
@@ -64,6 +69,7 @@ if(isset($_POST['btn_req'])){
     if($reqquery == true)
     {
         header ("location: ".$_SERVER['REQUEST_URI']);
+        ob_end_flush();
     }   
 }
 
@@ -77,6 +83,7 @@ if(isset($_POST['btn_approve']))
 
     if($approve_query == true){
         header("location: ".$_SERVER['REQUEST_URI']);
+        ob_end_flush();
     }
 }
 
@@ -88,6 +95,7 @@ if(isset($_POST['btn_disapprove']))
 
     if($disapprove_query == true){
         header("location: ".$_SERVER['REQUEST_URI']);
+        ob_end_flush();
     }
 }
 
@@ -110,6 +118,7 @@ if(isset($_POST['btn_save']))
     if($update_query == true){
         $_SESSION['edited'] = 1;
         header("location: ".$_SERVER['REQUEST_URI']);
+        ob_end_flush();
     }
 }
 
@@ -125,6 +134,7 @@ if(isset($_POST['btn_delete']))
             {
                 $_SESSION['delete'] = 1;
                 header("location: ".$_SERVER['REQUEST_URI']);
+                ob_end_flush();
             }
         }
     }
