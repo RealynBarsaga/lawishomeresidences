@@ -1,3 +1,0 @@
-# Deny access to the /database directory 
-RewriteEngine On 
-RewriteRule ^database/ - [F,L]
