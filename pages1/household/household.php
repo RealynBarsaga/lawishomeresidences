@@ -4,15 +4,15 @@
     <?php
     session_start();
     if (!isset($_SESSION['userid'])) {
-        header('Location: ../../login.php');
+        header('Location: ../../pages1/login.php');
         exit; // Ensure no further execution after redirect
     }
-    include('../../pages1/head_css.php');
+    include('../../pages1/head_css.php'); // Load necessary CSS files
     ?>
 </head>
 <body class="skin-black">
     <!-- header logo: style can be found in header.less -->
-    <?php include "connection.php"; ?>
+    <?php include "../../connection.php"; ?>
     <?php include('../../pages1/header.php'); ?>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
