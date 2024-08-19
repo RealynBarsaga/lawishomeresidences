@@ -1,5 +1,5 @@
 <!-- ========================= MODAL ======================= -->
-            <div id="addModal" class="modal fade">
+<div id="addModal" class="modal fade">
             <form method="post">
               <div class="modal-dialog modal-sm" style="width:300px !important;">
                 <div class="modal-content">
@@ -11,19 +11,9 @@
                         
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="form-group">
-                                    <label>Resident:</label>
-                                    <select name="ddl_resident" class="select2 form-control input-sm" style="width:100%;">
-                                        <option selected="" disabled="">-- Select Resident -- </option>
-                                        <?php
-                                            $squery = mysqli_query($con,"SELECT id,lname,fname,mname from tblresident");
-                                            while ($row = mysqli_fetch_array($squery)){
-                                                echo '
-                                                    <option value="'.$row['id'].'">'.$row['lname'].', '.$row['fname'].' '.$row['mname'].'</option>    
-                                                ';
-                                            }
-                                        ?>
-                                    </select>
+                            <div class="form-group">
+                                    <label>Name:</label>
+                                    <input name="txt_name" class="form-control input-sm" type="text" placeholder="Name"/>
                                 </div>
                                 <div class="form-group">
                                     <label>Business Name:</label>

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
 <head>
     <?php
     session_start();
@@ -50,10 +49,6 @@
                             </div>
                         </div><!-- /.box-header -->
                         <div class="box-body table-responsive">
-                            <!-- <ul class="nav nav-tabs" id="myTab">
-                                <li class="active"><a data-target="#approved" data-toggle="tab">Approved</a></li>
-                                <li><a data-target="#disapproved" data-toggle="tab">Disapproved</a></li>
-                            </ul> -->
                             <form method="post">
                                 <div class="tab-content">
                                     <div id="approved" class="tab-pane active in">
@@ -63,7 +58,7 @@
                                                     <th style="width: 20px !important;">
                                                         <input type="checkbox" name="chk_delete[]" class="cbxMain" onchange="checkMain(this)"/>
                                                     </th>
-                                                    <th>Resident Name</th>
+                                                    <th>Name</th>
                                                     <th>Business Name</th>
                                                     <th>Business Address</th>
                                                     <th>Type of Business</th>
@@ -74,19 +69,31 @@
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                $squery = mysqli_query($con, "SELECT *, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) AS residentname, p.id AS pid FROM tblpermit p LEFT JOIN tblresident r ON r.id = p.id") or die('Error: ' . mysqli_error($con));
+                                                // Execute the query to select data from the tblpermit table
+                                                $squery = mysqli_query($con, " 
+                                                    SELECT
+                                                        p.name, 
+                                                        p.businessName, 
+                                                        p.businessAddress, 
+                                                        p.typeOfBusiness, 
+                                                        p.orNo, 
+                                                        p.samount,
+                                                        p.id
+                                                    FROM tblpermit AS p");
+
+                                                // Loop through the results and generate table rows
                                                 while ($row = mysqli_fetch_array($squery)) {
                                                     echo '
                                                     <tr>
-                                                        <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['pid'] . '" /></td>
-                                                        <td>' . $row['residentname'] . '</td>
+                                                        <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['id'] . '" /></td>
+                                                        <td>' . $row['name'] . '</td>
                                                         <td>' . $row['businessName'] . '</td>
                                                         <td>' . $row['businessAddress'] . '</td>
                                                         <td>' . $row['typeOfBusiness'] . '</td>
                                                         <td>' . $row['orNo'] . '</td>
                                                         <td>₱ ' . number_format($row['samount'], 2) . '</td>
                                                         <td>
-                                                            <button class="btn btn-primary btn-sm" data-target="#editModal' . $row['pid'] . '" data-toggle="modal">
+                                                            <button class="btn btn-primary btn-sm" data-target="#editModal' . $row['id'] . '" data-toggle="modal">
                                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                                             </button>
                                                         </td>
@@ -99,7 +106,6 @@
                                         </table>
                                     </div>
                                 </div>
-
                                 <?php include "../deleteModal.php"; ?>
                             </form>
                         </div><!-- /.box-body -->

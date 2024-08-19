@@ -1,6 +1,3 @@
-<?php
-ob_start(); // Start output buffering at the very top of the script
-?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +34,9 @@ ob_start(); // Start output buffering at the very top of the script
 </head>
 <body>
 <?php
+
+ob_start(); // Start output buffering at the very top of the script
+
 // Fetch the total number of notifications
 $countQuery = mysqli_query($con, "SELECT COUNT(*) AS count FROM tbllogs");
 $countResult = mysqli_fetch_assoc($countQuery);

@@ -13,7 +13,22 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Name:</label>
-                                    <input name="txt_name" class="form-control input-sm" type="text" placeholder="Ex. Brgy.Ploblacion"/>
+                                    <select name="txt_name" class="form-control input-sm">
+                                        <option selected="" disabled="">Select Barangay</option>
+                                        <option value="Brgy.Tabagak">Brgy.Tabagak</option>
+                                        <option value="Brgy.Bunakan">Brgy.Bunakan</option>
+                                        <option value="Brgy.Kodia">Brgy.Kodia</option>
+                                        <option value="Brgy.Talangnan">Brgy.Talangnan</option>
+                                        <option value="Brgy.Maalat">Brgy.Maalat</option>
+                                        <option value="Brgy.Pili">Brgy.Pili</option>
+                                        <option value="Brgy.Kaongkod">Brgy.Kaongkod</option>
+                                        <option value="Brgy.Mancilang">Brgy.Mancilang</option>
+                                        <option value="Brgy.Kangwayan">Brgy.Kangwayan</option>
+                                        <option value="Brgy.Tugas">Brgy.Tugas</option>
+                                        <option value="Brgy.Malbago">Brgy.Malbago</option>
+                                        <option value="Brgy.Tarong">Brgy.Tarong</option>
+                                        <option value="Brgy.San Agustin">Brgy.San Agustin</option>
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Username:</label>

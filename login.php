@@ -10,7 +10,7 @@ if (isset($_POST['btn_login'])) {
     $username = $_POST['txt_username'];
     $password = $_POST['txt_password'];
 
-    $staff = mysqli_query($con, "SELECT * FROM tblstaff WHERE username = '$username' AND password = '$password'");
+    $staff = mysqli_query($con, "SELECT * from tblstaff where username = '$username' and password = '$password' ");
     $numrow_staff = mysqli_num_rows($staff);
 
     if ($numrow_staff > 0) {
@@ -19,20 +19,9 @@ if (isset($_POST['btn_login'])) {
             $_SESSION['staff'] = $row['name'];
             $_SESSION['userid'] = $row['id'];
             $_SESSION['username'] = $row['username'];
-
-            switch ($row['id']) {
-                case 1:
-                    header('Location: pages/household/household.php');
-                    break;
-                case 2:
-                    header('Location: pages1/household/household.php');
-                    break;
-                // Add more cases if needed
-                default:
-                    $error = true;
-                    break;
-            }
         }
+        /* header('location: pages/household/household.php'); */
+        header('location: pages/resident/resident.php');
         exit();
     } else {
         $error = true;

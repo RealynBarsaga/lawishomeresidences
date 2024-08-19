@@ -7,18 +7,21 @@ if (!isset($_SESSION['userid'])) {
     header('Location: ../../login.php');
     exit; // Ensure no further execution after redirect
 }
-include('../head_css.php'); // Removed ob_start() since it's not needed here
+
+include('../head_css.php'); 
 ?>
 
 <style>
-.input-size {
-    width: 418px;
-}
+    .input-size {
+        width: 418px;
+    }
 </style>
 
 <body class="skin-black">
-    <?php include "../connection.php"; ?>
-    <?php include('../header.php'); ?>
+    <?php 
+    include "../connection.php"; 
+    include('../header.php'); 
+    ?>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <?php include('../sidebar-left.php'); ?>
@@ -61,39 +64,82 @@ include('../head_css.php'); // Removed ob_start() since it's not needed here
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        $squery = mysqli_query($con, "SELECT id, CONCAT(lname, ', ', fname, ' ', mname) as cname, age, gender, formerAddress, purok, image FROM tblresident ORDER BY lname, fname");
+                                    <?php
+                                    /* $squery = mysqli_query($con, "SELECT id, CONCAT(lname, ', ', fname, ' ', mname) as cname, age, gender, formerAddress, purok, image FROM tblresident ORDER BY lname, fname");
+                                    while ($row = mysqli_fetch_array($squery)) {
+                                        echo '
+                                        <tr>
+                                            <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['id'] . '" /></td>
+                                            <td><img src="image/' . basename($row['image']) . '" style="width:60px;height:60px;"/></td>
+                                            <td>' . $row['cname'] . '</td>
+                                            <td>' . $row['age'] . '</td>
+                                            <td>' . $row['gender'] . '</td>
+                                            <td>' . $row['formerAddress'] . '</td>
+                                            <td>' . $row['purok'] . '</td>
+                                            <td>
+                                                <button class="btn btn-primary btn-sm" data-target="#editModal' . $row['id'] . '" data-toggle="modal">
+                                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                                </button>
+                                            </td>
+                                        </tr>';
+                                        include "edit_modal.php";
+                                    }  */
+                                    // Check if the 'zone' session variable is set
+                                    if (!isset($_SESSION['zone'])) {
+                                        $_SESSION['zone'] = 'Tabagak'; // Set default zone
+                                    } else {
+                                        $_SESSION['zone'] = 'Bunakan'; // Set default zone
+                                    }
+
+                                    // Get the zone from the session
+                                    $zone = $_SESSION['zone'];
+
+                                    // Determine the table to use based on the zone
+                                    $table = $zone === 'Bunakan' ? 'tblbunakan' : 'tblresident';
+
+                                    // Prepare and execute the query to fetch data from the determined table
+                                    $squery = mysqli_query($con, "SELECT id, CONCAT(lname, ', ', fname, ' ', mname) as cname, age, gender, formerAddress, purok, image FROM $table ORDER BY lname, fname");
+
+                                    if ($squery) {
                                         while ($row = mysqli_fetch_array($squery)) {
                                             echo '
                                             <tr>
-                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['id'] . '" /></td>
-                                                <td><img src="image/' . basename($row['image']) . '" style="width:60px;height:60px;"/></td>
-                                                <td>' . $row['cname'] . '</td>
-                                                <td>' . $row['age'] . '</td>
-                                                <td>' . $row['gender'] . '</td>
-                                                <td>' . $row['formerAddress'] . '</td>
-                                                <td>' . $row['purok'] . '</td>
+                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id']) . '" /></td>
+                                                <td><img src="image/' . htmlspecialchars(basename($row['image'])) . '" style="width:60px;height:60px;"/></td>
+                                                <td>' . htmlspecialchars($row['cname']) . '</td>
+                                                <td>' . htmlspecialchars($row['age']) . '</td>
+                                                <td>' . htmlspecialchars($row['gender']) . '</td>
+                                                <td>' . htmlspecialchars($row['formerAddress']) . '</td>
+                                                <td>' . htmlspecialchars($row['purok']) . '</td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm" data-target="#editModal' . $row['id'] . '" data-toggle="modal">
+                                                    <button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id']) . '" data-toggle="modal">
                                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                                     </button>
                                                 </td>
                                             </tr>';
                                             include "edit_modal.php";
                                         }
-                                        ?>
+                                    } else {
+                                        echo 'Error: ' . mysqli_error($con);
+                                    }
+
+                                    // Close the query
+                                    mysqli_free_result($squery);
+                                    ?>
                                     </tbody>
                                 </table>
                                 <?php include "../deleteModal.php"; ?>
                             </form>
                         </div>
                     </div>
-                    <?php include "../edit_notif.php"; ?>
-                    <?php include "../duplicate_error.php"; ?>
-                    <?php include "../added_notif.php"; ?>
-                    <?php include "../delete_notif.php"; ?>
-                    <?php include "add_modal.php"; ?>
-                    <?php include "function.php"; ?>
+                    <?php 
+                    include "../edit_notif.php"; 
+                    include "../duplicate_error.php"; 
+                    include "../added_notif.php"; 
+                    include "../delete_notif.php"; 
+                    include "add_modal.php"; 
+                    include "function.php"; 
+                    ?>
                 </div>
             </section>
         </aside>
