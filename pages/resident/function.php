@@ -1,6 +1,4 @@
 <?php
-include('../connection.php');
-
 // Handle form submission for adding a resident
 if (isset($_POST['btn_add'])) {
     $txt_lname = $_POST['txt_lname'];
@@ -39,10 +37,10 @@ if (isset($_POST['btn_add'])) {
 
     if (isset($_SESSION['role'])) {
         $action = 'Added Resident named of ' . $txt_fname . ' ' . $txt_mname . ' ' . $txt_lname;
-        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('" . $_SESSION['staff'] . "', NOW(), '" . $action . "')");
+        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Brgy." . $_SESSION['staff'] . "', NOW(), '" . $action . "')");
     }
 
-    $su = mysqli_query($con, "SELECT * FROM tblresident WHERE lname='$txt_lname' AND fname='$txt_fname' AND mname='$txt_mname'");
+    $su = mysqli_query($con, "SELECT * FROM tbltabagak WHERE lname='$txt_lname' AND fname='$txt_fname' AND mname='$txt_mname'");
     $ct = mysqli_num_rows($su);
 
     if ($ct == 0) {
@@ -50,7 +48,7 @@ if (isset($_POST['btn_add'])) {
             if (($imagetype == "image/jpeg" || $imagetype == "image/png" || $imagetype == "image/bmp") && $size <= 2048000) {
                 if (move_uploaded_file($temp, 'image/' . $image)) {
                     $txt_image = $image;
-                    $query = mysqli_query($con, "INSERT INTO tblresident (
+                    $query = mysqli_query($con, "INSERT INTO tbltabagak (
                                         lname,
                                         fname,
                                         mname,
@@ -101,7 +99,7 @@ if (isset($_POST['btn_add'])) {
             }
         } else {
             $txt_image = 'default.png';
-            $query = mysqli_query($con, "INSERT INTO tblresident (
+            $query = mysqli_query($con, "INSERT INTO tbltabagak (
                                         lname,
                                         fname,
                                         mname,
@@ -185,7 +183,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_save'])) {
         $target_file = $target_dir . basename($_FILES["txt_edit_image"]["name"]);
         move_uploaded_file($_FILES["txt_edit_image"]["tmp_name"], $target_file);
     } else {
-        $edit_query = mysqli_query($con, "SELECT image FROM tblresident WHERE id='$id'");
+        $edit_query = mysqli_query($con, "SELECT image FROM tbltabagak WHERE id='$id'");
         $erow = mysqli_fetch_array($edit_query);
         $image = $erow['image'];
     }
@@ -197,11 +195,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_save'])) {
     // Log action
     if (isset($_SESSION['role'])) {
         $action = 'Update Resident info of ' . $fname . ' ' . $mname . ' ' . $lname;
-        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('" . $_SESSION['staff'] . "', NOW(), '" . $action . "')");
+        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Brgy." . $_SESSION['staff'] . "', NOW(), '" . $action . "')");
     }
 
     // Update resident's information
-    $update_query = mysqli_query($con, "UPDATE tblresident SET 
+    $update_query = mysqli_query($con, "UPDATE tbltabagak SET 
               lname = '$lname', 
               fname = '$fname', 
               mname = '$mname', 
@@ -236,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_save'])) {
 if (isset($_POST['btn_delete'])) {
     if (isset($_POST['chk_delete'])) {
         foreach ($_POST['chk_delete'] as $value) {
-            $delete_query = mysqli_query($con, "DELETE FROM tblresident WHERE id = '$value' ") or die('Error: ' . mysqli_error($con));
+            $delete_query = mysqli_query($con, "DELETE FROM tbltabagak WHERE id = '$value' ") or die('Error: ' . mysqli_error($con));
 
             if ($delete_query == true) {
                 $_SESSION['delete'] = 1;

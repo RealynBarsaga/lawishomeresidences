@@ -1,10 +1,55 @@
+<?php
+// Start output buffering and session
+ob_start();
+
+// Database connection (assuming $con is the database connection)
+require_once('connection.php');
+
+// Fetch the total number of notifications
+$countQuery = mysqli_query($con, "SELECT COUNT(*) AS count FROM tbllogs");
+$countResult = mysqli_fetch_assoc($countQuery);
+$notificationCount = $countResult['count'];
+
+// Fetch notifications
+$current_time = time();
+$new_notifications = [];
+$earlier_notifications = [];
+
+$squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
+while ($notif = mysqli_fetch_assoc($squery)) {
+    $notif_time = strtotime($notif['logdate']);
+    $is_new = ($current_time - $notif_time) <= 86400; // 86400 seconds in a day
+    
+    if ($is_new) {
+        $new_notifications[] = $notif;
+    } else {
+        $earlier_notifications[] = $notif;
+    }
+}
+
+// Handle profile update
+if (isset($_POST['btn_saveeditProfile'])) {
+    $username = mysqli_real_escape_string($con, $_POST['txt_username']);
+    $password = mysqli_real_escape_string($con, password_hash(htmlspecialchars(stripslashes(trim($_POST['txt_password']))), PASSWORD_DEFAULT));
+    
+    $updadmin = mysqli_query($con, "UPDATE tbluser SET username = '$username', password = '$password' WHERE id = '".mysqli_real_escape_string($con, $_SESSION['userid'])."' ");
+    if ($updadmin) {
+        header("Location: " . $_SERVER['REQUEST_URI']);
+        exit();
+    } else {
+        echo "<script>alert('Error updating profile. Please try again.');</script>";
+    }
+}
+?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Madridejos Home Residence</title>
     <style>
         .footer {
-            margin-top: 20px;
+            margin-top: -1px;
             text-align: center;
         }
         .footer a {
@@ -20,30 +65,31 @@
             background-color: #f9f9f9;
             color: #333;
             padding: 7px;
+            margin: 11px;
             display: block;
-            max-width: 300px;
+            width: 296px;
+            margin-left: 1px;
             border-radius: 4px;
             word-wrap: break-word;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin-top: -8px;
         }
         .notification:hover {
             background-color: #e0e0e0;
         }
+        /* Styles for h2 to make the text smaller */
+        .dropdown-menu h2 {
+            font-size: 14px; /* Adjust this value as needed */
+            margin: 10px 0;
+            color: #333;
+            margin-left: 6px;
+        }
     </style>
 </head>
 <body>
-<?php
-
-ob_start(); // Start output buffering at the very top of the script
-
-// Fetch the total number of notifications
-$countQuery = mysqli_query($con, "SELECT COUNT(*) AS count FROM tbllogs");
-$countResult = mysqli_fetch_assoc($countQuery);
-$notificationCount = $countResult['count'];
-?>
 <header class="header">
-    <a href="../../admin/dashboard/dashboard.php" class="logo" style="font-size: 13px; font-family: Source Sans Pro, sans-serif;">
+    <a href="../../admin/dashboard/dashboard.php?page=dashboard" class="logo" style="font-size: 13px; font-family: Source Sans Pro, sans-serif;">
         Madridejos Home Residence
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
@@ -57,26 +103,47 @@ $notificationCount = $countResult['count'];
             <ul class="nav navbar-nav">
                 <li class="dropdown notifications-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="glyphicon glyphicon-bell"></i><span class="label label-warning"><?php echo htmlspecialchars($notificationCount); ?></span>
+                        <i class="glyphicon glyphicon-bell"></i>
+                        <span class="label label-warning"><?php echo htmlspecialchars($notificationCount); ?></span>
                     </a>
-                    <ul class="dropdown-menu">
+                    <ul class="dropdown-menu" style="width: 300px;">
                         <li class="header">You have <?php echo htmlspecialchars($notificationCount); ?> notifications</li>
                         <li>
                             <ul class="menu">
+                                <h2>New</h2>
                                 <?php
-                                // Fetch notifications from the database
-                                $squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
-                                while($notif = mysqli_fetch_assoc($squery)) {
-                                    $user = isset($notif['user']) ? htmlspecialchars($notif['user']) : 'Unknown user';
-                                    $action = isset($notif['action']) ? htmlspecialchars($notif['action']) : 'No action available';
-                                    echo '<li style="margin-bottom: 2px;">
-                                            <span class="notification">'.$user.'<br>'.$action.'</span>
-                                          </li>';
+                                if (!empty($new_notifications)) {
+                                    foreach ($new_notifications as $notif) {
+                                        $user = isset($notif['user']) ? htmlspecialchars($notif['user']) : 'Unknown user';
+                                        $logdate = isset($notif['logdate']) ? htmlspecialchars($notif['logdate']) : 'Unknown logdate';
+                                        $action = isset($notif['action']) ? htmlspecialchars($notif['action']) : 'No action available';
+                                        echo '<li style="margin-bottom: 2px;">
+                                                <span class="notification">'.$user.' ('.$logdate.')<br>'.$action.'</span>
+                                              </li>';
+                                    }
+                                } else {
+                                   /*  echo '<li>No new notifications.</li>'; */
+                                }
+                                ?>
+                                
+                                <h2>Earlier</h2>
+                                <?php
+                                if (!empty($earlier_notifications)) {
+                                    foreach ($earlier_notifications as $notif) {
+                                        $user = isset($notif['user']) ? htmlspecialchars($notif['user']) : 'Unknown user';
+                                        $logdate = isset($notif['logdate']) ? htmlspecialchars($notif['logdate']) : 'Unknown logdate';
+                                        $action = isset($notif['action']) ? htmlspecialchars($notif['action']) : 'No action available';
+                                        echo '<li style="margin-bottom: 2px;">
+                                                <span class="notification">'.$user.' ('.$logdate.')<br>'.$action.'</span>
+                                              </li>';
+                                    }
+                                } else {
+                                    /* echo '<li>No earlier notifications.</li>'; */
                                 }
                                 ?>
                             </ul>
                         </li>
-                        <li class="footer"><a href="../view_all_notifications.php">View all</a></li>
+                        <li class="footer"><a href="../view_all_notifications.php?page=notifications">View all</a></li>
                     </ul>
                 </li>
                 <li class="dropdown user user-menu">
@@ -101,6 +168,8 @@ $notificationCount = $countResult['count'];
         </div>
     </nav>
 </header>
+
+<!-- Edit Profile Modal -->
 <div id="editProfileModal" class="modal fade">
     <form method="post">
         <div class="modal-dialog modal-sm" style="width:300px !important;">
@@ -113,19 +182,19 @@ $notificationCount = $countResult['count'];
                     <div class="row">
                         <div class="col-md-12">
                             <?php
-                            $user = mysqli_query($con,"SELECT * FROM tbluser WHERE id = '".$_SESSION['userid']."' ");
-                            while($row = mysqli_fetch_array($user)) {
-                                echo '
-                                    <div class="form-group">
-                                        <label>Username:</label>
-                                        <input name="txt_username" id="txt_username" class="form-control input-sm" type="text" value="'.htmlspecialchars($row['username']).'" />
-                                    </div>
-                                    <div class="form-group">
-                                        <label>Password:</label>
-                                        <input name="txt_password" id="txt_password" class="form-control input-sm" type="password"  value="'.htmlspecialchars($row['password']).'"/>
-                                    </div>';
-                            }
-                            ?>    
+                                $user = mysqli_query($con, "SELECT * FROM tbluser WHERE id = '".$_SESSION['userid']."'");
+                                while ($row = mysqli_fetch_array($user)) {
+                                    echo '
+                                        <div class="form-group">
+                                            <label>Username:</label>
+                                            <input name="txt_username" id="txt_username" class="form-control input-sm" type="text" value="'.$row['username'].'" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Password:</label>
+                                            <input name="txt_password" id="txt_password" class="form-control input-sm" type="password"/>
+                                        </div>';
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -137,18 +206,60 @@ $notificationCount = $countResult['count'];
         </div>
     </form>
 </div>
-<?php
-if(isset($_POST['btn_saveeditProfile'])) {
-    $username = $_POST['txt_username'];
-    $password = $_POST['txt_password'];
 
-    $updadmin = mysqli_query($con,"UPDATE tbluser SET username = '$username', password = '$password' WHERE id = '".$_SESSION['userid']."' ");
-    if($updadmin) {
+<script>
+    // Handle dropdown toggle for notifications
+    document.querySelectorAll('.dropdown-toggle').forEach(function(dropdown) {
+        dropdown.addEventListener('click', function() {
+            var menu = this.nextElementSibling;
+            if (menu.style.display === 'block') {
+                menu.style.display = 'none';
+            } else {
+                menu.style.display = 'block';
+            }
+        });
+    });
+
+    // Close dropdown if clicked outside
+    window.onclick = function(event) {
+        if (!event.target.matches('.dropdown-toggle')) {
+            var dropdowns = document.getElementsByClassName('dropdown-menu');
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.style.display === 'block') {
+                    openDropdown.style.display = 'none';
+                }
+            }
+        }
+    };
+
+    // Initialize Bootstrap modal
+    document.querySelectorAll('.modal').forEach(function(modal) {
+        $(modal).modal({
+            backdrop: 'static',
+            keyboard: false
+        });
+    });
+</script>
+<?php
+if (isset($_POST['btn_saveeditProfile'])) {
+    $username = mysqli_real_escape_string($con, $_POST['txt_username']);
+    $password = mysqli_real_escape_string($con, password_hash(htmlspecialchars(stripslashes(trim($_POST['txt_password']))), PASSWORD_DEFAULT));
+
+    /* $hashedpassword = password_hash($password, PASSWORD_BCRYPT); */
+
+    // Consider hashing the password before storing it
+    $updadmin = mysqli_query($con, "UPDATE tbluser SET username = '$username', password = '$password' WHERE id = '".mysqli_real_escape_string($con, $_SESSION['userid'])."' ");
+
+
+    if ($updadmin) {
         header("Location: " . $_SERVER['REQUEST_URI']);
         exit();
+    } else {
+        echo "<script>alert('Error updating profile. Please try again.');</script>";
     }
 }
 ?>
-<?php ob_end_flush(); // Send the output buffer and turn off output buffering ?>
+
 </body>
 </html>

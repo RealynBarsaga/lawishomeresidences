@@ -1,6 +1,35 @@
+<style>
+    /* Container for the input group to ensure proper positioning */
+.form-group {
+    position: relative;
+}
+
+/* Style for the eye icon */
+.input-group-text {
+    position: absolute;
+    top: 70%;
+    right: 10px; /* Adjust as needed */
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 16px; /* Adjust size as needed */
+    color: #aaa; /* Light color for the icon */
+}
+
+/* Ensure input field has sufficient padding to avoid overlap with the eye icon */
+.form-control {
+    padding-right: 40px; /* Adjust based on icon size */
+}
+
+/* Optional: Add some styles for the form group to improve appearance */
+.form-group {
+    margin-bottom: 1rem; /* Space between form groups */
+}
+</style>
 <!-- ========================= MODAL ======================= -->
             <div id="addModal" class="modal fade">
-            <form method="post">
+            <form method="post" enctype="multipart/form-data">
               <div class="modal-dialog modal-sm" style="width:300px !important;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -12,33 +41,49 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
+                                    <label>Barangay Logo:</label>
+                                    <input name="logo" class="form-control input-sm" type="file" required/>
+                                </div>
+                                <div class="form-group">
                                     <label>Name:</label>
                                     <select name="txt_name" class="form-control input-sm">
                                         <option selected="" disabled="">Select Barangay</option>
-                                        <option value="Brgy.Tabagak">Brgy.Tabagak</option>
-                                        <option value="Brgy.Bunakan">Brgy.Bunakan</option>
-                                        <option value="Brgy.Kodia">Brgy.Kodia</option>
-                                        <option value="Brgy.Talangnan">Brgy.Talangnan</option>
-                                        <option value="Brgy.Maalat">Brgy.Maalat</option>
-                                        <option value="Brgy.Pili">Brgy.Pili</option>
-                                        <option value="Brgy.Kaongkod">Brgy.Kaongkod</option>
-                                        <option value="Brgy.Mancilang">Brgy.Mancilang</option>
-                                        <option value="Brgy.Kangwayan">Brgy.Kangwayan</option>
-                                        <option value="Brgy.Tugas">Brgy.Tugas</option>
-                                        <option value="Brgy.Malbago">Brgy.Malbago</option>
-                                        <option value="Brgy.Tarong">Brgy.Tarong</option>
-                                        <option value="Brgy.San Agustin">Brgy.San Agustin</option>
+                                        <option value="Tabagak">Brgy.Tabagak</option>
+                                        <option value="Bunakan">Brgy.Bunakan</option>
+                                        <option value="Kodia">Brgy.Kodia</option>
+                                        <option value="Talangnan">Brgy.Talangnan</option>
+                                        <option value="Poblacion">Brgy.Poblacion</option>
+                                        <option value="Maalat">Brgy.Maalat</option>
+                                        <option value="Pili">Brgy.Pili</option>
+                                        <option value="Kaongkod">Brgy.Kaongkod</option>
+                                        <option value="Mancilang">Brgy.Mancilang</option>
+                                        <option value="Kangwayan">Brgy.Kangwayan</option>
+                                        <option value="Tugas">Brgy.Tugas</option>
+                                        <option value="Malbago">Brgy.Malbago</option>
+                                        <option value="Tarong">Brgy.Tarong</option>
+                                        <option value="San Agustin">Brgy.San Agustin</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label>Username:</label>
-                                    <input name="txt_uname" class="form-control input-sm" id="username"  type="text" placeholder="Username"/>
+                                    <input name="txt_uname" class="form-control input-sm" id="username"  type="text" placeholder="Username" require/>
                                     <label id="user_msg" style="color:#CC0000;" ></label>
                                 </div>
                                 <div class="form-group">
-                                    <label>Password:</label>
-                                    <input name="txt_pass" class="form-control input-sm" type="password" placeholder="Password"/>
+                                <label>Password:</label>
+                                    <input name="txt_pass" class="form-control input-sm" type="password" placeholder="Password" required/>
+                                    <span class="input-group-text">
+                                        <i class="fa fa-eye" id="togglePassword1"></i>
+                                    </span>
                                 </div>
+                                <div class="form-group">
+                                <label>Confirm Password:</label>
+                                    <input name="txt_compass" class="form-control input-sm" type="password" placeholder="Confirm Password" required/>
+                                    <span class="input-group-text">
+                                        <i class="fa fa-eye" id="togglePassword2"></i>
+                                    </span>
+                                </div>
+                                <div id="password_error" class="text-danger" style="font-size:11px;"></div> <!-- Error message will be displayed here -->
                             </div>
                         </div>
                         
@@ -114,4 +159,33 @@ function is_available(){
     });
  
 }
+$(document).ready(function() {
+    // Toggle password visibility
+    $('#togglePassword1').click(function() {
+        const passwordField = $('input[name="txt_pass"]');
+        const type = passwordField.attr('type') === 'password' ? 'text' : 'password';
+        passwordField.attr('type', type);
+        $(this).toggleClass('fa-eye fa-eye-slash');
+    });
+
+    $('#togglePassword2').click(function() {
+        const confirmPasswordField = $('input[name="txt_compass"]');
+        const type = confirmPasswordField.attr('type') === 'password' ? 'text' : 'password';
+        confirmPasswordField.attr('type', type);
+        $(this).toggleClass('fa-eye fa-eye-slash');
+    });
+
+    // Validate passwords on form submission
+    $('#btn_add').click(function(e) {
+        var password = $('input[name="txt_pass"]').val();
+        var confirmPassword = $('input[name="txt_compass"]').val();
+
+        if (password !== confirmPassword) {
+            e.preventDefault(); // prevent form submission
+            $('#password_error').text('Passwords do not match. Please try again.'); // Display error message
+        } else {
+            $('#password_error').text(''); // Clear any previous error message
+        }
+    });
+});
 </script>

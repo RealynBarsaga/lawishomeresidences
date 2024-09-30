@@ -1,6 +1,6 @@
 <!-- ========================= MODAL ======================= -->
-            <div id="addCourseModal" class="modal fade">
-            <form method="post">
+            <div id="addOfficialModal" class="modal fade">
+            <form method="post" enctype="multipart/form-data">
               <div class="modal-dialog modal-sm" style="width:300px !important;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -17,12 +17,16 @@
                                         <option selected="" disabled="">-- Select Positions -- </option>
                                         <option value="Mayor">Mayor</option>
                                         <option value="Vice Mayor">Vice Mayor</option>
-                                        <option value="Hon">Hon.</option>
+                                        <option value="Hon">Hon</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Name:</label>
-                                    <input name="txt_cname" class="form-control input-sm" type="text" placeholder="Lastname, Firstname Middlename"/>
+                                    <label>Name: <span style="color:gray; font-size: 10px;">(Firstname Middlename, Lastname)</span></label>
+                                    <input name="txt_cname" class="form-control input-sm" type="text" placeholder="Firstname Middlename, Lastname" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Image:</label>
+                                    <input type="file" name="image" class="form-control input-sm" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Contact #:</label>
@@ -30,19 +34,18 @@
                                 </div>
                                 <div class="form-group">
                                     <label>Address:</label>
-                                    <input name="txt_address" class="form-control input-sm" type="text" placeholder="Ex.Talangnan, Madridejos, Cebu"/>
+                                    <input name="txt_address" class="form-control input-sm" type="text" placeholder="Ex.Talangnan, Madridejos, Cebu" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Start Term:</label>
-                                    <input id="txt_sterm" name="txt_sterm" class="form-control input-sm" type="date" placeholder="Start Term"/>
+                                    <input id="txt_sterm" name="txt_sterm" class="form-control input-sm" type="date" placeholder="Start Term" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>End Term:</label>
-                                    <input name="txt_eterm" class="form-control input-sm" type="date" placeholder="End Term"/>
+                                    <input name="txt_eterm" class="form-control input-sm" type="date" placeholder="End Term" required/>
                                 </div>
                             </div>
                         </div>
-                        
                     </div>
                     <div class="modal-footer">
                         <input type="button" class="btn btn-default btn-sm" data-dismiss="modal" value="Cancel"/>

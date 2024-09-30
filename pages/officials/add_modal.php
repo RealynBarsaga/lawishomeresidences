@@ -1,6 +1,6 @@
 <!-- ========================= MODAL ======================= -->
-            <div id="addCourseModal" class="modal fade">
-            <form method="post">
+            <div id="addOfficialModal" class="modal fade">
+            <form method="post" enctype="multipart/form-data">
               <div class="modal-dialog modal-sm" style="width:300px !important;">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -16,37 +16,35 @@
                                     <select name="ddl_pos" class="form-control input-sm">
                                         <option selected="" disabled="">-- Select Positions -- </option>
                                         <option value="Captain">Barangay Captain</option>
-                                        <option value="Kagawad(Ordinance)">Barangay Kagawad(Ordinance)</option>
-                                        <option value="Kagawad(Public Safety)">Barangay Kagawad(Public Safety)</option>
-                                        <option value="Kagawad(Tourism)">Barangay Kagawad(Tourism)</option>
-                                        <option value="Kagawad(Budget & Finance)">Barangay Kagawad(Budget & Finance)</option>
-                                        <option value="Kagawad(Agriculture)">Barangay Kagawad(Agriculture)</option>
-                                        <option value="Kagawad(Education)">Barangay Kagawad(Education)</option>
-                                        <option value="Kagawad(Infrastracture)">Barangay Kagawad(Infrastracture)</option>
+                                        <option value="Kagawad">Barangay Kagawad</option>
                                         <option value="SK Chairman">SK Chairman</option>
                                         <option value="Secretary">Barangay Secretary</option>
                                         <option value="Treasurer">Barangay Treasurer</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label>Name:</label>
-                                    <input name="txt_cname" class="form-control input-sm" type="text" placeholder="Lastname, Firstname Middlename"/>
+                                    <label>Name: <span style="color:gray; font-size: 10px;">(Firstname Middlename, Lastname)</span></label>
+                                    <input name="txt_cname" class="form-control input-sm" type="text" placeholder="Firstname Middlename, Lastname" required/>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label">Image:</label>
+                                    <input type="file" name="image" class="form-control input-sm" required>
                                 </div>
                                 <div class="form-group">
                                     <label>Contact #:</label>
-                                    <input name="txt_contact" class="form-control input-sm" type="number" placeholder="Contact #"/>
+                                    <input name="txt_contact" id="txt_contact" class="form-control input-sm" type="text" placeholder="Contact #" maxlength="11" pattern="^\d{11}$" required />
                                 </div>
                                 <div class="form-group">
                                     <label>Address:</label>
-                                    <input name="txt_address" class="form-control input-sm" type="text" placeholder="Address"/>
+                                    <input name="txt_address" class="form-control input-sm" type="text" placeholder="Ex.Talangnan, Madridejos, Cebu" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Start Term:</label>
-                                    <input id="txt_sterm" name="txt_sterm" class="form-control input-sm" type="date" placeholder="Start Term"/>
+                                    <input id="txt_sterm" name="txt_sterm" class="form-control input-sm" type="date" placeholder="Start Term" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>End Term:</label>
-                                    <input name="txt_eterm" class="form-control input-sm" type="date" placeholder="End Term"/>
+                                    <input name="txt_eterm" class="form-control input-sm" type="date" placeholder="End Term" required/>
                                 </div>
                             </div>
                         </div>
@@ -70,6 +68,19 @@
              document.getElementsByName("txt_eterm")[0].setAttribute('min', startterm);
         });
     });
+    document.addEventListener('DOMContentLoaded', function () {
+        const contactInput = document.getElementById('txt_contact');
 
+        contactInput.addEventListener('input', function () {
+            // Allow only numbers
+            this.value = this.value.replace(/[^0-9]/g, '');
 
+            // Check for exactly 11 digits
+            if (this.value.length !== 11) {
+                this.setCustomValidity('Please enter exactly 11 digits.');
+            } else {
+                this.setCustomValidity('');
+            }
+        });
+    });
 </script>

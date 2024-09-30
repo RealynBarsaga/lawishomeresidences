@@ -13,31 +13,33 @@
                             <div class="col-md-12">
                             <div class="form-group">
                                     <label>Name:</label>
-                                    <input name="txt_name" class="form-control input-sm" type="text" placeholder="Name"/>
+                                    <input name="txt_name" class="form-control input-sm" type="text" placeholder="Name" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Business Name:</label>
-                                    <input name="txt_busname" class="form-control input-sm" type="text" placeholder="Business Name"/>
+                                    <input name="txt_busname" class="form-control input-sm" type="text" placeholder="Business Name" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Business Address:</label>
-                                    <input name="txt_busadd" class="form-control input-sm" type="text" placeholder="Business Address"/>
+                                    <input name="txt_busadd" class="form-control input-sm" type="text" placeholder="Business Address" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Type of Business:</label>
                                     <select name="ddl_tob" class="form-control input-sm">
                                         <option selected="" disabled="">-- Select Type of Business -- </option>
-                                        <option value="Option 1">Option 1</option>
-                                        <option value="Option 2">Option 2</option>
+                                        <option value="Service">Option 1</option>
+                                        <option value="Merchandising">Option 2</option>
+                                        <option value="Manufacturing">Option 3</option>
+                                        <option value="Hybrid Business">Option 4</option>
                                     </select>                                    
                                 </div>
                                 <div class="form-group">
                                     <label>OR Number:</label>
-                                    <input name="txt_ornum" class="form-control input-sm" type="number" placeholder="OR Number"/>
+                                    <input name="txt_ornum" class="form-control input-sm" type="number" placeholder="OR Number" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Amount:</label>
-                                    <input name="txt_amount" class="form-control input-sm" type="number" placeholder="Amount"/>
+                                    <input name="txt_amount" class="form-control input-sm" type="number" placeholder="Amount" required/>
                                 </div>
                             </div>
                         </div>

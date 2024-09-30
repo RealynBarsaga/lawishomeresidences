@@ -47,11 +47,15 @@
                                 <table id="table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="width: 20px !important;">
-                                                <input type="checkbox" name="chk_delete[]" class="cbxMain" onchange="checkMain(this)"/>
+                                            <th style="width: 100px; text-align: left;">
+                                                <label>
+                                                    <input type="checkbox" class="cbxMain" onchange="checkMain(this)" style="vertical-align: middle;" />
+                                                    <span style="vertical-align: -webkit-baseline-middle; margin-left: 5px; font-size: 13px;">Select All</span>
+                                                </label>
                                             </th>
+                                            <th>Image</th>
                                             <th>Position</th>
-                                            <th>Name</th>
+                                            <th style="width: 150px !important;">Name</th>
                                             <th>Contact</th>
                                             <th>Address</th>
                                             <th>Start of Term</th>
@@ -61,7 +65,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $squery = mysqli_query($con, "SELECT * FROM tblofficial");
+                                            $squery = mysqli_query($con, "SELECT * FROM tblmadofficial");
                                             while ($row = mysqli_fetch_array($squery)) {
                                                 $editModalId = 'editModal' . $row['id'];
                                                 $endModalId = 'endModal' . $row['id'];
@@ -70,6 +74,7 @@
                                                 echo '
                                                 <tr>
                                                     <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id']) . '" /></td>
+                                                    <td><img src="./image/' . basename($row['image']) . '" style="width:60px;height:60px;"/></td>
                                                     <td>' . htmlspecialchars($row['sPosition']) . '</td>
                                                     <td>' . htmlspecialchars($row['completeName']) . '</td>
                                                     <td>' . htmlspecialchars($row['pcontact']) . '</td>

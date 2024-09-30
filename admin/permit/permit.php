@@ -55,8 +55,11 @@
                                         <table id="table" class="table table-bordered table-striped">
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 20px !important;">
-                                                        <input type="checkbox" name="chk_delete[]" class="cbxMain" onchange="checkMain(this)"/>
+                                                    <th style="width: 100px; text-align: left;">
+                                                        <label>
+                                                            <input type="checkbox" class="cbxMain" onchange="checkMain(this)" style="vertical-align: middle;" />
+                                                            <span style="vertical-align: -webkit-baseline-middle; margin-left: 5px; font-size: 13px;">Select All</span>
+                                                        </label>
                                                     </th>
                                                     <th>Name</th>
                                                     <th>Business Name</th>
@@ -64,7 +67,7 @@
                                                     <th>Type of Business</th>
                                                     <th>OR Number</th>
                                                     <th>Amount</th>
-                                                    <th style="width: 40px !important;">Option</th>
+                                                    <th style="width: 143.6667px;">Option</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -96,9 +99,12 @@
                                                             <button class="btn btn-primary btn-sm" data-target="#editModal' . $row['id'] . '" data-toggle="modal">
                                                                 <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                                             </button>
+                                                            <a style="width: 80px;" href="permit_form.php?" class="btn btn-primary btn-sm">
+                                                                <i class="fa fa-print" aria-hidden="true"></i> Print
+                                                            </a>
                                                         </td>
                                                     </tr>
-                                                    ';
+                                                    '; /* &resident=' . urlencode($row['name']) . '&purpose=' . urlencode($row['purpose']) . '&clearance=' . urlencode($row['clearanceNo']) . '&val=' . urlencode(base64_encode($row['clearanceNo'] . '|' . $row['name'])) . ' */
                                                     include "edit_modal.php";
                                                 }
                                                 ?>

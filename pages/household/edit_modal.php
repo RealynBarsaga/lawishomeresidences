@@ -18,7 +18,7 @@ echo '<div id="editModal' . $row['id'] . '" class="modal fade">
                             </div>
                             <div class="form-group">
                                 <label>Head of Family: <span style="color:gray; font-size: 10px;"></label>';
-                                    $q = mysqli_query($con, "SELECT *, CONCAT(lname, ', ', fname, ' ', mname) as name FROM tblresident WHERE id = '" . $row['headoffamily'] . "' ");
+                                    $q = mysqli_query($con, "SELECT *, CONCAT(lname, ', ', fname, ' ', mname) as name FROM tbltabagak WHERE id = '" . $row['headoffamily'] . "' ");
                                     while ($row1 = mysqli_fetch_array($q)) {
                                         echo '<input name="txt_edit_name" class="form-control input-sm" type="text" value="' . htmlspecialchars($row1['name'], ENT_QUOTES, 'UTF-8') . '" readonly/>';
                                     }

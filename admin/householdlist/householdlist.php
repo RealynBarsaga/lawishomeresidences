@@ -53,7 +53,7 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                              $squery = mysqli_query($con, "SELECT *, h.id as id, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name, b.barangay FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily LEFT JOIN tblresident b ON r.id = b.id ");
+                                              $squery = mysqli_query($con, "SELECT *, h.id as id, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name, b.barangay FROM tblhousehold h LEFT JOIN tbltabagak r ON r.id = h.headoffamily LEFT JOIN tbltabagak b ON r.id = b.id ");
                                               if (!$squery) {
                                                   die('MySQL Error: ' . mysqli_error($con));
                                               }
@@ -61,10 +61,10 @@
                                                   echo '
                                                   <tr>
                                                       <td>'.$row['id'].'</td>
-                                                      <td><a href="../resident/resident.php?resident=' . $row['householdno'] . '">' . $row['householdno'] . '</a></td>
-                                                      <td>' . $row['name'] . '</td>
-                                                      <td>' . $row['totalhousehold'] . '</td>
-                                                      <td>' . $row['barangay'] . '</td>
+                                                      <td>'.$row['householdno'].'</td>
+                                                      <td>'.$row['name'].'</td>
+                                                      <td>'.$row['totalhousehold'].'</td>
+                                                      <td>'.$row['barangay'].'</td>
                                                   </tr>';
                                               }
                                             ?>

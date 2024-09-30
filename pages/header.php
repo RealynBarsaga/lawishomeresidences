@@ -1,11 +1,12 @@
 <?php
-
+$off_barangay = $_SESSION["barangay"] ?? "";
 // Start output buffering
 ob_start();
 
+
 // Your header and HTML code
 echo  '<header class="header">
-            <a href="../household/household.php" class="logo" style="font-size: 13px; font-family: Source Sans Pro, sans-serif;">
+            <a href="../dashboard/dashboard.php?page=dashboard" class="logo" style="font-size: 13px; font-family: Source Sans Pro, sans-serif;">
                 Madridejos Home Residence
             </a>
             <nav class="navbar navbar-static-top" role="navigation">
@@ -19,11 +20,11 @@ echo  '<header class="header">
                     <ul class="nav navbar-nav">
                         <li class="dropdown user user-menu">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                <i class="glyphicon glyphicon-user"></i><span>'.$_SESSION['staff'].' <i class="caret"></i></span>
+                                <i class="glyphicon glyphicon-user"></i><span>Brgy. '.$_SESSION['staff'].' <i class="caret"></i></span>
                             </a>
                             <ul class="dropdown-menu">
                                 <li class="user-header bg-light-blue">
-                                    <p>'.$_SESSION['staff'].'</p>
+                                    <p>Brgy. '.$_SESSION['staff'].'</p>
                                 </li>
                                 <li class="user-footer">
                                     <div class="pull-left">
@@ -62,7 +63,7 @@ echo  '<header class="header">
                                         </div>
                                         <div class="form-group">
                                             <label>Password:</label>
-                                            <input name="txt_password" id="txt_password" class="form-control input-sm" type="password" value="'.$row['password'].'"/>
+                                            <input name="txt_password" id="txt_password" class="form-control input-sm" type="password"/>
                                         </div>';
                                 } 
                             }
@@ -82,11 +83,12 @@ echo  '<header class="header">
 <?php
 // Handle form submission
 if(isset($_POST['btn_saveeditProfile'])){
-    $username = $_POST['txt_username'];
-    $password = $_POST['txt_password'];
+    $username = htmlspecialchars(stripslashes(trim($_POST['txt_username'])));
+    $password = htmlspecialchars(stripslashes(trim($_POST['txt_password'])));
 
     if($_SESSION['role'] == "Staff"){
-        $updstaff = mysqli_query($con, "UPDATE tblstaff SET username = '$username', password = '$password' WHERE id = '".$_SESSION['userid']."'");
+        $hashed = password_hash($password, PASSWORD_DEFAULT);
+        $updstaff = mysqli_query($con, "UPDATE tblstaff SET username = '$username', password = '$hashed' WHERE id = '".$_SESSION['userid']."'");
         if($updstaff){
             // Redirect after update
             header("Location: ".$_SERVER['REQUEST_URI']);

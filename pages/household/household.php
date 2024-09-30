@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
     <?php
     session_start();
@@ -7,19 +8,21 @@
         header('Location: ../../login.php');
         exit; // Ensure no further execution after redirect
     }
-    include('../head_css.php'); // Removed ob_start() since it's not needed here
+    include('../head_css.php');
     ?>
 </head>
+
 <body class="skin-black">
-    <!-- header logo: style can be found in header.less -->
-    <?php include "../connection.php"; ?>
-    <?php include('../header.php'); ?>
+    <?php 
+    include "../connection.php"; 
+    include('../header.php'); 
+    ?>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
-        <!-- Left side column. contains the logo and sidebar -->
+        <!-- Left side column contains the logo and sidebar -->
         <?php include('../sidebar-left.php'); ?>
 
-        <!-- Right side column. Contains the navbar and content of the page -->
+        <!-- Right side column contains the navbar and content of the page -->
         <aside class="right-side">
             <!-- Content Header (Page header) -->
             <section class="content-header">
@@ -29,7 +32,7 @@
             <!-- Main content -->
             <section class="content">
                 <div class="row">
-                    <!-- left column -->
+                    <!-- Box container -->
                     <div class="box">
                         <div class="box-header">
                             <div style="padding:10px;">
@@ -41,13 +44,17 @@
                                 </button>
                             </div>
                         </div><!-- /.box-header -->
+
                         <div class="box-body table-responsive">
                             <form method="post">
                                 <table id="table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="width: 20px !important;">
-                                                <input type="checkbox" name="chk_delete[]" class="cbxMain" onchange="checkMain(this)" />
+                                            <th style="width: 100px; text-align: left;">
+                                                <label>
+                                                    <input type="checkbox" class="cbxMain" onchange="checkMain(this)" style="vertical-align: middle;" />
+                                                    <span style="vertical-align: -webkit-baseline-middle; margin-left: 5px; font-size: 13px;">Select All</span>
+                                                </label>
                                             </th>
                                             <th>Household #</th>
                                             <th>Total Members</th>
@@ -58,42 +65,49 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php
-                                        // Use prepared statements to prevent SQL injection
-                                        $stmt = $con->prepare("SELECT *, h.id as id, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name FROM tblhousehold h LEFT JOIN tblresident r ON r.id = h.headoffamily");
-                                        $stmt->execute();
-                                        $result = $stmt->get_result();
+                                    <?php
 
-                                        while ($row = $result->fetch_assoc()) {
-                                            echo '
-                                            <tr>
-                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" /></td>
-                                                <td><a href="../resident/resident.php?resident=' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($row['householdno'], ENT_QUOTES, 'UTF-8') . '</a></td>
-                                                <td>' . htmlspecialchars($row['totalhousehold'], ENT_QUOTES, 'UTF-8') . '</td>
-                                                <td>' . htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8') . '</td>
-                                                <td>' . htmlspecialchars($row['barangay'], ENT_QUOTES, 'UTF-8') . '</td>
-                                                <td>' . htmlspecialchars($row['purok'], ENT_QUOTES, 'UTF-8') . '</td>
-                                                <td><button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8') . '" data-toggle="modal">
-                                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                                    </button></td>
-                                            </tr>';
+                                    // Use prepared statements to prevent SQL injection
+                                    $stmt = $con->prepare("SELECT *, h.id as id, CONCAT(r.lname, ', ', r.fname, ' ', r.mname) as name 
+                                    FROM tblhousehold h 
+                                    LEFT JOIN tbltabagak r ON r.id = h.headoffamily WHERE r.barangay = '$off_barangay'");
+                                    $stmt->execute();
+                                    $result = $stmt->get_result();
 
-                                            include "edit_modal.php";
-                                        }
-                                        ?>
+                                    // Fetch and display the results
+                                    while ($row = $result->fetch_assoc()) {
+                                        echo '
+                                        <tr>
+                                            <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id']) . '" /></td>
+                                            <td><a href="../resident/resident.php?resident=' . htmlspecialchars($row['householdno']) . '">' . htmlspecialchars($row['householdno']) . '</a></td>
+                                            <td>' . htmlspecialchars($row['totalhousehold']) . '</td>
+                                            <td>' . htmlspecialchars($row['name']) . '</td>
+                                            <td>' . htmlspecialchars($row['barangay']) . '</td>
+                                            <td>' . htmlspecialchars($row['purok']) . '</td>
+                                            <td><button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id']) . '" data-toggle="modal">
+                                                <i class="fa fa-eye" aria-hidden="true"></i> View
+                                                </button></td>
+                                        </tr>';
+
+                                        include "edit_modal.php";
+                                    }
+                                    ?>
                                     </tbody>
                                 </table>
-
                                 <?php include "../deleteModal.php"; ?>
                             </form>
                         </div><!-- /.box-body -->
                     </div><!-- /.box -->
-                    <?php include "../edit_notif.php"; ?>
-                    <?php include "../added_notif.php"; ?>
-                    <?php include "../delete_notif.php"; ?>
-                    <?php include "../duplicate_error.php"; ?>
-                    <?php include "add_modal.php"; ?>
-                    <?php include "function.php"; ?>
+
+                    <!-- Include notifications and modals -->
+                    <?php 
+                    include "../edit_notif.php"; 
+                    include "../added_notif.php"; 
+                    include "../delete_notif.php"; 
+                    include "../duplicate_error.php"; 
+                    include "add_modal.php"; 
+                    include "function.php"; 
+                    ?>
                 </div> <!-- /.row -->
             </section><!-- /.content -->
         </aside><!-- /.right-side -->

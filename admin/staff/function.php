@@ -1,74 +1,106 @@
 <?php
-if(isset($_POST['btn_add'])){
-    $txt_name = $_POST['txt_name'];
-    $txt_uname = $_POST['txt_uname'];
-    $txt_pass = $_POST['txt_pass'];
+if (isset($_POST['btn_add'])) {
+    $txt_name = htmlspecialchars(stripslashes(trim($_POST['txt_name'])));
+    $txt_uname = htmlspecialchars(stripslashes(trim($_POST['txt_uname'])));
+    $txt_pass = htmlspecialchars(stripslashes(trim($_POST['txt_pass'])));
+    $txt_compass = htmlspecialchars(stripslashes(trim($_POST['txt_compass'])));
+    $filename = date("mdGis") . ".png";
+    $tmp_name = $_FILES['logo']['tmp_name'];
+    $folder = "./logo/" . $filename;
 
-    if (isset($_SESSION['role'])) {
-        $action = 'Added Staff with name of ' . $txt_name;
-        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Administrator', NOW(), '" . $action . "')");
+    // Log the action if the user has the appropriate role
+    if (isset($_SESSION['role']) && $_SESSION['role'] === 'Administrator') {
+        $action = 'Added Barangay with the name of ' . $txt_name;
+        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Administrator', NOW(), '$action')");
     }
 
-    $su = mysqli_query($con,"SELECT * from tblstaff where username = '".$txt_uname."' ");
+    // Check if the username already exists
+    $su = mysqli_query($con, "SELECT * FROM tblstaff WHERE username = '$txt_uname'");
     $ct = mysqli_num_rows($su);
-    
-    if($ct == 0){
-        $query = mysqli_query($con,"INSERT INTO tblstaff (name,username,password) 
-            values ('$txt_name', '$txt_uname', '$txt_pass')") or die('Error: ' . mysqli_error($con));
-        if($query == true)
-        {
+
+    if ($ct == 0) {
+        $hashed = password_hash($txt_pass, PASSWORD_DEFAULT);
+        $query = mysqli_query($con, "INSERT INTO tblstaff (name, username, password, compass,logo) 
+            VALUES ('$txt_name', '$txt_uname', '$hashed', '$hashed', '$filename')") or die('Error: ' . mysqli_error($con));
+        if ($query) {
+            move_uploaded_file($tmp_name, $folder);
             $_SESSION['added'] = 1;
-            header ("location: ".$_SERVER['REQUEST_URI']);
-        } 
-    }
-    else{
+            header("location: " . $_SERVER['REQUEST_URI']);
+            exit();
+        }
+    } else {
         $_SESSION['duplicateuser'] = 1;
-        header ("location: ".$_SERVER['REQUEST_URI']);
-    }   
+        header("location: " . $_SERVER['REQUEST_URI']);
+        exit();
+    }
 }
 
-
-if(isset($_POST['btn_save']))
-{
+if (isset($_POST['btn_save'])) {
     $txt_id = $_POST['hidden_id'];
-    $txt_edit_name = $_POST['txt_edit_name'];
-    $txt_edit_uname = $_POST['txt_edit_uname'];
-    $txt_edit_pass = $_POST['txt_edit_pass'];
+    $txt_edit_name = htmlspecialchars(stripslashes(trim($_POST['txt_edit_name'])));
+    $txt_edit_uname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_uname'])));
+    $txt_edit_pass = htmlspecialchars(stripslashes(trim($_POST['txt_edit_pass'])));
+    $txt_edit_compass = htmlspecialchars(stripslashes(trim($_POST['txt_edit_compass'])));
 
-    if(isset($_SESSION['role'])){
-        $action = 'Update Staff with name of '.$txt_edit_name;
-        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('Administrator', NOW(), '".$action."')");
+    // Log the action if the user has the appropriate role
+    if (isset($_SESSION['role'])) {
+        $action = 'Updated Barangay with the name of ' . $txt_edit_name;
+        $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Administrator', NOW(), '$action')");
     }
 
-    $su = mysqli_query($con,"SELECT * from tblstaff where username = '".$txt_edit_uname."' ");
-    $ct = mysqli_num_rows($su);
-    
-    if($ct == 0){
-        $update_query = mysqli_query($con,"UPDATE tblstaff set name = '".$txt_edit_name."', username = '".$txt_edit_uname."', password = '".$txt_edit_pass."' where id = '".$txt_id."' ") or die('Error: ' . mysqli_error($con));
+    // Check if the username already exists
+    // $su = mysqli_query($con, "SELECT * FROM tblstaff WHERE username = '$txt_edit_uname'");
+    // $ct = mysqli_num_rows($su);
 
-        if($update_query == true){
-            $_SESSION['edited'] = 1;
-            header("location: ".$_SERVER['REQUEST_URI']);
+    if ($_FILES['logo']['error'] > 0) {
+        if (!empty($txt_edit_pass)) {
+            $hashed = password_hash($txt_edit_pass, PASSWORD_DEFAULT);
+        $update_query = mysqli_query($con, "UPDATE tblstaff 
+            SET name = '$txt_edit_name', username = '$txt_edit_uname', password = '$hashed', compass = '$hashed' 
+            WHERE id = '$txt_id'") or die('Error: ' . mysqli_error($con));
+        }else{
+            
+        $update_query = mysqli_query($con, "UPDATE tblstaff 
+            SET name = '$txt_edit_name', username = '$txt_edit_uname'
+            WHERE id = '$txt_id'") or die('Error: ' . mysqli_error($con));
+        }
+    }else{
+        $filename = date("mdGis") . ".png";
+        $tmp_name = $_FILES['logo']['tmp_name'];
+        $folder = "./logo/" . $filename;
+
+        if (!empty($txt_edit_pass)) {
+            $hashed = password_hash($txt_edit_pass, PASSWORD_DEFAULT);
+            move_uploaded_file($tmp_name, $folder);
+        $update_query = mysqli_query($con, "UPDATE tblstaff 
+            SET name = '$txt_edit_name', username = '$txt_edit_uname', password = '$hashed', compass = '$hashed', logo = '$filename' 
+            WHERE id = '$txt_id'") or die('Error: ' . mysqli_error($con));
+           
+        }else{
+            move_uploaded_file($tmp_name, $folder);
+        $update_query = mysqli_query($con, "UPDATE tblstaff 
+            SET name = '$txt_edit_name', username = '$txt_edit_uname', logo = '$filename' 
+            WHERE id = '$txt_id'") or die('Error: ' . mysqli_error($con));
+            
         }
     }
-    else{
-        $_SESSION['duplicateuser'] = 1;
-        header ("location: ".$_SERVER['REQUEST_URI']);
-    } 
+
+    if ($update_query) {
+        $_SESSION['edited'] = 1;
+        header("location: " . $_SERVER['REQUEST_URI']);
+        exit();
+    }
 }
 
-if(isset($_POST['btn_delete']))
-{
-    if(isset($_POST['chk_delete']))
-    {
-        foreach($_POST['chk_delete'] as $value)
-        {
-            $delete_query = mysqli_query($con,"DELETE from tblstaff where id = '$value' ") or die('Error: ' . mysqli_error($con));
-                    
-            if($delete_query == true)
-            {
+if (isset($_POST['btn_delete'])) {
+    if (isset($_POST['chk_delete'])) {
+        foreach ($_POST['chk_delete'] as $value) {
+            $delete_query = mysqli_query($con, "DELETE FROM tblstaff WHERE id = '$value'") or die('Error: ' . mysqli_error($con));
+
+            if ($delete_query) {
                 $_SESSION['delete'] = 1;
-                header("location: ".$_SERVER['REQUEST_URI']);
+                header("location: " . $_SERVER['REQUEST_URI']);
+                exit();
             }
         }
     }

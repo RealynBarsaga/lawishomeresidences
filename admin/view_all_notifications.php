@@ -6,7 +6,7 @@ if (isset($_GET['delete_id'])) {
     $delete_id = intval($_GET['delete_id']);
     $delete_query = mysqli_query($con, "DELETE FROM tbllogs WHERE id = $delete_id");
     if ($delete_query) {
-        header("Location: view_all_notifications.php");
+        header("Location: view_all_notifications.php?page=notifications");
         exit();
     } else {
         echo "Error deleting notification.";
@@ -15,6 +15,23 @@ if (isset($_GET['delete_id'])) {
 
 // Fetch notifications from the database
 $squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
+
+// Separate notifications into 'New' and 'Earlier' categories
+$new_notifications = [];
+$earlier_notifications = [];
+
+$current_time = time();
+
+while ($notif = mysqli_fetch_assoc($squery)) {
+    $notif_time = strtotime($notif['logdate']);
+    $is_new = ($current_time - $notif_time) <= 86400; // 86400 seconds in a day
+
+    if ($is_new) {
+        $new_notifications[] = $notif;
+    } else {
+        $earlier_notifications[] = $notif;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,6 +60,11 @@ $squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
             margin-bottom: 20px;
             color: #333;
         }
+        h2 {
+            font-size: 18px;
+            color: #333;
+            margin-bottom: 10px;
+        }
         ul {
             list-style-type: none;
             padding: 0;
@@ -62,6 +84,7 @@ $squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
             border-radius: 4px;
             word-wrap: break-word;
             position: relative;
+            margin-top: -8px;
         }
         .menu-button {
             background: none;
@@ -107,13 +130,91 @@ $squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
         .footer a:hover {
             text-decoration: underline;
         }
+        /* Styles for h2 to make the text smaller */
+        .menu,.h2 {
+            font-size: 15px; /* Adjust this value as needed */
+            margin: 10px 0;
+            color: #333;
+            margin-left: 6px;
+        }
     </style>
+</head>
+<body>
+    <div class="container">
+        <h1>All Notifications</h1>
+
+        <!-- Display New Notifications -->
+        <ul>
+        <h2 class="menu">New</h2>
+            <?php
+            if (!empty($new_notifications)) {
+                foreach ($new_notifications as $notif) {
+                    $user = isset($notif['user']) ? htmlspecialchars($notif['user']) : 'Unknown user';
+                    $logdate = isset($notif['logdate']) ? htmlspecialchars($notif['logdate']) : 'Unknown logdate';
+                    $action = isset($notif['action']) ? htmlspecialchars($notif['action']) : 'No action available';
+                    
+                    $message = sprintf(
+                        '<span class="notification">%s (%s)<br> %s.</span>',
+                        $user,
+                        $logdate,
+                        $action
+                    );
+                    
+                    echo '<li>' . $message . '
+                            <button class="menu-button" onclick="toggleMenu('.$notif['id'].')"></button>
+                            <div id="menu-'.$notif['id'].'" class="dropdown-menu">
+                                <a href="view_all_notifications.php?delete_id='.$notif['id'].'">Delete</a>
+                            </div>
+                          </li>';
+                }
+            } else {
+                /* echo '<li>No new notifications.</li>'; */
+            }
+            ?>
+        </ul>
+
+        <!-- Display Earlier Notifications -->
+        <ul>
+        <h2 class="menu">Earlier</h2>
+            <?php
+            if (!empty($earlier_notifications)) {
+                foreach ($earlier_notifications as $notif) {
+                    $user = isset($notif['user']) ? htmlspecialchars($notif['user']) : 'Unknown user';
+                    $logdate = isset($notif['logdate']) ? htmlspecialchars($notif['logdate']) : 'Unknown logdate';
+                    $action = isset($notif['action']) ? htmlspecialchars($notif['action']) : 'No action available';
+                    
+                    $message = sprintf(
+                        '<span class="notification">%s (%s)<br> %s.</span>',
+                        $user,
+                        $logdate,
+                        $action
+                    );
+                    
+                    echo '<li>' . $message . '
+                            <button class="menu-button" onclick="toggleMenu('.$notif['id'].')"></button>
+                            <div id="menu-'.$notif['id'].'" class="dropdown-menu">
+                                <a href="view_all_notifications.php?delete_id='.$notif['id'].'">Delete</a>
+                            </div>
+                          </li>';
+                }
+            } else {
+                /* echo '<li>No earlier notifications.</li>'; */
+            }
+            ?>
+        </ul>
+
+        <div class="footer">
+            <a href="dashboard/dashboard.php?page=dashboard">Back to Home</a>
+        </div>
+    </div>
+    
     <script>
         function toggleMenu(id) {
             var menu = document.getElementById("menu-" + id);
             menu.style.display = menu.style.display === "block" ? "none" : "block";
         }
 
+        // Close dropdown menus when clicking outside
         document.addEventListener('click', function(e) {
             var menus = document.querySelectorAll('.dropdown-menu');
             menus.forEach(function(menu) {
@@ -123,33 +224,5 @@ $squery = mysqli_query($con, "SELECT * FROM tbllogs ORDER BY logdate DESC");
             });
         });
     </script>
-</head>
-<body>
-    <div class="container">
-        <h1>All Notifications</h1>
-        <ul>
-            <?php
-            while($notif = mysqli_fetch_assoc($squery)){
-                $user = isset($notif['user']) ? htmlspecialchars($notif['user']) : 'Unknown user';
-                $action = isset($notif['action']) ? htmlspecialchars($notif['action']) : 'No action available';
-                $message = sprintf(
-                    '<span class="notification">%s <br> %s.</span>',
-                    $user,
-                    $action
-                );
-
-                echo '<li>' . $message . '
-                        <button class="menu-button" onclick="toggleMenu('.$notif['id'].')"></button>
-                        <div id="menu-'.$notif['id'].'" class="dropdown-menu">
-                            <a href="view_all_notifications.php?delete_id='.$notif['id'].'">Delete</a>
-                        </div>
-                      </li>';
-            }
-            ?>
-        </ul>
-        <div class="footer">
-            <a href="dashboard/dashboard.php">Back to Home</a>
-        </div>
-    </div>
 </body>
 </html>

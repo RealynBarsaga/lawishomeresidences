@@ -50,12 +50,15 @@
                             </div>                                
                         </div><!-- /.box-header -->
                         <div class="box-body table-responsive">
-                            <form method="post">
+                            <form method="post" enctype="multipart/form-data">
                                 <table id="table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="width: 20px !important;">
-                                                <input type="checkbox" name="chk_delete[]" class="cbxMain" onchange="checkMain(this)"/>
+                                            <th style="width: 100px; text-align: left;">
+                                                <label>
+                                                    <input type="checkbox" class="cbxMain" onchange="checkMain(this)" style="vertical-align: middle;" />
+                                                    <span style="vertical-align: -webkit-baseline-middle; margin-left: 5px; font-size: 13px;">Select All</span>
+                                                </label>
                                             </th>
                                             <th>List Of Barangay</th>
                                             <th>Username</th>

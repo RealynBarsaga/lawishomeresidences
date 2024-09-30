@@ -1,3 +1,40 @@
+<?php
+// Replace with your actual database credentials
+$MySQL_username = "u510162695_db_barangay";
+$Password = "1Db_barangay";    
+$MySQL_database_name = "u510162695_db_barangay";
+
+// Create connection
+$conn = mysqli_connect('localhost', $MySQL_username, $Password, $MySQL_database_name);
+
+// Check connection
+if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+} 
+
+// Setting the default timezone
+date_default_timezone_set("Asia/Manila");
+
+$off_barangay = $_SESSION["barangay"] ?? "";
+
+// Query the latest clearance number from the database
+$query = "SELECT clearanceNo FROM tblclearance WHERE barangay = '$off_barangay' ORDER BY id DESC LIMIT 1";
+$result = mysqli_query($conn, $query);
+
+if ($result && mysqli_num_rows($result) > 0) {
+    $row = mysqli_fetch_assoc($result);
+    // Extract the last clearance number and increment it
+    $last_clearance_number = $row['clearanceNo'];
+    
+    // Increment logic depending on your numbering format
+    $next_clearance_number = intval($last_clearance_number) + 1;
+} else {
+    // If no records found, start with a default clearance number
+    $next_clearance_number = 1; // or any starting number
+}
+// Format the clearance number to be 4 digits (e.g., 0001)
+$formatted_clearance_number = str_pad($next_clearance_number, 4, '0', STR_PAD_LEFT);
+?>
 <!-- ========================= MODAL ======================= -->
             <div id="addModal" class="modal fade">
             <form method="post">
@@ -8,38 +45,42 @@
                         <h4 class="modal-title">Manage Clearance</h4>
                     </div>
                     <div class="modal-body">
-                        
                         <div class="row">
                             <div class="col-md-12">
                             <div class="form-group">
                                     <label>Resident Name:</label>
-                                    <select name="ddl_resident" class="select2 form-control input-sm" style="width:100%;">
-                                        <option selected="" disabled="">-- Select Resident -- </option>
-                                        <?php
-                                            $squery = mysqli_query($con,"SELECT id,lname,fname,mname from tblresident");
-                                            while ($row = mysqli_fetch_array($squery)){
-                                                echo '
-                                                    <option value="'.$row['id'].'">'.$row['lname'].', '.$row['fname'].' '.$row['mname'].'</option>    
-                                                ';
-                                            }
-                                        ?>
-                                    </select>
+                                    <input name="txt_name" class="form-control input-sm" type="text" placeholder="Name" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Clearance #:</label>
-                                    <input name="txt_cnum" class="form-control input-sm" type="number" placeholder="Clearance #"/>
+                                    <input name="txt_cnum" class="form-control input-sm" type="text" value="<?php echo $formatted_clearance_number; ?>" readonly/>
                                 </div>
                                 <div class="form-group">
                                     <label>Purpose:</label>
-                                    <input name="txt_purpose" class="form-control input-sm" type="text" placeholder="Purpose"/>
+                                    <input name="txt_purpose" class="form-control input-sm" type="text" placeholder="Purpose" required/>
+                                </div>
+                                <!-- Age -->
+                                <div class="form-group">
+                                    <label>Age:</label>
+                                    <input name="txt_age" id="txt_age" class="form-control input-sm" type="text" placeholder="Age" readonly/>
+                                </div>
+                                <!-- Birthdate -->
+                                <div class="form-group">
+                                    <label>Birthdate:</label>
+                                    <input name="txt_bdate" id="txt_bdate" class="form-control input-sm" type="date" placeholder="Birthdate" max="<?php echo date('Y-m-d'); ?>" required/>
+                                </div>
+                                <!-- Purok -->
+                                <div class="form-group">
+                                    <label>Purok:</label>
+                                    <input name="txt_purok" class="form-control input-sm" type="text" placeholder="Purok" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>OR Number:</label>
-                                    <input name="txt_ornum" class="form-control input-sm" type="number" placeholder="OR Number"/>
+                                    <input name="txt_ornum" class="form-control input-sm" type="number" placeholder="OR Number" required/>
                                 </div>
                                 <div class="form-group">
                                     <label>Amount:</label>
-                                    <input name="txt_amount" class="form-control input-sm" type="number" placeholder="Amount"/>
+                                    <input name="txt_amount" class="form-control input-sm" type="number" placeholder="Amount" required/>
                                 </div>
                             </div>
                         </div>
@@ -53,3 +94,18 @@
               </div>
               </form>
             </div>
+<script>
+    $(document).ready(function() {
+        // Calculate age function
+        $('#txt_bdate').change(function(){
+            var dob = new Date($(this).val());
+            var today = new Date();
+            var age = today.getFullYear() - dob.getFullYear();
+            var m = today.getMonth() - dob.getMonth();
+            if (m < 0 || (m === 0 && today.getDate() < dob.getDate())) {
+                age--;
+            }
+            $('#txt_age').val(age);
+        });
+    });
+</script>

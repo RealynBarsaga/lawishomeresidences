@@ -1,34 +1,33 @@
 <?php
-ob_start();
-
 if(isset($_POST['btn_add'])){
     $txt_householdno = $_POST['txt_householdno'];
     $txt_totalmembers = $_POST['txt_totalmembers'];
     $txt_hof = $_POST['txt_hof'];
-   /*  $txt_purok = $_POST['txt_purok']; */
+    $txt_brgy = $_POST['txt_brgy'];
+    $txt_purok = $_POST['txt_purok'];
 
-    $chkdup = mysqli_query($con, "SELECT * from tblhousehold where householdno = ".$txt_householdno."");
+    $chkdup = mysqli_query($con, "SELECT * from tblhousehold where headoffamily = ".$txt_hof."");
     $rows = mysqli_num_rows($chkdup);
 
     if(isset($_SESSION['role'])){
         $action = 'Added Household Number '.$txt_householdno;
-        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('".$_SESSION['staff']."', NOW(), '".$action."')");
+        $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('Brgy.".$_SESSION['staff']."', NOW(), '".$action."')");
     }
 
     if($rows == 0){
-        $query = mysqli_query($con,"INSERT INTO tblhousehold (householdno, totalhouseholdmembers, headoffamily) 
-            values ('$txt_householdno', '$txt_totalmembers', '$txt_hof')") or die('Error: ' . mysqli_error($con));
+        $query = mysqli_query($con,"INSERT INTO tblhousehold (householdno, totalhouseholdmembers, headoffamily, barangay, purok) 
+            values ('$txt_householdno', '$txt_totalmembers', '$txt_hof', '$txt_brgy', '$txt_purok')") or die('Error: ' . mysqli_error($con));
         if($query == true)
         {
             $_SESSION['added'] = 1;
             header("location: ".$_SERVER['REQUEST_URI']);
-            ob_end_flush();
+            exit();
         }     
     }
     else {
         $_SESSION['duplicate'] = 1;
         header("location: ".$_SERVER['REQUEST_URI']);
-        ob_end_flush();
+        exit();
     }
 }
 
@@ -58,7 +57,7 @@ if (isset($_POST['btn_save'])) {
         // Log action
         if (isset($_SESSION['role'])) {
             $action = 'Update Household Number ' . $txt_edit_householdno;
-            $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('" . $_SESSION['staff'] . "', NOW(), '" . $action . "')");
+            $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Brgy." . $_SESSION['staff'] . "', NOW(), '" . $action . "')");
         }
 
         // Redirect if successful
@@ -87,7 +86,7 @@ if(isset($_POST['btn_delete']))
             {
                 $_SESSION['delete'] = 1;
                 header("location: ".$_SERVER['REQUEST_URI']);
-                ob_end_flush();
+                exit();
             }
         }
     }

@@ -6,27 +6,37 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                         <ul class="sidebar-menu">
                             <li>
-                                <a href="../household/household.php">
+                                <a href="../dashboard/dashboard.php?page=dashboard">
+                                    <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../officials/officials.php?page=officials">
+                                    <i class="fa fa-user"></i> <span>Barangay Officials</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="../household/household.php?page=household">
                                     <i class="fa fa-home"></i> <span>Household</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="../resident/resident.php">
+                                <a href="../resident/resident.php?page=resident">
                                     <i class="fa fa-users"></i> <span>Resident</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="../BrgyClearance/BrgyClearance.php">
+                                <a href="../brgyclearance/brgyclearance.php?page=brgyclearance">
                                     <i class="fa fa-file"></i> <span>Barangay Clearance</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="../CertOfRes/CertOfRes.php">
+                                <a href="../certofresidency/certofres.php?page=certofresidency">
                                     <i class="fa fa-file"></i> <span>Certificate Of Residency</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="#">
+                                <a href="../certofindigency/certofindigency.php?page=certofindigency">
                                     <i class="fa fa-file"></i> <span>Certificate Of Indigency</span>
                                 </a>
                             </li>

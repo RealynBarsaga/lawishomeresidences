@@ -91,15 +91,22 @@ if(isset($_POST['btn_save'])){
 }
 if(isset($_POST['btn_delete'])){
     if(isset($_POST['chk_delete'])){
+        $stmt = $con->prepare("DELETE FROM tblpermit WHERE id = ?");
         foreach($_POST['chk_delete'] as $id){
-            $delete_query = mysqli_query($con,"DELETE FROM tblpermit WHERE `tblpermit`.`id` = $id") or die('Error: ' . mysqli_error($con));
-
-            if($delete_query == true){
+            // Ensure the ID is an integer
+            $id = intval($id);
+            
+            // Bind the parameter and execute the query
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            
+            if($stmt->affected_rows > 0){
                 $_SESSION['delete'] = 1;
                 header("location: ".$_SERVER['REQUEST_URI']);
                 exit(); // Ensure no further code is executed after redirection
             }
         }
+        $stmt->close();
     }
 }
 ?>

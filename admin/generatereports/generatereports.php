@@ -40,16 +40,44 @@
                         <div class="box-body table-responsive">
                             <form method="post">
                                 <table id="table" class="table table-bordered table-striped">
-                                    <thead>
+                                <thead>
                                         <tr>
                                             <th>ID</th>
                                             <th>Resident Name</th>
-                                            <th>Clearance/Permit ID</th>
                                             <th>Date</th>
                                             <th>Barangay</th>
                                             <th>Report Type</th>
                                         </tr>
                                     </thead>
+                                    <tbody>
+                                        <?php
+                                        // Ensure you have the correct database connection
+                                        $squery = mysqli_query($con, "
+                                            (SELECT id, name, dateRecorded, barangay, report_type FROM tblclearance)
+                                            UNION
+                                            (SELECT id, name, dateRecorded, barangay, report_type FROM tblrecidency)
+                                            UNION
+                                            (SELECT id, name, dateRecorded, barangay, report_type FROM tblindigency)
+                                        ");
+                                        
+                                        // Check for query errors
+                                        if (!$squery) {
+                                            die('MySQL Error: ' . mysqli_error($con));
+                                        }
+                                        
+                                        // Fetch and display rows from the result set
+                                        while ($row = mysqli_fetch_array($squery, MYSQLI_ASSOC)) {
+                                            echo '
+                                            <tr>
+                                                <td>'.$row['id'].'</td>
+                                                <td>'.$row['name'].'</td>
+                                                <td>'.$row['dateRecorded'].'</td>
+                                                <td>'.$row['barangay'].'</td>
+                                                <td>'.$row['report_type'].'</td>
+                                            </tr>';
+                                        }
+                                        ?>
+                                    </tbody>
                                 </table>
                             </form>
                         </div><!-- /.box-body -->
