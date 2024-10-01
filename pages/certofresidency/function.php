@@ -10,7 +10,7 @@ if(isset($_POST['btn_add'])){
     $rows = mysqli_num_rows($chkdup);
 
     if(isset($_SESSION['role'])){
-        $action = 'Added certificate of residency name of '.$$txt_name;
+        $action = 'Added certificate of residency named of '.$txt_name;
         $iquery = mysqli_query($con,"INSERT INTO tbllogs (user,logdate,action) values ('Brgy.".$_SESSION['staff']."', NOW(), '".$action."')");
     }
 

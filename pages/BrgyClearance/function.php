@@ -18,7 +18,7 @@ if (isset($_POST['btn_add'])) {
 
     // Log the action if the session role is set
     if (isset($_SESSION['role'])) {
-        $action = 'Added Clearance name of ' . $txt_name;
+        $action = 'Added Clearance named of ' . $txt_name;
         $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) values ('Brgy." . $_SESSION['staff'] . "', NOW(), '" . $action . "')");
     }
 
