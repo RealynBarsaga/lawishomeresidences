@@ -44,7 +44,7 @@
 
         <aside class="right-side">
             <section class="content-header">
-                <h1>Dashboard Brgy.<?= $_SESSION['barangay']; ?></h1>
+                <h1>Dashboard</h1>
             </section>
 
             <section class="content">
