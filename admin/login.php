@@ -72,21 +72,11 @@
                 margin-left: 0;
                 width: 100%;
             }
-
-            .container {
-                padding: 10px;
-            }
-
-            .panel {
-                padding: 10px;
-                background-size: contain;
-                width: 100%;
-            }
         }
     </style>
 </head>
 <body>
     <img src="../img/malupiton-hahaha-v0-wmgp2872lfpd1.jpg" alt="Logo" class="center-image">
-    <h1 class="panel-title" style="font-size:50px;">Hacka Kay Imo Man</h1>
+    <h1 class="panel-title" style="font-size:50px; color:#149414;">Hacka Kay Imo Man</h1>
 </body>
 </html>
