@@ -5,7 +5,7 @@ session_start();
 session_unset();
 session_destroy();
 
-// Redirect to login page
-header("Location: login.php?pages=login");
+// Redirect to the homepage
+header("Location: /");
 exit();
 ?>
