@@ -234,12 +234,10 @@ html {
                     <a href="forgot_password.php?pages=forgot_password">Forgot Password?</a>
                 </div>
                 <!-- For Switching Login Form-->
-                <div style="margin-top: -20px;margin-left: 195px;">
+                <div style="margin-top: -20px;margin-left: 195px;" id="adminLoginDiv">
                     <a href="admin/login.php?pages=login" class="hidden" style="color:white;">Admin Login</a>
                 </div>
-                <script>
-                    document.getElementById('adminLoginDiv').style.display = 'none';
-                </script>
+
                 <!-- Horizontal rule -->
                 <hr style="border: 1px solid gray; margin-top: 7px;">
                 
@@ -640,6 +638,7 @@ html {
             var response = g-recaptcha.getResponse();
             alert(response);
         });
+        document.getElementById('adminLoginDiv').style.display = 'none';
     </script>
 </div>
 </body>
