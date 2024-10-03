@@ -10,18 +10,7 @@
     <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css"/>
     <style>
         body {
-            background-image: url('../img/received_1185064586170879.jpeg');
-            background-attachment: fixed;
-            background-position: center center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column; /* Center content both horizontally and vertically */
+            background-color: white;
         }
 
         html {
