@@ -1,0 +1,26 @@
+# Ignore OS generated files
+.DS_Store
+Thumbs.db
+
+# Ignore sensitive files
+.env
+connection.php
+
+# Ignore log files and databases
+*.log
+*.sql
+*.sqlite
+
+# Ignore directories
+/vendor/
+/node_modules/
+/cache/
+/public/uploads/
+
+# Ignore compiled assets
+/public/js/
+/public/css/
+
+# Ignore editor-specific files
+.vscode/
+*.swp
