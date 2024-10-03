@@ -1,3 +1,8 @@
 RewriteEngine On
 RewriteBase /
+
+# Redirect root to login.php
 RewriteRule ^$ login.php [L]
+
+# Rewrite /dashboard to /pages/dashboard/dashboard.php?page=dashboard
+RewriteRule ^dashboard$ pages/dashboard/dashboard.php?page=dashboard [L,QSA]
