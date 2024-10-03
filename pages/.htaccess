@@ -1,20 +1,25 @@
 RewriteEngine On
 RewriteBase /
 
-# Rewrite /dashboard to /admin/dashboard/dashboard.php?page=dashboard
-RewriteRule ^dashboard$ /admin/dashboard/dashboard.php?page=dashboard [L,QSA]
+# Rewrite rules for the sidebar menu
 
-# Rewrite /officials to /admin/officials/officials.php?page=officials
-RewriteRule ^officials$ /admin/officials/officials.php?page=officials [L,QSA]
+# Rewrite /dashboard to the actual file path
+RewriteRule ^dashboard$ /pages/dashboard/dashboard.php [L,QSA]
 
-# Rewrite /staff to /admin/staff/staff.php?page=staff
-RewriteRule ^staff$ /admin/staff/staff.php?page=staff [L,QSA]
+# Rewrite /officials to the actual file path
+RewriteRule ^officials$ /pages/officials/officials.php [L,QSA]
 
-# Rewrite /householdlist to /admin/householdlist/householdlist.php?page=householdlist
-RewriteRule ^householdlist$ /admin/householdlist/householdlist.php?page=householdlist [L,QSA]
+# Rewrite /household to the actual file path
+RewriteRule ^household$ /pages/household/household.php [L,QSA]
 
-# Rewrite /permit to /admin/permit/permit.php?page=permit
-RewriteRule ^permit$ /admin/permit/permit.php?page=permit [L,QSA]
+# Rewrite /resident to the actual file path
+RewriteRule ^resident$ /pages/resident/resident.php [L,QSA]
 
-# Rewrite /generatereports to /admin/generatereports/generatereports.php
-RewriteRule ^generatereports$ /admin/generatereports/generatereports.php [L,QSA]
+# Rewrite /brgyclearance to the actual file path
+RewriteRule ^brgyclearance$ /pages/brgyclearance/brgyclearance.php [L,QSA]
+
+# Rewrite /certofresidency to the actual file path
+RewriteRule ^certofresidency$ /pages/certofresidency/certofresidency.php [L,QSA]
+
+# Rewrite /certofindigency to the actual file path
+RewriteRule ^certofindigency$ /pages/certofindigency/certofindigency.php [L,QSA]
