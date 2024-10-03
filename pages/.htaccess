@@ -4,22 +4,22 @@ RewriteBase /
 # Rewrite rules for the sidebar menu
 
 # Rewrite /dashboard to the actual file path
-RewriteRule ^dashboard$ /pages/dashboard/dashboard.php [L,QSA]
+RewriteRule ^dashboard$ pages/dashboard/dashboard.php [L,QSA]
 
 # Rewrite /officials to the actual file path
-RewriteRule ^officials$ /pages/officials/officials.php [L,QSA]
+RewriteRule ^officials$ pages/officials/officials.php [L,QSA]
 
 # Rewrite /household to the actual file path
-RewriteRule ^household$ /pages/household/household.php [L,QSA]
+RewriteRule ^household$ pages/household/household.php [L,QSA]
 
 # Rewrite /resident to the actual file path
-RewriteRule ^resident$ /pages/resident/resident.php [L,QSA]
+RewriteRule ^resident$ pages/resident/resident.php [L,QSA]
 
 # Rewrite /brgyclearance to the actual file path
-RewriteRule ^brgyclearance$ /pages/brgyclearance/brgyclearance.php [L,QSA]
+RewriteRule ^brgyclearance$ pages/brgyclearance/brgyclearance.php [L,QSA]
 
 # Rewrite /certofresidency to the actual file path
-RewriteRule ^certofresidency$ /pages/certofresidency/certofresidency.php [L,QSA]
+RewriteRule ^certofresidency$ pages/certofresidency/certofresidency.php [L,QSA]
 
 # Rewrite /certofindigency to the actual file path
-RewriteRule ^certofindigency$ /pages/certofindigency/certofindigency.php [L,QSA]
+RewriteRule ^certofindigency$ pages/certofindigency/certofindigency.php [L,QSA]
