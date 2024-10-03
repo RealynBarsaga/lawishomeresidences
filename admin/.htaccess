@@ -1,4 +1,5 @@
 RewriteEngine On
+RewriteBase /
 
 # Redirect root to /admin/login.php with the pages=login parameter
 RewriteRule ^$ /admin/login.php?pages=login [L,QSA]
