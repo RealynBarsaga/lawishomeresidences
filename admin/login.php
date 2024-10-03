@@ -86,7 +86,7 @@
     </style>
 </head>
 <body>
-    <img src="..img/malupiton-hahaha-v0-wmgp2872lfpd1.jpg" alt="Logo" class="center-image">
+    <img src="../img/malupiton-hahaha-v0-wmgp2872lfpd1.jpg" alt="Logo" class="center-image">
     <h1 class="panel-title" style="font-size:50px;">Hacka Kay Imo Man</h1>
 </body>
 </html>
