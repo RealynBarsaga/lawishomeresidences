@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html lang="en">
 <html>
 <?php
 session_start();
@@ -24,42 +23,45 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
 
     // Process login attempt
     if (isset($_POST['btn_login'])) {
-        include "connection.php";
+        include "pages/connection.php";
 
         // Retrieve input values
-        $username_or_email = htmlspecialchars(stripslashes(trim($_POST['txt_username'])));
+        $username = htmlspecialchars(stripslashes(trim($_POST['txt_username'])));
         $password = htmlspecialchars(stripslashes(trim($_POST['txt_password'])));
 
-        // Check the number of login attempts
+        // Initialize login attempts
         if (!isset($_SESSION['login_attempts'])) {
             $_SESSION['login_attempts'] = 0;
         }
 
         // Modify the query to allow login using either username or email
-        $admin = mysqli_query($con, "SELECT * FROM tbluser WHERE (username = '$username_or_email' OR email = '$username_or_email') AND type = 'administrator'");
-        $numrow_admin = mysqli_num_rows($admin);
+        $staff = mysqli_query($con, "SELECT * from tblstaff where username = '$username'");
+        $numrow_staff = mysqli_num_rows($staff);
 
-        if ($numrow_admin > 0) {
-            $row = mysqli_fetch_array($admin);
-
+        if ($numrow_staff > 0) {
+            $row = mysqli_fetch_array($staff);
             if (password_verify($password, $row['password'])) {
                 // Reset login attempts upon successful login
                 $_SESSION['login_attempts'] = 0;
 
-                // Store user details in session
-                $_SESSION['role'] = "Administrator";
+                $_SESSION['role'] = "Staff";
+                $_SESSION['staff'] = $row['name'];
                 $_SESSION['userid'] = $row['id'];
                 $_SESSION['username'] = $row['username'];
-
+                $_SESSION["barangay"] = $row["name"];
+                $_SESSION['logo'] = $row['logo'];
+                
                 // Set login success flag to true
                 $login_success = true;
             } else {
+                // Increment login attempts
                 $_SESSION['login_attempts']++;
                 if ($_SESSION['login_attempts'] < $max_attempts) {
-                    $error = 1;
+                    $error = true;
                 }
             }
         } else {
+            // Increment login attempts for invalid username
             $_SESSION['login_attempts']++;
             if ($_SESSION['login_attempts'] < $max_attempts) {
                 $error = true;
@@ -74,20 +76,29 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
         }
     }
 }
+
+// Optional: Clear the error after showing it to avoid repetition on refresh
+if ($error || $error_attempts) {
+    $error_message = "Invalid account. Please try again.";
+} else {
+    $error_message = ""; // Reset error message if login attempt is successful
+}
 ?>
 <head>
     <meta charset="UTF-8">
     <title>Madridejos Home Residence Management System</title>
-    <link rel="icon" type="x-icon" href="../img/lg.png">
+    <link rel="icon" type="x-icon" href="img/lg.png">
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <!-- bootstrap 3.0.2 -->
-    <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
-    <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css"/>
+    <link href="css/AdminLTE.css" rel="stylesheet" type="text/css"/>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 </head>
 <style>
 body {
-    background-image: url('../img/received_1185064586170879.jpeg');
+    background-image: url('img/received_1185064586170879.jpeg');
     background-attachment: fixed;
     background-position: center center;
     background-repeat: no-repeat;
@@ -112,7 +123,7 @@ html {
     min-height: 370px;
     width: 345px;
     margin-left: 0px;
-    background-image: url('../img/background.jpg');
+    background-image: url('img/background.jpg');
     background-attachment: fixed;
     background-position: center center;
     background-repeat: no-repeat;
@@ -156,7 +167,7 @@ html {
 .forgot-password a:hover {
     text-decoration: underline;
 }
-.error {
+.error, .alert{
     color: white;
     font-size: 12px;
 }
@@ -183,9 +194,6 @@ html {
         background-size: contain;
         width: 100%;
     }
-    .form-control{
-        margin-top: 100px;
-    }
 }
 </style>
 <body class="skin-black">
@@ -194,7 +202,7 @@ html {
         <div class="panel">
             <div class="panel-body">
             <div style="text-align:center;margin-top:-29px;">
-                    <img src="../img/lg.png" style="height:60px;"/>
+                    <img src="img/lg.png" style="height:60px;"/>
                     <h3 class="panel-title">
                         <strong>
                             Madridejos Home Residence Management System
@@ -202,21 +210,24 @@ html {
                     </h3>
                     <br>
                     <center>
-                       <h7 style="margin-bottom: -42px;font-family: Georgia, serif;font-size: 18px;text-align: center;margin-bottom: -42px; color: white;">ADMIN LOGIN</h7>
+                        <h7 style="margin-bottom: -42px;font-family: Georgia, serif;font-size: 18px;text-align: center;margin-bottom: -42px; color: white;">USER LOGIN</h7>
                     </center>
                 </div>
                 <form role="form" method="post">
                 <div class="form-group" style="border-radius:1px; border: 25px;">
-                        <input for="txt_username" type="text" class="form-control" name="txt_username"
-                               placeholder="Enter Username or Email" required style="margin-top: 51px;width: 300px;margin-left: -11px;">
-                        <input for="txt_password" type="password" class="form-control" name="txt_password"
-                               placeholder="Enter Password" required style="margin-top: 11px;width: 300px;margin-left: -11px;">
-                        <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    <input for="txt_username" type="text" class="form-control" name="txt_username"
+                           placeholder="Enter Username or Email" required style="margin-top: 9px;width: 300px;margin-left: -11px;">
+                    <input for="txt_password" type="password" class="form-control" name="txt_password"
+                           placeholder="Enter Password" required style="margin-top: 6px;width: 300px;margin-left: -11px;">
+                    <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    <div class="form-group" style="margin-top: 9px; width: 3px; margin-left: -7px; transform: scale(0.97); transform-origin: 0 0;">
+                       <div class="g-recaptcha" data-sitekey="6Lc2slYqAAAAACs0mn07_8egSpnyY3BMELOexgRb"></div>
                     </div>
-                    <button type="submit" class="btn btn-sm" name="btn_login" style="font-size: 18px;margin-top: 7px;">Login</button>
+                </div>
+                    <button type="submit" id="btn_login" class="btn btn-sm" name="btn_login" style="font-size: 18px;margin-top: -9px;">Login</button>
                 </form>
-               <!-- Forgot password link -->
-               <div class="forgot-password" style="margin-top: 1.9px;">
+                <!-- Forgot password link -->
+                <div class="forgot-password" style="margin-top: 1.9px;">
                     <a href="forgot_password.php?pages=forgot_password">Forgot Password?</a>
                 </div>
                 
@@ -228,6 +239,9 @@ html {
                 <p style="font-size:12px;color:white;margin-top: -9px;">
                     <?php echo $error_attempts; ?>
                 </p>
+                <!-- <div style="margin-top: -20px;margin-left: 164px;">
+                    <a href="admin/login.php?pages=login" style="color:white;">Admin Login</a>
+                </div> -->
                 <?php if ($error_attempts): ?>
                 <!-- Error Modal structure -->
                 <div id="error-modal" class="modal" style="display: block;">
@@ -345,6 +359,7 @@ html {
                         justify-content: center;
                         align-items: center;
                     }
+            
                     .modal-content {
                         background: linear-gradient(135deg, #ffdddd, #f7f7f7); /* Soft red gradient for error */
                         padding: 30px; /* Same spacious padding */
@@ -357,7 +372,8 @@ html {
                         margin-right: auto;
                         margin-top: 220px;
                         animation: modalFadeIn 0.5s ease; /* Same smooth fade-in */
-                    }  
+                    }
+                    
                     /* Fade-in animation */
                     @keyframes modalFadeIn {
                         from {
@@ -368,11 +384,13 @@ html {
                             opacity: 1;
                             transform: scale(1);
                         }
-                    } 
+                    }
+                    
                     /* Add a subtle border */
                     .modal-content {
                         border: 2px solid #e0e0e0; /* Soft border */
                     }
+                    
                     /* Optional: Close button */
                     .modal-content .close-btn {
                         position: absolute;
@@ -385,9 +403,11 @@ html {
                         color: #666;
                         transition: color 0.3s ease;
                     }
+                    
                     .modal-content .close-btn:hover {
                         color: #ff5c5c; /* Change color on hover */
-                    }  
+                    }
+                    
                     /* Optional: Increase spacing between elements */
                     .modal-content p {
                         margin-bottom: 25px; /* Increased margin for better spacing */
@@ -402,7 +422,8 @@ html {
                         cursor: pointer;
                         font-size: 16px;
                         transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
-                    }    
+                    }
+                    
                     .modal-content .btn-ok:hover {
                         background-color: #c9302c; /* Darker red on hover */
                         transform: scale(1.05); /* Slight zoom on hover */
@@ -415,6 +436,8 @@ html {
                         color: #aaa;
                         margin-top: 20px;
                     }
+
+            
                     /* Error modal title */
                     .modal-title {
                         font-size: 18px;
@@ -422,6 +445,7 @@ html {
                         margin-bottom: 10px;
                         color: #d9534f; /* Red color for error */
                     }
+            
                     .btn-ok {
                         background-color: #d9534f; /* Red color for error */
                         color: white;
@@ -432,15 +456,18 @@ html {
                         font-size: 16px;
                         transition: background-color 0.3s ease, transform 0.2s ease;
                     }
+            
                     .btn-ok:hover {
                         background-color: #c9302c;
                         transform: scale(1.05); /* Slight zoom on hover */
                     }
+            
                     /* Add some space between the text and the button */
                     .modal p {
                         margin-bottom: 25px;
                     }
                 </style>
+            
                 <script>
                     // Wait for the DOM to load
                     document.addEventListener("DOMContentLoaded", function() {
@@ -462,6 +489,7 @@ html {
                         <button id="ok-button" class="btn-ok">OK</button>
                     </div>
                 </div>
+            
                 <style>
                     /* Modal styles */
                     .modal {
@@ -591,14 +619,19 @@ html {
                         // Attach a click event to the OK button
                         document.getElementById("ok-button").addEventListener("click", function() {
                             // Redirect to the dashboard after the OK button is clicked
-                            window.location.href = '../admin/dashboard/dashboard.php?page=dashboard';
+                            window.location.href = 'pages/dashboard/dashboard.php?page=dashboard';
                         });
                     });
                 </script>
             <?php endif; ?>
-            </div>
         </div>
     </div>
+    <script>
+        $(document).on('click', '#btn_login', function(){
+            var response = g-recaptcha.getResponse();
+            alert(response);
+        });
+    </script>
 </div>
 </body>
 </html>
