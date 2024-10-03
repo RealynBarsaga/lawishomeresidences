@@ -1,0 +1,17 @@
+# Rewrite /dashboard to /admin/dashboard/dashboard.php?page=dashboard
+RewriteRule ^dashboard$ /admin/dashboard/dashboard.php?page=dashboard [L,QSA]
+
+# Rewrite /officials to /admin/officials/officials.php?page=officials
+RewriteRule ^officials$ /admin/officials/officials.php?page=officials [L,QSA]
+
+# Rewrite /staff to /admin/staff/staff.php?page=staff
+RewriteRule ^staff$ /admin/staff/staff.php?page=staff [L,QSA]
+
+# Rewrite /householdlist to /householdlist/householdlist.php?page=householdlist
+RewriteRule ^householdlist$ /householdlist/householdlist.php?page=householdlist [L,QSA]
+
+# Rewrite /permit to /permit/permit.php?page=permit
+RewriteRule ^permit$ /permit/permit.php?page=permit [L,QSA]
+
+# Rewrite /generatereports to /generatereports/generatereports.php
+RewriteRule ^generatereports$ /generatereports/generatereports.php [L,QSA]
