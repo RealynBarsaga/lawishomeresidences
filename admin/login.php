@@ -11,6 +11,17 @@
     <style>
         body {
             background-color: white;
+            background-attachment: fixed;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column; /* Center content both horizontally and vertically */
         }
 
         html {
