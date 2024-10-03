@@ -4,5 +4,7 @@ RewriteEngine On
 RewriteRule ^$ /admin/login.php?pages=login [L,QSA]
 
 
+RewriteEngine On
+
 # Rewrite /dashboard to /pages/dashboard/dashboard.php?page=dashboard internally
 RewriteRule ^dashboard$ /pages/dashboard/dashboard.php?page=dashboard [L,QSA]
