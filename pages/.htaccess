@@ -1,4 +1,5 @@
 RewriteEngine On
+RewriteBase /
 
 # Rewrite /dashboard to /admin/dashboard/dashboard.php?page=dashboard
 RewriteRule ^dashboard$ /admin/dashboard/dashboard.php?page=dashboard [L,QSA]
