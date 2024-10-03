@@ -194,6 +194,9 @@ html {
         background-size: contain;
         width: 100%;
     }
+    .hidden {
+        display: none;
+    }
 }
 </style>
 <body class="skin-black">
@@ -232,8 +235,11 @@ html {
                 </div>
                 <!-- For Switching Login Form-->
                 <div style="margin-top: -20px;margin-left: 195px;">
-                    <a href="admin/login.php?pages=login" style="color:white;">Admin Login</a>
+                    <a href="admin/login.php?pages=login" class="hidden" style="color:white;">Admin Login</a>
                 </div>
+                <script>
+                    document.getElementById('adminLoginDiv').style.display = 'none';
+                </script>
                 <!-- Horizontal rule -->
                 <hr style="border: 1px solid gray; margin-top: 7px;">
                 
