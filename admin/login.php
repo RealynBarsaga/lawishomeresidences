@@ -86,12 +86,7 @@
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="panel">
-            <img src="https://images.app.goo.gl/WpSftXyqeunE3mw46" alt="Logo" class="center-image">
-            <h1 class="panel-title">Hacka Kay Imo Man</h1>
-            <!-- Replace '../img/logo.png' with the actual image path -->
-        </div>
-    </div>
+    <img src="..img/malupiton-hahaha-v0-wmgp2872lfpd1.jpg" alt="Logo" class="center-image">
+    <h1 class="panel-title" style="font-size:50px;">Hacka Kay Imo Man</h1>
 </body>
 </html>
