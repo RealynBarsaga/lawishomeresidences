@@ -1,0 +1,2 @@
+RewriteEngine On
+RewriteRule ^admin$ login.php [L]

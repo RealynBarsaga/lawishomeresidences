@@ -1,20 +1,2 @@
-<IfModule mod_rewrite.c>
-    Options +FollowSymLinks
-    RewriteEngine On
-
-    # Exclude everything in /public/ from rewriting
-    RewriteCond %{REQUEST_URI} !^/public/ 
-
-    # Don't rewrite directories and files
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-
-    # Rewrite everything to /public/
-    RewriteRule ^(.*)$ /public/$1 [L]
-
-    # Redirect the root URL to the login page
-    RewriteRule ^$ public/login.php [L]
-
-    # Optional: If you still want to keep `/login` but hide .php extension
-    # RewriteRule ^login$ public/login.php [L]
-</IfModule>
+RewriteEngine On
+RewriteRule ^login$ login.php [L]
