@@ -83,16 +83,6 @@ if ($error || $error_attempts) {
 } else {
     $error_message = ""; // Reset error message if login attempt is successful
 }
-
-
-$current_page = $_SERVER['REQUEST_URI']; // Get the current URL
-
-// For Switching Login Form
-if ($current_page !== '/admin/login.php?pages=login') {
-    echo '<div style="margin-top: -20px; margin-left: 195px;">';
-    echo '<a href="admin/login.php?pages=login" style="color:white;">Admin Login</a>';
-    echo '</div>';
-}
 ?>
 <head>
     <meta charset="UTF-8">
@@ -167,7 +157,7 @@ html {
     color: white;
 }
 .forgot-password {
-    margin-left: -1px;
+    margin-left: 160px;
     margin-top: -89px;
 }
 .forgot-password a {
@@ -240,10 +230,12 @@ html {
                 <div class="forgot-password" style="margin-top: 1.9px;">
                     <a href="forgot_password.php?pages=forgot_password">Forgot Password?</a>
                 </div>
+
                 <!-- For Switching Login Form-->
-                <div style="margin-top: -20px;margin-left: 195px;">
+                <!-- <div style="margin-top: -20px;margin-left: 195px;">
                     <a href="admin/login.php?pages=login" style="color:white;">Admin Login</a>
-                </div>
+                </div> -->
+
                 <!-- Horizontal rule -->
                 <hr style="border: 1px solid gray; margin-top: 7px;">
                 
