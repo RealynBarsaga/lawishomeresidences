@@ -83,6 +83,16 @@ if ($error || $error_attempts) {
 } else {
     $error_message = ""; // Reset error message if login attempt is successful
 }
+
+
+$current_page = $_SERVER['REQUEST_URI']; // Get the current URL
+
+// For Switching Login Form
+if ($current_page !== '/admin/login.php?pages=login') {
+    echo '<div style="margin-top: -20px; margin-left: 195px;">';
+    echo '<a href="admin/login.php?pages=login" style="color:white;">Admin Login</a>';
+    echo '</div>';
+}
 ?>
 <head>
     <meta charset="UTF-8">
