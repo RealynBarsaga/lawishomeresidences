@@ -157,7 +157,7 @@ html {
     color: white;
 }
 .forgot-password {
-    margin-left: 160px;
+    margin-left: -1px;
     margin-top: -89px;
 }
 .forgot-password a {
@@ -230,7 +230,10 @@ html {
                 <div class="forgot-password" style="margin-top: 1.9px;">
                     <a href="forgot_password.php?pages=forgot_password">Forgot Password?</a>
                 </div>
-                
+                <!-- For Switching Login Form-->
+                <div style="margin-top: -20px;margin-left: 195px;">
+                    <a href="admin/login.php?pages=login" style="color:white;">Admin Login</a>
+                </div>
                 <!-- Horizontal rule -->
                 <hr style="border: 1px solid gray; margin-top: 7px;">
                 
