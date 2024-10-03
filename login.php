@@ -235,7 +235,7 @@ html {
                 </div>
                 <!-- For Switching Login Form-->
                 <div style="margin-top: -20px;margin-left: 195px;" id="adminLoginDiv">
-                    <a href="admin/login.php?pages=login" class="hidden" style="color:white;">Admin Login</a>
+                    <a href="admin/login.php?pages=login" style="color:white;">Admin Login</a>
                 </div>
 
                 <!-- Horizontal rule -->
