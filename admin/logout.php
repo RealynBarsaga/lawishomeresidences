@@ -5,7 +5,7 @@ session_start();
 session_unset();
 session_destroy();
 
-// Redirect to login page
-header("Location: login.php?pages=login");
+// Redirect to the /admin page (without query parameters)
+header("Location: /admin");
 exit();
 ?>
