@@ -207,12 +207,12 @@ html {
                 </div>
                 <form role="form" method="post">
                 <div class="form-group" style="border-radius:1px; border: 25px;">
-                        <input for="txt_username" type="text" class="form-control" name="txt_username"
+                        <input for="txt_username" type="text" type="email" class="form-control" name="txt_username"
                                placeholder="Enter Username or Email" required style="margin-top: 51px;width: 300px;margin-left: -11px;">
                         <input for="txt_password" type="password" class="form-control" name="txt_password"
                                placeholder="Enter Password" required style="margin-top: 11px;width: 300px;margin-left: -11px;">
                         <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                    </div>
+                </div>
                     <button type="submit" class="btn btn-sm" name="btn_login" style="font-size: 18px;margin-top: 7px;">Login</button>
                 </form>
                <!-- Forgot password link -->
@@ -596,7 +596,7 @@ html {
                         // Attach a click event to the OK button
                         document.getElementById("ok-button").addEventListener("click", function() {
                             // Redirect to the dashboard after the OK button is clicked
-                            window.location.href = '../admin/dashboard/dashboard.php?page=dashboard';
+                            window.location.href = '/admin/dashboard';
                         });
                     });
                 </script>

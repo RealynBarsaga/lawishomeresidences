@@ -1,16 +1,57 @@
 <?php
 if (isset($_POST['btn_add'])) {
-    // Get form input values
-    $txt_cnum = $_POST['txt_cnum'];
-    $txt_name = $_POST['txt_name'];
-    $txt_purpose = $_POST['txt_purpose'];
-    $txt_ornum = $_POST['txt_ornum'];
-    $txt_amount = $_POST['txt_amount'];
-    $txt_age = $_POST['txt_age'];
-    $txt_bdate = $_POST['txt_bdate'];
-    $txt_purok = $_POST['txt_purok'];
-    $date = date('Y-m-d');
+    // Sanitize inputs
+    $txt_cnum = htmlspecialchars(stripslashes(trim($_POST['txt_cnum'])), ENT_QUOTES, 'UTF-8');
+    $txt_name = htmlspecialchars(stripslashes(trim($_POST['txt_name'])), ENT_QUOTES, 'UTF-8');
+    $txt_purpose = htmlspecialchars(stripslashes(trim($_POST['txt_purpose'])), ENT_QUOTES, 'UTF-8');
+    $txt_ornum = htmlspecialchars(stripslashes(trim($_POST['txt_ornum'])), ENT_QUOTES, 'UTF-8');
+    $txt_amount = htmlspecialchars(stripslashes(trim($_POST['txt_amount'])), ENT_QUOTES, 'UTF-8');
+    $txt_age = (int) $_POST['txt_age']; // Cast age to integer
+    $txt_bdate = htmlspecialchars(stripslashes(trim($_POST['txt_bdate'])), ENT_QUOTES, 'UTF-8');
+    $txt_purok = htmlspecialchars(stripslashes(trim($_POST['txt_purok'])), ENT_QUOTES, 'UTF-8');
+    $date = date('Y-m-d'); // Current date in 'YYYY-MM-DD' format
     $off_barangay = $_SESSION["barangay"] ?? "";
+    
+    // Basic Validation
+    if (empty($txt_cnum) || empty($txt_name) || empty($txt_purpose) || empty($txt_ornum) || 
+        empty($txt_amount) || empty($txt_age) || empty($txt_bdate) || empty($txt_purok)) {
+        die('Required fields are missing.');
+    }
+    
+    // Validate contact number (example: numeric and possibly length validation)
+    if (!preg_match('/^[0-9]{10,12}$/', $txt_cnum)) {
+        die('Invalid contact number. It must be between 10 and 12 digits.');
+    }
+    
+    // Validate name (letters and spaces allowed)
+    if (!preg_match('/^[a-zA-Z\s]+$/', $txt_name)) {
+        die('Invalid name format. Only letters and spaces are allowed.');
+    }
+    
+    // Validate OR number (assuming it's numeric)
+    if (!preg_match('/^[0-9]+$/', $txt_ornum)) {
+        die('Invalid OR number. It must be numeric.');
+    }
+    
+    // Validate amount (assuming it's a positive decimal)
+    if (!preg_match('/^\d+(\.\d{1,2})?$/', $txt_amount)) {
+        die('Invalid amount format. Only positive numbers are allowed with up to two decimal places.');
+    }
+    
+    // Validate age (must be a positive integer)
+    if ($txt_age <= 0) {
+        die('Invalid age. It must be a positive number.');
+    }
+    
+    // Validate birthdate (check if it's a valid date in 'YYYY-MM-DD' format)
+    if (!DateTime::createFromFormat('Y-m-d', $txt_bdate)) {
+        die('Invalid birthdate format. Please use YYYY-MM-DD.');
+    }
+    
+    // Validate purok (assuming it's numeric)
+    if (!preg_match('/^[0-9]+$/', $txt_purok)) {
+        die('Invalid purok. Only numbers are allowed.');
+    }
 
     // Check for duplicate clearance
     $chkdup = mysqli_query($con, "SELECT * from tblclearance where name = '$txt_name'");
@@ -107,17 +148,58 @@ if(isset($_POST['btn_disapprove']))
 }
 
 if(isset($_POST['btn_save'])) {
-    $txt_edit_residentname = $_POST['txt_edit_residentname'];
-    $txt_id = $_POST['hidden_id'];
-    $txt_edit_cnum = $_POST['txt_edit_cnum'];
-    $txt_edit_purpose = $_POST['txt_edit_purpose'];
-    $txt_edit_ornum = $_POST['txt_edit_ornum'];
-    $txt_edit_amount = $_POST['txt_edit_amount'];
-
-    // New fields
-    $txt_edit_age = $_POST['txt_edit_age'];
-    $txt_edit_bdate = $_POST['txt_edit_bdate'];
-    $txt_edit_purok = $_POST['txt_edit_purok'];
+   // Sanitize inputs
+   $txt_edit_residentname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_residentname'])), ENT_QUOTES, 'UTF-8');
+   $txt_id = htmlspecialchars(stripslashes(trim($_POST['hidden_id'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_cnum = htmlspecialchars(stripslashes(trim($_POST['txt_edit_cnum'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_purpose = htmlspecialchars(stripslashes(trim($_POST['txt_edit_purpose'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_ornum = htmlspecialchars(stripslashes(trim($_POST['txt_edit_ornum'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_amount = htmlspecialchars(stripslashes(trim($_POST['txt_edit_amount'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_age = (int) $_POST['txt_edit_age']; // Cast to integer
+   $txt_edit_bdate = htmlspecialchars(stripslashes(trim($_POST['txt_edit_bdate'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_purok = htmlspecialchars(stripslashes(trim($_POST['txt_edit_purok'])), ENT_QUOTES, 'UTF-8');
+   
+   // Basic Validation
+   if (empty($txt_edit_residentname) || empty($txt_id) || empty($txt_edit_cnum) || 
+       empty($txt_edit_purpose) || empty($txt_edit_ornum) || empty($txt_edit_amount) || 
+       empty($txt_edit_age) || empty($txt_edit_bdate) || empty($txt_edit_purok)) {
+       die('Required fields are missing.');
+   }
+   
+   // Validate resident name (letters and spaces allowed)
+   if (!preg_match('/^[a-zA-Z\s]+$/', $txt_edit_residentname)) {
+       die('Invalid resident name format. Only letters and spaces are allowed.');
+   }
+   
+   // Validate contact number (example: numeric, 10-12 digits)
+   if (!preg_match('/^[0-9]{10,12}$/', $txt_edit_cnum)) {
+       die('Invalid contact number. It must be between 10 and 12 digits.');
+   }
+   
+   // Validate OR number (assuming it's numeric)
+   if (!preg_match('/^[0-9]+$/', $txt_edit_ornum)) {
+       die('Invalid OR number. It must be numeric.');
+   }
+   
+   // Validate amount (assuming it's a positive decimal)
+   if (!preg_match('/^\d+(\.\d{1,2})?$/', $txt_edit_amount)) {
+       die('Invalid amount format. Only positive numbers are allowed with up to two decimal places.');
+   }
+   
+   // Validate age (must be a positive integer)
+   if ($txt_edit_age <= 0) {
+       die('Invalid age. It must be a positive number.');
+   }
+   
+   // Validate birthdate (check if it's a valid date in 'YYYY-MM-DD' format)
+   if (!DateTime::createFromFormat('Y-m-d', $txt_edit_bdate)) {
+       die('Invalid birthdate format. Please use YYYY-MM-DD.');
+   }
+   
+   // Validate purok (assuming it's numeric)
+   if (!preg_match('/^[0-9]+$/', $txt_edit_purok)) {
+       die('Invalid purok. Only numbers are allowed.');
+   }
 
     // Update query including the new fields
     $update_query = mysqli_query($con,"UPDATE tblclearance SET 

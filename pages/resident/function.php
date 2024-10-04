@@ -1,31 +1,38 @@
 <?php
 // Handle form submission for adding a resident
 if (isset($_POST['btn_add'])) {
-    $txt_lname = $_POST['txt_lname'];
-    $txt_fname = $_POST['txt_fname'];
-    $txt_mname = $_POST['txt_mname'];
-    $ddl_gender = $_POST['ddl_gender'];
-    $txt_bdate = $_POST['txt_bdate'];
-    $txt_bplace = $_POST['txt_bplace'];
-
+    // Sanitize input data
+    $txt_lname = htmlspecialchars(stripslashes(trim($_POST['txt_lname'])), ENT_QUOTES, 'UTF-8');
+    $txt_fname = htmlspecialchars(stripslashes(trim($_POST['txt_fname'])), ENT_QUOTES, 'UTF-8');
+    $txt_mname = htmlspecialchars(stripslashes(trim($_POST['txt_mname'])), ENT_QUOTES, 'UTF-8');
+    $ddl_gender = htmlspecialchars(stripslashes(trim($_POST['ddl_gender'])), ENT_QUOTES, 'UTF-8');
+    $txt_bdate = htmlspecialchars(stripslashes(trim($_POST['txt_bdate'])), ENT_QUOTES, 'UTF-8');
+    $txt_bplace = htmlspecialchars(stripslashes(trim($_POST['txt_bplace'])), ENT_QUOTES, 'UTF-8');
+    
     // Calculate age based on birthdate
-    $dateOfBirth = $txt_bdate;
-    $today = date("Y-m-d");
-    $diff = date_diff(date_create($dateOfBirth), date_create($today));
-    $txt_age = $diff->format('%y');
+    $dateOfBirth = DateTime::createFromFormat('Y-m-d', $txt_bdate);
+    $today = new DateTime('today');
+    
+    if ($dateOfBirth && $dateOfBirth <= $today) { // Ensure valid date and not in the future
+        $diff = $today->diff($dateOfBirth);
+        $txt_age = $diff->y; // Get the age in years
+    } else {
+        $txt_age = 0; // Invalid or future birthdate
+    }
+    
+    // Continue with other sanitized form data
+    $txt_brgy = htmlspecialchars(stripslashes(trim($_POST['txt_brgy'])), ENT_QUOTES, 'UTF-8');
+    $txt_purok = htmlspecialchars(stripslashes(trim($_POST['txt_purok'])), ENT_QUOTES, 'UTF-8');
+    $txt_householdmem = htmlspecialchars(stripslashes(trim($_POST['txt_householdmem'])), ENT_QUOTES, 'UTF-8');
+    $txt_cstatus = htmlspecialchars(stripslashes(trim($_POST['txt_cstatus'])), ENT_QUOTES, 'UTF-8');
+    $txt_householdnum = htmlspecialchars(stripslashes(trim($_POST['txt_householdnum'])), ENT_QUOTES, 'UTF-8');
+    $txt_religion = htmlspecialchars(stripslashes(trim($_POST['txt_religion'])), ENT_QUOTES, 'UTF-8');
+    $txt_national = htmlspecialchars(stripslashes(trim($_POST['txt_national'])), ENT_QUOTES, 'UTF-8');
+    $ddl_hos = htmlspecialchars(stripslashes(trim($_POST['ddl_hos'])), ENT_QUOTES, 'UTF-8');
+    $ddl_los = htmlspecialchars(stripslashes(trim($_POST['ddl_los'])), ENT_QUOTES, 'UTF-8');
+    $txt_lightning = htmlspecialchars(stripslashes(trim($_POST['txt_lightning'])), ENT_QUOTES, 'UTF-8');
+    $txt_faddress = htmlspecialchars(stripslashes(trim($_POST['txt_faddress'])), ENT_QUOTES, 'UTF-8');
 
-    // Continue with your other form data
-    $txt_brgy = $_POST['txt_brgy'];
-    $txt_purok = $_POST['txt_purok'];
-    $txt_householdmem = $_POST['txt_householdmem'];
-    $txt_cstatus = $_POST['txt_cstatus'];
-    $txt_householdnum = $_POST['txt_householdnum'];
-    $txt_religion = $_POST['txt_religion'];
-    $txt_national = $_POST['txt_national'];
-    $ddl_hos = $_POST['ddl_hos'];
-    $ddl_los = $_POST['ddl_los'];
-    $txt_lightning = $_POST['txt_lightning'];
-    $txt_faddress = $_POST['txt_faddress'];
 
     $name = basename($_FILES['txt_image']['name']);
     $temp = $_FILES['txt_image']['tmp_name'];
@@ -156,26 +163,31 @@ if (isset($_POST['btn_add'])) {
 // Handle form submission for editing a resident
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_save'])) {
     // Get form data
-    $id = $_POST['hidden_id'];
-    $lname = $_POST['txt_edit_lname'];
-    $fname = $_POST['txt_edit_fname'];
-    $mname = $_POST['txt_edit_mname'];
-    $age = $_POST['txt_edit_age'];
-    $bdate = $_POST['txt_edit_bdate'];
-    $barangay = $_POST['txt_edit_brgy'];
-    $purok = $_POST['txt_edit_purok'];
-    $householdnum = $_POST['txt_edit_householdnum'];
-    $cstatus = $_POST['txt_edit_cstatus'];
-    $nationality = $_POST['txt_edit_national'];
-    $landOwnershipStatus = $_POST['ddl_edit_los'];
-    $gender = $_POST['ddl_edit_gender'];
-    $bplace = $_POST['txt_edit_bplace'];
-    $totalhousehold = $_POST['txt_edit_householdmem'];
-    $religion = $_POST['txt_edit_religion'];
-    $houseOwnershipStatus = $_POST['ddl_edit_hos'];
-    $lightning = $_POST['txt_edit_lightning'];
-    $formerAddress = $_POST['txt_edit_faddress'];
-
+    $id = htmlspecialchars(stripslashes(trim($_POST['hidden_id'])), ENT_QUOTES, 'UTF-8'); 
+    $lname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_lname'])), ENT_QUOTES, 'UTF-8');
+    $fname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_fname'])), ENT_QUOTES, 'UTF-8');
+    $mname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_mname'])), ENT_QUOTES, 'UTF-8');
+    $age = (int) $_POST['txt_edit_age']; // cast age to an integer
+    $bdate = htmlspecialchars(stripslashes(trim($_POST['txt_edit_bdate'])), ENT_QUOTES, 'UTF-8');
+    $barangay = htmlspecialchars(stripslashes(trim($_POST['txt_edit_brgy'])), ENT_QUOTES, 'UTF-8');
+    $purok = htmlspecialchars(stripslashes(trim($_POST['txt_edit_purok'])), ENT_QUOTES, 'UTF-8');
+    $householdnum = htmlspecialchars(stripslashes(trim($_POST['txt_edit_householdnum'])), ENT_QUOTES, 'UTF-8');
+    $cstatus = htmlspecialchars(stripslashes(trim($_POST['txt_edit_cstatus'])), ENT_QUOTES, 'UTF-8');
+    $nationality = htmlspecialchars(stripslashes(trim($_POST['txt_edit_national'])), ENT_QUOTES, 'UTF-8');
+    $landOwnershipStatus = htmlspecialchars(stripslashes(trim($_POST['ddl_edit_los'])), ENT_QUOTES, 'UTF-8');
+    $gender = htmlspecialchars(stripslashes(trim($_POST['ddl_edit_gender'])), ENT_QUOTES, 'UTF-8');
+    $bplace = htmlspecialchars(stripslashes(trim($_POST['txt_edit_bplace'])), ENT_QUOTES, 'UTF-8');
+    $totalhousehold = (int) $_POST['txt_edit_householdmem']; // cast to integer
+    $religion = htmlspecialchars(stripslashes(trim($_POST['txt_edit_religion'])), ENT_QUOTES, 'UTF-8');
+    $houseOwnershipStatus = htmlspecialchars(stripslashes(trim($_POST['ddl_edit_hos'])), ENT_QUOTES, 'UTF-8');
+    $lightning = htmlspecialchars(stripslashes(trim($_POST['txt_edit_lightning'])), ENT_QUOTES, 'UTF-8');
+    $formerAddress = htmlspecialchars(stripslashes(trim($_POST['txt_edit_faddress'])), ENT_QUOTES, 'UTF-8');
+    
+    // Validate essential fields (example)
+    if (empty($id) || empty($lname) || empty($fname)) {
+        die('Required fields are missing.');
+    }
+    
     // Handle image upload
     $image = $_FILES['txt_edit_image']['name'];
     if ($image) {

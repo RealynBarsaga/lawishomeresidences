@@ -5,7 +5,7 @@ session_start();
 session_unset();
 session_destroy();
 
-// Redirect to the homepage
+// Redirect to login page
 header("Location: /");
 exit();
 ?>

@@ -69,11 +69,11 @@
                                         while ($row = mysqli_fetch_array($squery, MYSQLI_ASSOC)) {
                                             echo '
                                             <tr>
-                                                <td>'.$row['id'].'</td>
-                                                <td>'.$row['name'].'</td>
-                                                <td>'.$row['dateRecorded'].'</td>
-                                                <td>'.$row['barangay'].'</td>
-                                                <td>'.$row['report_type'].'</td>
+                                                <td>'.htmlspecialchars($row['id'], ENT_QUOTES, 'UTF-8').'</td>
+                                                <td>'.htmlspecialchars($row['name'], ENT_QUOTES, 'UTF-8').'</td>
+                                                <td>'.htmlspecialchars($row['dateRecorded'], ENT_QUOTES, 'UTF-8').'</td>
+                                                <td>'.htmlspecialchars($row['barangay'], ENT_QUOTES, 'UTF-8').'</td>
+                                                <td>'.htmlspecialchars($row['report_type'], ENT_QUOTES, 'UTF-8').'</td>
                                             </tr>';
                                         }
                                         ?>

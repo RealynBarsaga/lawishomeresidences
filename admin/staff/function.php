@@ -10,7 +10,7 @@ if (isset($_POST['btn_add'])) {
 
     // Log the action if the user has the appropriate role
     if (isset($_SESSION['role']) && $_SESSION['role'] === 'Administrator') {
-        $action = 'Added Barangay with the name of ' . $txt_name;
+        $action = 'Added Barangay ' . $txt_name;
         $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Administrator', NOW(), '$action')");
     }
 
@@ -44,7 +44,7 @@ if (isset($_POST['btn_save'])) {
 
     // Log the action if the user has the appropriate role
     if (isset($_SESSION['role'])) {
-        $action = 'Updated Barangay with the name of ' . $txt_edit_name;
+        $action = 'Updated Barangay ' . $txt_edit_name;
         $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Administrator', NOW(), '$action')");
     }
 

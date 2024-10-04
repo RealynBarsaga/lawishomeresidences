@@ -85,6 +85,22 @@ if (isset($_POST['btn_saveeditProfile'])) {
             color: #333;
             margin-left: 6px;
         }
+        .form-group {
+            position: relative;
+        }
+        
+        /* Style for the eye icon */
+        .input-group-text {
+            position: absolute;
+            top: 70%;
+            right: 10px; /* Adjust as needed */
+            transform: translateY(-50%);
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px; /* Adjust size as needed */
+            color: #aaa; /* Light color for the icon */
+        }
     </style>
 </head>
 <body>
@@ -190,8 +206,17 @@ if (isset($_POST['btn_saveeditProfile'])) {
                                             <input name="txt_username" id="txt_username" class="form-control input-sm" type="text" value="'.$row['username'].'" />
                                         </div>
                                         <div class="form-group">
+                                            <label>Email:</label>
+                                            <input name="txt_email" id="txt_email" class="form-control input-sm" type="email" required/>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Password:</label>
-                                            <input name="txt_password" id="txt_password" class="form-control input-sm" type="password"/>
+                                            <input name="txt_password" id="txt_password" class="form-control input-sm" type="password" required
+                                            pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$" 
+                                            title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character."/>
+                                            <span class="input-group-text">
+                                                <i class="fa fa-eye" id="togglePassword"></i>
+                                            </span>
                                         </div>';
                                 }
                             ?>
@@ -208,6 +233,16 @@ if (isset($_POST['btn_saveeditProfile'])) {
 </div>
 
 <script>
+    // Toggle password visibility
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('txt_password');
+    togglePassword.addEventListener('click', function (e) {
+        const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    
     // Handle dropdown toggle for notifications
     document.querySelectorAll('.dropdown-toggle').forEach(function(dropdown) {
         dropdown.addEventListener('click', function() {
@@ -245,21 +280,21 @@ if (isset($_POST['btn_saveeditProfile'])) {
 if (isset($_POST['btn_saveeditProfile'])) {
     $username = mysqli_real_escape_string($con, $_POST['txt_username']);
     $password = mysqli_real_escape_string($con, password_hash(htmlspecialchars(stripslashes(trim($_POST['txt_password']))), PASSWORD_DEFAULT));
+    $email = mysqli_real_escape_string($con, $_POST['txt_email']);
 
     /* $hashedpassword = password_hash($password, PASSWORD_BCRYPT); */
 
     // Consider hashing the password before storing it
-    $updadmin = mysqli_query($con, "UPDATE tbluser SET username = '$username', password = '$password' WHERE id = '".mysqli_real_escape_string($con, $_SESSION['userid'])."' ");
+    $updadmin = mysqli_query($con, "UPDATE tbluser SET username = '$username', password = '$password', email = '$email' WHERE id = '".mysqli_real_escape_string($con, $_SESSION['userid'])."' ");
 
 
-    if ($updadmin) {
-        header("Location: " . $_SERVER['REQUEST_URI']);
+    if ($updadmin == true) {
+         // Redirect after update
+         $_SESSION['edited'] = 1;
+        header("location: " . $_SERVER['REQUEST_URI']);
         exit();
-    } else {
-        echo "<script>alert('Error updating profile. Please try again.');</script>";
     }
 }
 ?>
-
 </body>
 </html>

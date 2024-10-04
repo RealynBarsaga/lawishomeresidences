@@ -1,12 +1,23 @@
 <?php
 if(isset($_POST['btn_add'])){
-    $ddl_pos = $_POST['ddl_pos'];
-    $txt_cname = $_POST['txt_cname'];
-    $txt_contact = $_POST['txt_contact'];
-    $txt_address = $_POST['txt_address'];
-    $txt_sterm = $_POST['txt_sterm'];
-    $txt_eterm = $_POST['txt_eterm'];
+    // Sanitize all inputs
+    $ddl_pos = htmlspecialchars(stripslashes(trim($_POST['ddl_pos'])), ENT_QUOTES, 'UTF-8');
+    $txt_cname = htmlspecialchars(stripslashes(trim($_POST['txt_cname'])), ENT_QUOTES, 'UTF-8');
+    $txt_contact = htmlspecialchars(stripslashes(trim($_POST['txt_contact'])), ENT_QUOTES, 'UTF-8');
+    $txt_address = htmlspecialchars(stripslashes(trim($_POST['txt_address'])), ENT_QUOTES, 'UTF-8');
+    $txt_sterm = htmlspecialchars(stripslashes(trim($_POST['txt_sterm'])), ENT_QUOTES, 'UTF-8');
+    $txt_eterm = htmlspecialchars(stripslashes(trim($_POST['txt_eterm'])), ENT_QUOTES, 'UTF-8');
     $off_barangay = $_SESSION['barangay']; // Assuming barangay is stored in the session
+    
+    // Optional: Validate specific fields (example)
+    if (empty($ddl_pos) || empty($txt_cname) || empty($txt_contact)) {
+        die('Required fields are missing.');
+    }
+    
+    // Additional validation for contact (example: check if it's numeric or follows a specific format)
+    if (!preg_match('/^[0-9]+$/', $txt_contact)) {
+        die('Invalid contact number.');
+    }
 
     // Handle file upload
     $name = basename($_FILES['image']['name']);
@@ -60,12 +71,37 @@ if(isset($_POST['btn_add'])){
 
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_save'])) {
-    $id = $_POST['hidden_id'];
-    $txt_edit_cname = $_POST['txt_edit_cname'];
-    $txt_edit_contact = $_POST['txt_edit_contact'];
-    $txt_edit_address = $_POST['txt_edit_address'];
-    $txt_edit_sterm = $_POST['txt_edit_sterm'];
-    $txt_edit_eterm = $_POST['txt_edit_eterm'];
+    // Sanitize inputs
+    $id = htmlspecialchars(stripslashes(trim($_POST['hidden_id'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_cname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_cname'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_contact = htmlspecialchars(stripslashes(trim($_POST['txt_edit_contact'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_address = htmlspecialchars(stripslashes(trim($_POST['txt_edit_address'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_sterm = htmlspecialchars(stripslashes(trim($_POST['txt_edit_sterm'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_eterm = htmlspecialchars(stripslashes(trim($_POST['txt_edit_eterm'])), ENT_QUOTES, 'UTF-8');
+    
+    // Basic Validation
+    if (empty($txt_edit_cname) || empty($txt_edit_contact) || empty($txt_edit_address)) {
+        die('Required fields are missing.');
+    }
+    
+    // Validate contact (example: assuming it should be numeric)
+    if (!preg_match('/^[0-9]+$/', $txt_edit_contact)) {
+        die('Invalid contact number.');
+    }
+    
+    // Optional: Validate start and end term (e.g., date validation if these represent dates)
+    if (!empty($txt_edit_sterm) && !empty($txt_edit_eterm)) {
+        $start_date = DateTime::createFromFormat('Y-m-d', $txt_edit_sterm);
+        $end_date = DateTime::createFromFormat('Y-m-d', $txt_edit_eterm);
+    
+        if (!$start_date || !$end_date) {
+            die('Invalid date format. Please use YYYY-MM-DD.');
+        }
+    
+        if ($start_date > $end_date) {
+            die('Start term cannot be after end term.');
+        }
+    }
 
     // Handle image upload
     $image = $_FILES['txt_edit_image']['name'];

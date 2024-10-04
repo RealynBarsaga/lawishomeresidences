@@ -221,7 +221,7 @@ html {
                            placeholder="Enter Password" required style="margin-top: 6px;width: 300px;margin-left: -11px;">
                     <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                     <div class="form-group" style="margin-top: 9px; width: 3px; margin-left: -7px; transform: scale(0.97); transform-origin: 0 0;">
-                       <div class="g-recaptcha" data-sitekey="6Lc2slYqAAAAACs0mn07_8egSpnyY3BMELOexgRb"></div>
+                       <div class="g-recaptcha" data-sitekey="6LeI31UqAAAAAIMbElYP18m5855S0nqy2npHMUml"></div>
                     </div>
                 </div>
                     <button type="submit" id="btn_login" class="btn btn-sm" name="btn_login" style="font-size: 18px;margin-top: -9px;">Login</button>

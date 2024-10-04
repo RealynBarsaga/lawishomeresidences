@@ -70,14 +70,14 @@
                                     <label id="user_msg" style="color:#CC0000;" ></label>
                                 </div>
                                 <div class="form-group">
-                                <label>Password:</label>
-                                    <input name="txt_pass" class="form-control input-sm" type="password" placeholder="Password" required/>
+                                    <label>Password:</label>
+                                    <input name="txt_pass" class="form-control input-sm" type="password" placeholder="Password" required pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$"  title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character."/>
                                     <span class="input-group-text">
                                         <i class="fa fa-eye" id="togglePassword1"></i>
                                     </span>
                                 </div>
                                 <div class="form-group">
-                                <label>Confirm Password:</label>
+                                    <label>Confirm Password:</label>
                                     <input name="txt_compass" class="form-control input-sm" type="password" placeholder="Confirm Password" required/>
                                     <span class="input-group-text">
                                         <i class="fa fa-eye" id="togglePassword2"></i>

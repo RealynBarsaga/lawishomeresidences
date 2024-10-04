@@ -24,11 +24,11 @@
                 </div>
                 <div class="form-group">
                     <label>Password: </label>
-                    <input name="txt_edit_pass" class="form-control input-sm" type="password"  />
+                    <input name="txt_edit_pass" class="form-control input-sm" type="password"/>
                 </div>
                 <div class="form-group">
-                    <label>Comfirm Password: </label>
-                    <input name="txt_edit_compass" class="form-control input-sm" type="password" />
+                    <label>Confirm Password: </label>
+                    <input name="txt_edit_compass" class="form-control input-sm" type="password"/>
                 </div>
             </div>
         </div>

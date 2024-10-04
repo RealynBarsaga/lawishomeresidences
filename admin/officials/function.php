@@ -1,12 +1,39 @@
 <?php
 // Handle form submission for adding an official
 if (isset($_POST['btn_add'])) {
-    $ddl_pos = $_POST['ddl_pos'];
-    $txt_cname = $_POST['txt_cname'];
-    $txt_contact = $_POST['txt_contact'];
-    $txt_address = $_POST['txt_address'];
-    $txt_sterm = $_POST['txt_sterm'];
-    $txt_eterm = $_POST['txt_eterm'];
+    // Sanitize inputs
+    $ddl_pos = htmlspecialchars(stripslashes(trim($_POST['ddl_pos'])), ENT_QUOTES, 'UTF-8');
+    $txt_cname = htmlspecialchars(stripslashes(trim($_POST['txt_cname'])), ENT_QUOTES, 'UTF-8');
+    $txt_contact = htmlspecialchars(stripslashes(trim($_POST['txt_contact'])), ENT_QUOTES, 'UTF-8');
+    $txt_address = htmlspecialchars(stripslashes(trim($_POST['txt_address'])), ENT_QUOTES, 'UTF-8');
+    $txt_sterm = htmlspecialchars(stripslashes(trim($_POST['txt_sterm'])), ENT_QUOTES, 'UTF-8');
+    $txt_eterm = htmlspecialchars(stripslashes(trim($_POST['txt_eterm'])), ENT_QUOTES, 'UTF-8');
+    
+    // Basic Validation
+    if (empty($ddl_pos) || empty($txt_cname) || empty($txt_contact) || 
+        empty($txt_address) || empty($txt_sterm) || empty($txt_eterm)) {
+        die('Required fields are missing.');
+    }
+    
+    // Validate contact number (assuming it should be numeric and 10-12 digits long)
+    if (!preg_match('/^[0-9]{10,12}$/', $txt_contact)) {
+        die('Invalid contact number. It must be between 10 and 12 digits.');
+    }
+    
+    // Validate name (allowing letters, spaces, and some punctuation)
+    if (!preg_match('/^[a-zA-Z\s.,-]+$/', $txt_cname)) {
+        die('Invalid name format. Only letters, spaces, and certain punctuation are allowed.');
+    }
+    
+    // Validate address (allowing alphanumeric characters, spaces, and basic punctuation)
+    if (!preg_match('/^[a-zA-Z0-9\s.,-]+$/', $txt_address)) {
+        die('Invalid address format. Only alphanumeric characters and basic punctuation are allowed.');
+    }
+    
+    // Validate start and end terms (assuming they are formatted correctly)
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $txt_sterm) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $txt_eterm)) {
+        die('Invalid term format. Please use YYYY-MM-DD.');
+    }
 
     // Handle file upload
     $name = basename($_FILES['image']['name']);
@@ -61,12 +88,39 @@ if (isset($_POST['btn_add'])) {
 
 // Handle form submission for editing an official
 if (isset($_POST['btn_save'])) {
-    $id = $_POST['hidden_id'];
-    $txt_edit_cname = $_POST['txt_edit_cname'];
-    $txt_edit_contact = $_POST['txt_edit_contact'];
-    $txt_edit_address = $_POST['txt_edit_address'];
-    $txt_edit_sterm = $_POST['txt_edit_sterm'];
-    $txt_edit_eterm = $_POST['txt_edit_eterm'];
+    // Sanitize inputs
+    $id = htmlspecialchars(stripslashes(trim($_POST['hidden_id'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_cname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_cname'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_contact = htmlspecialchars(stripslashes(trim($_POST['txt_edit_contact'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_address = htmlspecialchars(stripslashes(trim($_POST['txt_edit_address'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_sterm = htmlspecialchars(stripslashes(trim($_POST['txt_edit_sterm'])), ENT_QUOTES, 'UTF-8');
+    $txt_edit_eterm = htmlspecialchars(stripslashes(trim($_POST['txt_edit_eterm'])), ENT_QUOTES, 'UTF-8');
+    
+    // Basic Validation
+    if (empty($id) || empty($txt_edit_cname) || empty($txt_edit_contact) || 
+        empty($txt_edit_address) || empty($txt_edit_sterm) || empty($txt_edit_eterm)) {
+        die('Required fields are missing.');
+    }
+    
+    // Validate contact number (assuming it should be numeric and 10-12 digits long)
+    if (!preg_match('/^[0-9]{10,12}$/', $txt_edit_contact)) {
+        die('Invalid contact number. It must be between 10 and 12 digits.');
+    }
+    
+    // Validate name (allowing letters, spaces, and some punctuation)
+    if (!preg_match('/^[a-zA-Z\s.,-]+$/', $txt_edit_cname)) {
+        die('Invalid name format. Only letters, spaces, and certain punctuation are allowed.');
+    }
+    
+    // Validate address (allowing alphanumeric characters, spaces, and basic punctuation)
+    if (!preg_match('/^[a-zA-Z0-9\s.,-]+$/', $txt_edit_address)) {
+        die('Invalid address format. Only alphanumeric characters and basic punctuation are allowed.');
+    }
+    
+    // Validate start and end terms (assuming they are formatted correctly)
+    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $txt_edit_sterm) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $txt_edit_eterm)) {
+        die('Invalid term format. Please use YYYY-MM-DD.');
+    }
 
     // Handle image upload
     $image = $_FILES['txt_edit_image']['name'];

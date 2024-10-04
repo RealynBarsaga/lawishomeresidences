@@ -63,12 +63,12 @@
                                         while ($row = $result->fetch_assoc()) {
                                             echo '
                                             <tr>
-                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="'.$row['pid'].'" /></td>
-                                                <td>'.$row['Name'].'</td>
-                                                <td>'.$row['purpose'].'</td> 
-                                                <td>'.$row['purok'].'</td>
+                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="'.htmlspecialchars($row['pid']).'" /></td>
+                                                <td>'.htmlspecialchars($row['Name']).'</td>
+                                                <td>'.htmlspecialchars($row['purpose']).'</td> 
+                                                <td>'.htmlspecialchars($row['purok']).'</td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm" data-target="#editModal'.$row['pid'].'" data-toggle="modal">
+                                                    <button class="btn btn-primary btn-sm" data-target="#editModal'.htmlspecialchars($row['pid']).'" data-toggle="modal">
                                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                                     </button>
                                                     <a style="width: 80px;" href="certofres_form.php?" class="btn btn-primary btn-sm">

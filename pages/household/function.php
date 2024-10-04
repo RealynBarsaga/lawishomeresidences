@@ -1,10 +1,27 @@
 <?php
 if(isset($_POST['btn_add'])){
-    $txt_householdno = $_POST['txt_householdno'];
-    $txt_totalmembers = $_POST['txt_totalmembers'];
-    $txt_hof = $_POST['txt_hof'];
-    $txt_brgy = $_POST['txt_brgy'];
-    $txt_purok = $_POST['txt_purok'];
+    // Sanitize inputs
+    $txt_householdno = htmlspecialchars(stripslashes(trim($_POST['txt_householdno'])), ENT_QUOTES, 'UTF-8');
+    $txt_totalmembers = (int) $_POST['txt_totalmembers']; // Cast to integer
+    $txt_hof = htmlspecialchars(stripslashes(trim($_POST['txt_hof'])), ENT_QUOTES, 'UTF-8');
+    $txt_brgy = htmlspecialchars(stripslashes(trim($_POST['txt_brgy'])), ENT_QUOTES, 'UTF-8');
+    $txt_purok = htmlspecialchars(stripslashes(trim($_POST['txt_purok'])), ENT_QUOTES, 'UTF-8');
+    
+    // Basic Validation
+    if (empty($txt_householdno) || empty($txt_hof) || empty($txt_brgy) || empty($txt_purok)) {
+        die('Required fields are missing.');
+    }
+    
+    // Validate total members (example: ensure it's a positive integer)
+    if ($txt_totalmembers <= 0) {
+        die('Total members must be a positive number.');
+    }
+    
+    // Optional: Validate household number (example: you can use a regex pattern if household numbers follow a specific format)
+    // Example: Check if it's numeric or follows a specific format (modify this regex according to your needs)
+    if (!preg_match('/^[0-9]+$/', $txt_householdno)) {
+        die('Invalid household number.');
+    }
 
     $chkdup = mysqli_query($con, "SELECT * from tblhousehold where headoffamily = ".$txt_hof."");
     $rows = mysqli_num_rows($chkdup);
@@ -32,12 +49,33 @@ if(isset($_POST['btn_add'])){
 }
 
 if (isset($_POST['btn_save'])) {
-    $txt_id = $_POST['hidden_id'];
-    $txt_edit_householdno = $_POST['txt_edit_householdno'];
-    $txt_edit_totalmembers = $_POST['txt_edit_totalmembers'];
-    $txt_edit_name = $_POST['txt_edit_name'];
-    $txt_edit_purok = $_POST['txt_edit_purok'];
-    $txt_edit_brgy = $_POST['txt_edit_brgy'];
+   // Sanitize inputs
+   $txt_id = htmlspecialchars(stripslashes(trim($_POST['hidden_id'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_householdno = htmlspecialchars(stripslashes(trim($_POST['txt_edit_householdno'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_totalmembers = (int) $_POST['txt_edit_totalmembers']; // Cast to integer
+   $txt_edit_name = htmlspecialchars(stripslashes(trim($_POST['txt_edit_name'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_purok = htmlspecialchars(stripslashes(trim($_POST['txt_edit_purok'])), ENT_QUOTES, 'UTF-8');
+   $txt_edit_brgy = htmlspecialchars(stripslashes(trim($_POST['txt_edit_brgy'])), ENT_QUOTES, 'UTF-8');
+   
+   // Basic Validation
+   if (empty($txt_id) || empty($txt_edit_householdno) || empty($txt_edit_name) || empty($txt_edit_purok) || empty($txt_edit_brgy)) {
+       die('Required fields are missing.');
+   }
+   
+   // Validate total members (ensure it's a positive integer)
+   if ($txt_edit_totalmembers <= 0) {
+       die('Total members must be a positive number.');
+   }
+   
+   // Validate household number (example: check if it's numeric)
+   if (!preg_match('/^[0-9]+$/', $txt_edit_householdno)) {
+       die('Invalid household number.');
+   }
+   
+   // Optional: Validate name (ensure it's not just spaces or special characters)
+   if (!preg_match('/^[a-zA-Z\s]+$/', $txt_edit_name)) {
+       die('Invalid name format. Only letters and spaces are allowed.');
+   }
 
     // Check if columns exist in the table
     $columns = array('householdno', 'totalhouseholdmembers', 'barangay', 'purok'); // Modify these as per your table structure
