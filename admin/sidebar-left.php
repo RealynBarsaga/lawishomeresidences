@@ -21,17 +21,17 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="../householdlist/householdlist.php?page=householdlist">
+                                <a href="../../admin/householdlist/householdlist.php?page=householdlist">
                                     <i class="fa fa-users"></i> <span>List Of Household</span>
                                 </a>
                             </li>
                              <li>
-                                <a href="../permit/permit.php?page=permit">
+                                <a href="../../admin/permit/permit.php?page=permit">
                                     <i class="fa fa-file"></i> <span>Permit</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="../generatereports/generatereports.php">
+                                <a href="../../admin/generatereports/generatereports.php">
                                     <i class="fa fa-paper-plane"></i> <span>Generated Reports</span>
                                 </a>
                             </li>                  
