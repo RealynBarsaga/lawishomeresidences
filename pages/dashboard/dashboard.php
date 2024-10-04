@@ -40,7 +40,7 @@
     </style>
 
     <div class="wrapper row-offcanvas row-offcanvas-left">
-    <?php include('../pages/sidebar-left.php'); ?>
+    <?php include('../sidebar-left.php'); ?>
 
         <aside class="right-side">
             <section class="content-header">
