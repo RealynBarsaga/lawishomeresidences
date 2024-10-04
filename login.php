@@ -624,7 +624,7 @@ html {
                         // Attach a click event to the OK button
                         document.getElementById("ok-button").addEventListener("click", function() {
                             // Redirect to the dashboard after the OK button is clicked
-                            window.location.href = '/dashboard';
+                            window.location.href = 'pages/dashboard/dashboard.php?page=dashboard';
                         });
                     });
                 </script>
