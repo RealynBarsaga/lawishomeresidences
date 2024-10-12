@@ -46,7 +46,7 @@
             box-sizing: border-box;
             padding: -8px;       
         }
-        .canvas#myPieChart {
+        canvas#myPieChart { /* Fixed the CSS issue here */
             display: block;
             box-sizing: border-box;
             height: 307px;
@@ -90,7 +90,6 @@
                                         More Info <i class="fa fa-arrow-circle-right"></i>
                                     </a>
                                 </div>
-
                             </div>
                         </div>
                         <?php } ?>
@@ -115,7 +114,7 @@
     $counts = [];
 
     foreach ($barangays as $barangay) {
-        $q = mysqli_query($con, "SELECT * FROM tbltabagak WHERE barangay = '$barangay'");
+        $q = mysqli_query($con, "SELECT * FROM tblhousehold WHERE barangay = '$barangay'"); // Corrected table name
         $counts[] = mysqli_num_rows($q);
     }
     ?>
@@ -212,7 +211,5 @@
         }
     });
     </script>
-    
-    <?php include "../../admin/footer.php"; ?>
 </body>
 </html>
