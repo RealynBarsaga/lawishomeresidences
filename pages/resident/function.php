@@ -1,6 +1,10 @@
 <?php
 // Handle form submission for adding a resident
 if (isset($_POST['btn_add'])) {
+    // Set Content Security Policy
+    header("Content-Security-Policy: script-src 'self';");
+
+    
     // Sanitize input data
     $txt_lname = htmlspecialchars(stripslashes(trim($_POST['txt_lname'])), ENT_QUOTES, 'UTF-8');
     $txt_fname = htmlspecialchars(stripslashes(trim($_POST['txt_fname'])), ENT_QUOTES, 'UTF-8');
@@ -162,6 +166,9 @@ if (isset($_POST['btn_add'])) {
 
 // Handle form submission for editing a resident
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_save'])) {
+    // Set Content Security Policy
+    header("Content-Security-Policy: script-src 'self';");
+
     // Get form data
     $id = htmlspecialchars(stripslashes(trim($_POST['hidden_id'])), ENT_QUOTES, 'UTF-8'); 
     $lname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_lname'])), ENT_QUOTES, 'UTF-8');

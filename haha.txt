@@ -1,7 +1,0 @@
-// Admin Login
-User: admin / admin@gmail.com
-Pass: Admin@12345
-
-// User Login
-User: tabagak
-Pass: Tabagak@123

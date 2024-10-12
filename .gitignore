@@ -1,26 +1,6 @@
-# Ignore OS generated files
-.DS_Store
-Thumbs.db
-
-# Ignore sensitive files
-.env
-connection.php
-
-# Ignore log files and databases
-*.log
-*.sql
-*.sqlite
-
-# Ignore directories
+composer.phar
 /vendor/
-/node_modules/
-/cache/
-/public/uploads/
 
-# Ignore compiled assets
-/public/js/
-/public/css/
-
-# Ignore editor-specific files
-.vscode/
-*.swp
+# Commit your application's lock file https://getcomposer.org/doc/01-basic-usage.md#commit-your-composer-lock-file-to-version-control
+# You may choose to ignore a library lock file http://getcomposer.org/doc/02-libraries.md#lock-file
+# composer.lock

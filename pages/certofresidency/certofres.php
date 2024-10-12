@@ -64,7 +64,7 @@
                                             echo '
                                             <tr>
                                                 <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="'.htmlspecialchars($row['pid']).'" /></td>
-                                                <td>'.htmlspecialchars($row['Name']).'</td> ' . htmlspecialchars($row['totalhousehold']) . '
+                                                <td>'.htmlspecialchars($row['Name']).'</td>
                                                 <td>'.htmlspecialchars($row['purpose']).'</td> 
                                                 <td>'.htmlspecialchars($row['purok']).'</td>
                                                 <td>

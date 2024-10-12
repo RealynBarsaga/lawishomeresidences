@@ -85,6 +85,10 @@ ob_start();
                                             <input name="txt_username" id="txt_username" class="form-control input-sm" type="text" value="'.$row['username'].'" />
                                         </div>
                                         <div class="form-group">
+                                            <label>Email:</label>
+                                            <input name="txt_email" id="txt_email" class="form-control input-sm" type="email" placeholder="Ex: juan@sample.com" required/>
+                                        </div>
+                                        <div class="form-group">
                                             <label>Password:</label>
                                             <input name="txt_password" id="txt_password" class="form-control input-sm" type="password" required
                                             pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$" 
@@ -125,11 +129,12 @@ ob_start();
 if(isset($_POST['btn_saveeditProfile'])){
     $username = htmlspecialchars(stripslashes(trim($_POST['txt_username'])));
     $password = htmlspecialchars(stripslashes(trim($_POST['txt_password'])));
+    $email = htmlspecialchars(stripslashes(trim($_POST['txt_email'])));
 
     $hashed = password_hash($password, PASSWORD_DEFAULT);
-    $updstaff = mysqli_query($con, "UPDATE tblstaff SET username = '$username', password = '$hashed' WHERE id = '".$_SESSION['userid']."'");
+    $updstaff = mysqli_query($con, "UPDATE tblstaff SET username = '$username', email = '$email', password = '$hashed' WHERE id = '".$_SESSION['userid']."'");
     
-    if($updstaff == true){
+    if($updstaff){
         // Redirect after update
         $_SESSION['edited'] = 1;
         header("Location: ".$_SERVER['REQUEST_URI']);

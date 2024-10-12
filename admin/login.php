@@ -7,6 +7,8 @@ $error = false;
 $login_success = false;
 $error_attempts = false;
 
+$username_or_email = "";
+
 // Set a limit for the number of allowed attempts and lockout time (in seconds)
 $max_attempts = 3;
 $lockout_time = 300; // 5 minutes (300 seconds)
@@ -26,7 +28,7 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
     if (isset($_POST['btn_login'])) {
         include "connection.php";
 
-        // Retrieve input values
+        // Retrieve and sanitize input values
         $username_or_email = htmlspecialchars(stripslashes(trim($_POST['txt_username'])));
         $password = htmlspecialchars(stripslashes(trim($_POST['txt_password'])));
 
@@ -35,12 +37,15 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
             $_SESSION['login_attempts'] = 0;
         }
 
-        // Modify the query to allow login using either username or email
-        $admin = mysqli_query($con, "SELECT * FROM tbluser WHERE (username = '$username_or_email' OR email = '$username_or_email') AND type = 'administrator'");
-        $numrow_admin = mysqli_num_rows($admin);
+        // Use prepared statements to prevent SQL injection
+        $stmt = $con->prepare("SELECT * FROM tbluser WHERE (username = ? OR email = ?) AND type = 'administrator'");
+        $stmt->bind_param('ss', $username_or_email, $username_or_email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $numrow_admin = $result->num_rows;
 
         if ($numrow_admin > 0) {
-            $row = mysqli_fetch_array($admin);
+            $row = $result->fetch_assoc();
 
             if (password_verify($password, $row['password'])) {
                 // Reset login attempts upon successful login
@@ -56,7 +61,7 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
             } else {
                 $_SESSION['login_attempts']++;
                 if ($_SESSION['login_attempts'] < $max_attempts) {
-                    $error = 1;
+                    $error = true;
                 }
             }
         } else {
@@ -72,6 +77,10 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
             $error_attempts = "Too many failed attempts. Please try again in 5 minute(s).";
             $error = false; // Stop showing the "Invalid account" message
         }
+
+        // Close the prepared statement and connection
+        $stmt->close();
+        $con->close();
     }
 }
 ?>
@@ -83,109 +92,31 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
     <!-- bootstrap 3.0.2 -->
     <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
     <!-- Theme style -->
-    <link href="../css/AdminLTE.css" rel="stylesheet" type="text/css"/>
+    <link href="../css/style2.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 </head>
 <style>
-body {
-    background-image: url('../img/received_1185064586170879.jpeg');
-    background-attachment: fixed;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover; /* Ensures the background image covers the entire container */
-    height: 100vh; /* Makes sure the body takes up the full height of the viewport */
-    margin: 0;
-    padding: 0;
-    display: flex;
-    align-items: center; /* Vertically centers the content */
-    justify-content: center; /* Horizontally centers the content */
+.input-group {
+    position: relative; /* Make sure input-group has relative positioning */
 }
-html {
-    height: 100%; /* Ensures the HTML covers the full height */
+.input-group .form-control {
+    padding-right: 40px; /* Add padding to the right for the input */
 }
-.container {
-    max-width: 1061px;
-    width: 100%; /* Make sure the container is responsive */
-    padding: 15px; /* Add padding to the container */
+.input-group .input-group-text {
+    position: absolute; /* Position the eye icon absolutely */
+    right: 10px; /* Adjust the right position */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust for centering */
+    background-color: transparent; /* Make background transparent */
+    border: none; /* Remove border */
+    cursor: pointer; /* Change cursor to pointer */
 }
-.panel {
-    height: 449px;
-    min-height: 370px;
-    width: 345px;
-    margin-left: 0px;
-    background-image: url('../img/background.jpg');
-    background-attachment: fixed;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: 30% 100%; /* Ensures the background image covers the entire container */
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.6); /* Optional: Add a dark overlay to improve readability */
-    padding: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Add shadow for a modern look */
-}
-.panel-title {
-    color: white;
-    text-align: center;
-}
-.form-control {
-    border-radius: 34px !important;
-    box-shadow: none;
-}
-.btn {
-    margin-left: -9px;
-    width: 300px;
-    height: 40px;
-    border-radius: 25px;
-    color: white;
-    background: rgba(200,0,0,1);
-    border: none; /* Optional: Remove default border */
-    transition: background 0.3s ease, transform 0.3s ease; /* Smooth transition for hover */
-}
-.btn:hover {
-    background: linear-gradient(184deg, rgba(200,0,0,1) 40%, rgba(50,50,50,1) 92%);
-    transform: scale(1.05);
-    color: white;
-}
-.forgot-password {
-    margin-left: 160px;
-    margin-top: -89px;
-}
-.forgot-password a {
-    text-decoration: none;
-    color: #fff;
-}
-.forgot-password a:hover {
-    text-decoration: underline;
-}
-.error {
-    color: white;
-    font-size: 12px;
-}
-.alert {
-    position: relative;
-}
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    body {
-        background-size: cover; /* Keep background image filling the screen */
-    }
-
-    .btn {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    .panel {
-        padding: 10px;
-        background-size: contain;
-        width: 100%;
-    }
-    .form-control{
-        margin-top: 100px;
-    }
+.input-group-text i {
+    opacity: 0.5; /* Set initial opacity */
+    transition: opacity 0.3s; /* Smooth transition */
+}  
+.input-group-text:hover i {
+    opacity: 1; /* Increase opacity on hover */
 }
 </style>
 <body class="skin-black">
@@ -193,7 +124,7 @@ html {
     <div class="col-md-4 col-md-offset-4">
         <div class="panel">
             <div class="panel-body">
-            <div style="text-align:center;margin-top:-29px;">
+            <div style="text-align:center;margin-top:-20px;">
                     <img src="../img/lg.png" style="height:60px;"/>
                     <h3 class="panel-title">
                         <strong>
@@ -207,17 +138,28 @@ html {
                 </div>
                 <form role="form" method="post">
                 <div class="form-group" style="border-radius:1px; border: 25px;">
-                        <input for="txt_username" type="text" type="email" class="form-control" name="txt_username"
-                               placeholder="Enter Username or Email" required style="margin-top: 51px;width: 300px;margin-left: -11px;">
-                        <input for="txt_password" type="password" class="form-control" name="txt_password"
-                               placeholder="Enter Password" required style="margin-top: 11px;width: 300px;margin-left: -11px;">
-                        <span toggle="#password" class="fa fa-fw fa-eye field-icon toggle-password"></span>
+                    <label for="txt_username" style="color:#fff;margin-left: -8px;margin-top: 22px;font-weight: lighter;">Email</label>
+                    <input type="email" class="form-control" name="txt_username"
+                           placeholder="e.g., jose@gmail.com" required value="<?php echo $username_or_email ?>" style="margin-top: -3px;width: 300px;margin-left: -11px;">
+
+                    <label for="txt_password" style="color:#fff;margin-left: -8px;font-weight: lighter;">Password</label>
+                    <div style="position: relative; width: 300px; margin-left: -11px;">
+                        <input type="password" class="form-control" name="txt_password" id="txt_password"
+                               placeholder="************" required style="padding-right: 40px; margin-top: -4px; width: 100%;"
+                               pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$"
+                               title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character.">
+                        
+                        <span class="input-group-text" onclick="togglePassword('txt_password', this)" 
+                              style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); cursor: pointer; background-color: transparent; border: none;">
+                            <i class="fa fa-eye"></i>
+                        </span>
+                    </div>
                 </div>
-                    <button type="submit" class="btn btn-sm" name="btn_login" style="font-size: 18px;margin-top: 7px;">Login</button>
+                    <button type="submit" class="btn btn-sm" name="btn_login" style="font-size: 18px;margin-top: 13px;">Login</button>
                 </form>
                <!-- Forgot password link -->
-               <div class="forgot-password" style="margin-top: 1.9px;">
-                    <a href="forgot_password.php?pages=forgot_password">Forgot Password?</a>
+               <div class="forgot-password" style="margin-top: 1.9px;margin-left: 140px;">
+                    <a href="admin/forgot_password.php?pages=forgot_password">Forgotten Password?</a>
                 </div>
 
                 <!-- For Switching Login Form-->
@@ -241,369 +183,71 @@ html {
                         <p><?php echo $error_attempts; ?></p>
                         <button id="error-ok-button" class="btn-ok">OK</button>
                     </div>
-                </div>
-                <!-- Add the modal styles and script as per your original design -->
-                <style>
-                    /* Modal styles for "Too many failed attempts" */
-                    .modal {
-                        position: fixed;
-                        z-index: 1000; /* Ensure it's on top */
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
-                        background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                    .modal-content {
-                        background: linear-gradient(135deg, #ffcccb, #f7f7f7); /* Soft red gradient for warning */
-                        padding: 30px; /* Same spacious padding */
-                        border-radius: 15px; /* Same rounded corners */
-                        text-align: center;
-                        width: 350px; /* Same width */
-                        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Same shadow effect */
-                        position: relative;
-                        margin-left: auto;
-                        margin-right: auto;
-                        margin-top: 220px;
-                        animation: modalFadeIn 0.5s ease; /* Same smooth fade-in */
-                    }
-                    /* Fade-in animation */
-                    @keyframes modalFadeIn {
-                        from {
-                            opacity: 0;
-                            transform: scale(0.95); /* Slight scaling for a zoom-in effect */
-                        }
-                        to {
-                            opacity: 1;
-                            transform: scale(1);
-                        }
-                    }
-                    /* Add a subtle border */
-                    .modal-content {
-                        border: 2px solid #e0e0e0;
-                    }
-                    .modal-title {
-                        font-size: 18px;
-                        font-weight: bold;
-                        margin-bottom: 10px;
-                        color: #d9534f; /* Red color for warning */
-                    }
-                    .modal-content .btn-ok {
-                        background-color: #f0ad4e; /* Orange for warning */
-                        color: white;
-                        border: none;
-                        padding: 12px 25px;
-                        border-radius: 25px;
-                        cursor: pointer;
-                        font-size: 16px;
-                        transition: background-color 0.3s ease, transform 0.2s ease;
-                    }
-                    .modal-content .btn-ok:hover {
-                        background-color: #ec971f;
-                        transform: scale(1.05);
-                    }
-                    .modal p {
-                        margin-bottom: 25px;
-                        font-size: 16px;
-                    }
-                    /* Optional: Add a subtle footer */
-                    .modal-content::after {
-                        content: "Powered by Madridejos HRMS";
-                        display: block;
-                        font-size: 12px;
-                        color: #aaa;
-                        margin-top: 20px;
-                    }
-                </style>      
-                <script>
-                    document.addEventListener("DOMContentLoaded", function() {
-                        document.getElementById("error-ok-button").addEventListener("click", function() {
-                            document.getElementById("error-modal").style.display = 'none';
-                        });
-                    });
-                </script>
+                </div>     
             <?php endif; ?>
             <!-- Error message modal and JavaScript for dismiss -->
             <?php if ($error): ?>
                 <!-- Error Modal structure -->
-                <div id="error-modal" class="modal" style="display: block;">
-                    <div class="modal-content" style="margin-left:479px;">
-                        <span class="modal-title">Error</span>
+                <div id="error-modal1" class="modal1" style="display: block;">
+                    <div class="modal-content1" style="margin-left:479px;">
+                        <span class="modal-title1">Error</span>
                         <p>Invalid account. Please try again.</p>
-                        <button id="error-ok-button" class="btn-ok">OK</button>
+                        <button id="error-ok-button1" class="btn-ok1">OK</button>
                     </div>
                 </div>
-                <style>
-                    /* Modal styles */
-                    .modal {
-                        position: fixed;
-                        z-index: 1000; /* Ensure it's on top */
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
-                        background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
-                    .modal-content {
-                        background: linear-gradient(135deg, #ffdddd, #f7f7f7); /* Soft red gradient for error */
-                        padding: 30px; /* Same spacious padding */
-                        border-radius: 15px; /* Same rounded corners */
-                        text-align: center;
-                        width: 350px; /* Same width */
-                        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Same shadow effect */
-                        position: relative;
-                        margin-left: auto;
-                        margin-right: auto;
-                        margin-top: 220px;
-                        animation: modalFadeIn 0.5s ease; /* Same smooth fade-in */
-                    }  
-                    /* Fade-in animation */
-                    @keyframes modalFadeIn {
-                        from {
-                            opacity: 0;
-                            transform: scale(0.95); /* Slight scaling for a zoom-in effect */
-                        }
-                        to {
-                            opacity: 1;
-                            transform: scale(1);
-                        }
-                    } 
-                    /* Add a subtle border */
-                    .modal-content {
-                        border: 2px solid #e0e0e0; /* Soft border */
-                    }
-                    /* Optional: Close button */
-                    .modal-content .close-btn {
-                        position: absolute;
-                        top: 10px;
-                        right: 15px;
-                        background: transparent;
-                        border: none;
-                        font-size: 18px;
-                        cursor: pointer;
-                        color: #666;
-                        transition: color 0.3s ease;
-                    }
-                    .modal-content .close-btn:hover {
-                        color: #ff5c5c; /* Change color on hover */
-                    }  
-                    /* Optional: Increase spacing between elements */
-                    .modal-content p {
-                        margin-bottom: 25px; /* Increased margin for better spacing */
-                        font-size: 16px; /* Slightly larger text */
-                    }
-                    .modal-content .btn-ok {
-                        background-color: #d9534f; /* Red color for error */
-                        color: white;
-                        border: none;
-                        padding: 12px 25px;
-                        border-radius: 25px; /* More rounded button */
-                        cursor: pointer;
-                        font-size: 16px;
-                        transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
-                    }    
-                    .modal-content .btn-ok:hover {
-                        background-color: #c9302c; /* Darker red on hover */
-                        transform: scale(1.05); /* Slight zoom on hover */
-                    }
-                    /* Optional: Add a subtle footer */
-                    .modal-content::after {
-                        content: "Powered by Madridejos HRMS";
-                        display: block;
-                        font-size: 12px;
-                        color: #aaa;
-                        margin-top: 20px;
-                    }
-                    /* Error modal title */
-                    .modal-title {
-                        font-size: 18px;
-                        font-weight: bold;
-                        margin-bottom: 10px;
-                        color: #d9534f; /* Red color for error */
-                    }
-                    .btn-ok {
-                        background-color: #d9534f; /* Red color for error */
-                        color: white;
-                        border: none;
-                        padding: 12px 25px;
-                        border-radius: 25px; /* More rounded button */
-                        cursor: pointer;
-                        font-size: 16px;
-                        transition: background-color 0.3s ease, transform 0.2s ease;
-                    }
-                    .btn-ok:hover {
-                        background-color: #c9302c;
-                        transform: scale(1.05); /* Slight zoom on hover */
-                    }
-                    /* Add some space between the text and the button */
-                    .modal p {
-                        margin-bottom: 25px;
-                    }
-                </style>
-                <script>
-                    // Wait for the DOM to load
-                    document.addEventListener("DOMContentLoaded", function() {
-                        // Attach a click event to the OK button
-                        document.getElementById("error-ok-button").addEventListener("click", function() {
-                            // Close the error modal when OK is clicked
-                            document.getElementById("error-modal").style.display = 'none';
-                        });
-                    });
-                </script>
             <?php endif; ?>
             <!-- Success message and JavaScript for redirection -->
             <?php if ($login_success): ?>
                 <!-- Modal structure -->
-                <div id="success-modal" class="modal" style="display: block;">
-                    <div class="modal-content" style="margin-left:479px;">
-                        <span class="modal-title">Success</span>
+                <div id="success-modal2" class="modal2" style="display: block;">
+                    <div class="modal-content2" style="margin-left:479px;">
+                        <span class="modal-title2">Success</span>
                         <p>Login Successfully!</p>
-                        <button id="ok-button" class="btn-ok">OK</button>
+                        <button id="ok-button2" class="btn-ok2">OK</button>
                     </div>
                 </div>
-                <style>
-                    /* Modal styles */
-                    .modal {
-                        position: fixed;
-                        z-index: 1000; /* Ensure it's on top */
-                        left: 0;
-                        top: 0;
-                        width: 100%;
-                        height: 100%;
-                        background-color: rgba(0, 0, 0, 0.5); /* Background overlay */
-                        display: flex;
-                        justify-content: center;
-                        align-items: center;
-                    }
-            
-                    .modal-content {
-                        background: linear-gradient(135deg, #ffffff, #f7f7f7); /* Soft gradient background */
-                        padding: 30px; /* Increased padding for a spacious look */
-                        border-radius: 15px; /* Slightly more rounded corners */
-                        text-align: center;
-                        width: 350px; /* Slightly wider */
-                        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Deeper shadow for a more elevated effect */
-                        position: relative; /* Allows for positioning of close button */
-                        margin-left: auto;
-                        margin-right: auto;
-                        margin-top: 220px;
-                        animation: modalFadeIn 0.5s ease; /* Smooth fade-in animation */
-                    }
-                    
-                    /* Fade-in animation */
-                    @keyframes modalFadeIn {
-                        from {
-                            opacity: 0;
-                            transform: scale(0.95); /* Slight scaling for a zoom-in effect */
-                        }
-                        to {
-                            opacity: 1;
-                            transform: scale(1);
-                        }
-                    }
-                    
-                    /* Add a subtle border */
-                    .modal-content {
-                        border: 2px solid #e0e0e0; /* Soft border */
-                    }
-                    
-                    /* Optional: Close button */
-                    .modal-content .close-btn {
-                        position: absolute;
-                        top: 10px;
-                        right: 15px;
-                        background: transparent;
-                        border: none;
-                        font-size: 18px;
-                        cursor: pointer;
-                        color: #666;
-                        transition: color 0.3s ease;
-                    }
-                    
-                    .modal-content .close-btn:hover {
-                        color: #ff5c5c; /* Change color on hover */
-                    }
-                    
-                    /* Optional: Increase spacing between elements */
-                    .modal-content p {
-                        margin-bottom: 25px; /* Increased margin for better spacing */
-                        font-size: 16px; /* Slightly larger text */
-                    }
-                    
-                    .modal-content .btn-ok {
-                        background-color: #4CAF50;
-                        color: white;
-                        border: none;
-                        padding: 12px 25px;
-                        border-radius: 25px; /* More rounded button */
-                        cursor: pointer;
-                        font-size: 16px;
-                        transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
-                    }
-                    
-                    .modal-content .btn-ok:hover {
-                        background-color: #45a049;
-                        transform: scale(1.05); /* Slight zoom on hover */
-                    }
-                    
-                    /* Optional: Add a subtle footer */
-                    .modal-content::after {
-                        content: "Powered by Madridejos HRMS";
-                        display: block;
-                        font-size: 12px;
-                        color: #aaa;
-                        margin-top: 20px;
-                    }
-
-            
-                    .modal-title {
-                        font-size: 18px;
-                        font-weight: bold;
-                        margin-bottom: 10px;
-                    }
-            
-                    .btn-ok {
-                        background-color: #4CAF50;
-                        color: white;
-                        border: none;
-                        padding: 10px 20px;
-                        border-radius: 5px;
-                        cursor: pointer;
-                        font-size: 16px;
-                        margin-top: 10px;
-                        transition: background-color 0.3s ease;
-                    }
-            
-                    .btn-ok:hover {
-                        background-color: #45a049;
-                    }
-            
-                    /* Add some space between the text and the button */
-                    .modal p {
-                        margin-bottom: 20px;
-                    }
-                </style>
-            
-                <script>
-                    // Wait for the DOM to load
-                    document.addEventListener("DOMContentLoaded", function() {
-                        // Attach a click event to the OK button
-                        document.getElementById("ok-button").addEventListener("click", function() {
-                            // Redirect to the dashboard after the OK button is clicked
-                            window.location.href = '../admin/dashboard/dashboard.php?page=dashboard';
-                        });
-                    });
-                </script>
             <?php endif; ?>
             </div>
         </div>
     </div>
 </div>
+<script>
+     document.addEventListener("DOMContentLoaded", function() {
+      document.getElementById("error-ok-button").addEventListener("click", function() {
+          document.getElementById("error-modal").style.display = 'none';
+      });
+  });
+
+  // Wait for the DOM to load
+  document.addEventListener("DOMContentLoaded", function() {
+      // Attach a click event to the OK button
+      document.getElementById("error-ok-button1").addEventListener("click", function() {
+          // Close the error modal when OK is clicked
+          document.getElementById("error-modal1").style.display = 'none';
+      });
+  });
+  // Wait for the DOM to load
+  document.addEventListener("DOMContentLoaded", function() {
+      // Attach a click event to the OK button
+      document.getElementById("ok-button2").addEventListener("click", function() {
+          // Redirect to the dashboard after the OK button is clicked
+          window.location.href = 'admin/dashboard/dashboard.php?page=dashboard';
+      });
+  });
+  function togglePassword(inputId, icon) {
+        const input = document.getElementById(inputId);
+        const iconElement = icon.querySelector('i');
+        
+        if (input.type === 'password') {
+            input.type = 'text';
+            iconElement.classList.remove('fa-eye');
+            iconElement.classList.add('fa-eye-slash');
+        } else {
+            input.type = 'password';
+            iconElement.classList.remove('fa-eye-slash');
+            iconElement.classList.add('fa-eye');
+        }
+    }
+</script>
 </body>
 </html>

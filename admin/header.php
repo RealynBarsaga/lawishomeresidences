@@ -105,7 +105,7 @@ if (isset($_POST['btn_saveeditProfile'])) {
 </head>
 <body>
 <header class="header">
-    <a href="../../admin/dashboard/dashboard.php?page=dashboard" class="logo" style="font-size: 13px; font-family: Source Sans Pro, sans-serif;">
+    <a href="admin/dashboard/dashboard.php?page=dashboard" class="logo" style="font-size: 13px; font-family: Source Sans Pro, sans-serif;">
         Madridejos Home Residence
     </a>
     <nav class="navbar navbar-static-top" role="navigation">
@@ -175,7 +175,7 @@ if (isset($_POST['btn_saveeditProfile'])) {
                                 <a href="#" class="btn btn-default btn-flat" data-toggle="modal" data-target="#editProfileModal">Change Account</a>
                             </div>
                             <div class="pull-right">
-                                <a href="../../admin/logout.php" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="admin/logout.php" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>
@@ -278,19 +278,18 @@ if (isset($_POST['btn_saveeditProfile'])) {
 </script>
 <?php
 if (isset($_POST['btn_saveeditProfile'])) {
-    $username = mysqli_real_escape_string($con, $_POST['txt_username']);
+    $username = mysqli_real_escape_string($con, (htmlspecialchars(stripslashes(trim($_POST['txt_username'])))));
     $password = mysqli_real_escape_string($con, password_hash(htmlspecialchars(stripslashes(trim($_POST['txt_password']))), PASSWORD_DEFAULT));
-    $email = mysqli_real_escape_string($con, $_POST['txt_email']);
+    $email = mysqli_real_escape_string($con, (htmlspecialchars(stripslashes(trim($_POST['txt_email'])))));
 
     /* $hashedpassword = password_hash($password, PASSWORD_BCRYPT); */
 
     // Consider hashing the password before storing it
-    $updadmin = mysqli_query($con, "UPDATE tbluser SET username = '$username', password = '$password', email = '$email' WHERE id = '".mysqli_real_escape_string($con, $_SESSION['userid'])."' ");
+    $updadmin = mysqli_query($con, "UPDATE tbluser SET username = '$username', email = '$email', password = '$password' WHERE id = '".mysqli_real_escape_string($con, (htmlspecialchars(stripslashes(trim($_SESSION['userid'])))))."'") or die('Error: ' . mysqli_error($con));
 
 
-    if ($updadmin == true) {
-         // Redirect after update
-         $_SESSION['edited'] = 1;
+    if ($updadmin) {
+        $_SESSION['edited'] = 1;
         header("location: " . $_SERVER['REQUEST_URI']);
         exit();
     }
