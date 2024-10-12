@@ -1,5 +1,9 @@
 RewriteEngine On
+RewriteBase /admin/
 
-# Redirect /admin to /login (internally, it will serve login.php without showing it)
-RewriteCond %{REQUEST_URI} ^/admin/?$ [NC]
-RewriteRule ^admin/?$ /admin/login.php?pages=login [L,QSA]
+# Redirect root to login.php
+RewriteRule ^$ login.php [L]
+
+# Block direct access to login.php if explicitly requested
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /admin/login\.php\ HTTP/ [NC]
+RewriteRule ^login\.php$ /admin/ [R=302,L]
