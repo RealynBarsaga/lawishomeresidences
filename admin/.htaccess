@@ -12,3 +12,9 @@ RewriteRule ^login\.php$ - [F,L]
 
 # Allow access to login.php through /admin
 RewriteRule ^$ login.php [L]
+
+
+
+RewriteEngine On
+RewriteCond %{THE_REQUEST} \s/login\.php\?pages=login[\s?] [NC]
+RewriteRule ^login\.php$ - [F]
