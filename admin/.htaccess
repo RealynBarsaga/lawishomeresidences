@@ -1,5 +1,9 @@
 RewriteEngine On
-RewriteBase /admin/
+RewriteBase /admin
 
-# Redirect requests to /admin to /admin/login.php
+# Block direct access to login.php
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /admin/login\.php\ HTTP/
+RewriteRule ^login\.php$ - [F,L]
+
+# Allow access to login.php through /admin
 RewriteRule ^$ login.php [L]
