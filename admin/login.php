@@ -226,6 +226,7 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
           document.getElementById("error-modal1").style.display = 'none';
       });
   });
+
   // Wait for the DOM to load
   document.addEventListener("DOMContentLoaded", function() {
       // Attach a click event to the OK button
@@ -234,6 +235,7 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
           window.location.href = '../admin/dashboard/dashboard.php?page=dashboard';
       });
   });
+  
   function togglePassword(inputId, icon) {
         const input = document.getElementById(inputId);
         const iconElement = icon.querySelector('i');
