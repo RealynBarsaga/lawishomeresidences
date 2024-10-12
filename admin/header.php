@@ -175,7 +175,7 @@ if (isset($_POST['btn_saveeditProfile'])) {
                                 <a href="#" class="btn btn-default btn-flat" data-toggle="modal" data-target="#editProfileModal">Change Account</a>
                             </div>
                             <div class="pull-right">
-                                <a href="../admin/" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="../admin/login.php" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>
