@@ -26,7 +26,7 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
 
     // Process login attempt
     if (isset($_POST['btn_login'])) {
-        include "connection.php";
+        include "../../connection.php";
 
         // Retrieve and sanitize input values
         $username_or_email = htmlspecialchars(stripslashes(trim($_POST['txt_username'])));
