@@ -89,7 +89,7 @@ $email = '';
                         <button type="submit" name="reset" class="btn">Send Reset Link</button>
                     </div>
                     <div class="back-link">
-                        <a href="lawishomeresidences.com">Login</a>
+                        <a href="..">Login</a>
                     </div>
                 </form>
             </div>
