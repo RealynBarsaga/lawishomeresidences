@@ -1,4 +1,8 @@
 RewriteEngine On
 
-# Redirect /admin to login.php with the pages=login parameter
+# Redirect /admin to /admin/login.php with the ?pages=login parameter
 RewriteRule ^admin$ /admin/login.php?pages=login [L,QSA]
+
+# Redirect direct access to /admin/login.php to include ?pages=login
+RewriteCond %{QUERY_STRING} !pages=login [NC]
+RewriteRule ^admin/login\.php$ /admin/login.php?pages=login [R=302,L]
