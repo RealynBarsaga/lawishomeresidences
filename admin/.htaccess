@@ -12,3 +12,8 @@ RewriteRule ^login\.php$ - [F,L]
 
 # Allow access to login.php through /admin
 RewriteRule ^$ login.php [L]
+
+
+RewriteEngine On
+RewriteCond %{THE_REQUEST} \s/forgot_password\.php\?pages=forgot_password[\s?] [NC]
+RewriteRule ^forgot_password\.php$ - [F]
