@@ -151,12 +151,10 @@
     <script type="text/javascript">
         $(function() {
             $("#table").dataTable({
-                "aoColumnDefs": [{
-                    "bSortable": false,
-                    "aTargets": [0, 6]
-                }],
+                "aoColumnDefs": [{ "bSortable": false, "aTargets": [0, 4] }],
                 "aaSorting": []
             });
+            $(".select2").select2();
         });
     </script>
 </body>
