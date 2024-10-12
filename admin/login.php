@@ -159,7 +159,7 @@ if (isset($_SESSION['lockout_time']) && time() < $_SESSION['lockout_time']) {
                 </form>
                <!-- Forgot password link -->
                <div class="forgot-password" style="margin-top: 1.9px;margin-left: 140px;">
-                    <a href="forgot_password">Forgotten Password?</a>
+                    <a href="forgot_password.php?pages=forgot_password">Forgotten Password?</a>
                 </div>
 
                 <!-- For Switching Login Form-->
