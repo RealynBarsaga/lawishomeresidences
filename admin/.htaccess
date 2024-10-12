@@ -1,5 +1,5 @@
 RewriteEngine On
-RewriteBase /admin/
+RewriteBase /admin
 
 # Remove trailing slash from /admin/
 RewriteCond %{REQUEST_FILENAME} !-d
