@@ -1,8 +1,9 @@
 RewriteEngine On
 
-# Redirect /admin to login.php with the pages=login parameter
-RewriteRule ^admin/?$ /admin/login.php?pages=login [L,QSA]
+# Block direct access to login.php
+RewriteCond %{THE_REQUEST} \ /admin/login\.php [NC]
+RewriteCond %{HTTP_REFERER} !^https://lawishomeresidences\.com/admin [NC]
+RewriteRule ^ - [F,L]
 
-# Optional: Force redirect without showing /login.php in the URL
-RewriteCond %{REQUEST_URI} ^/admin/login.php$
-RewriteRule ^admin/?$ /admin [R=301,L]
+# Redirect /admin to login.php with the pages=login parameter
+RewriteRule ^admin$ /admin/login.php?pages=login [L,QSA]
