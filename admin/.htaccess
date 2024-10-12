@@ -10,5 +10,9 @@ RewriteRule ^ %1 [R=301,L]
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /admin/login\.php\ HTTP/
 RewriteRule ^login\.php$ - [F,L]
 
-# Allow access to login.php through /admin
-RewriteRule ^$ login.php [L]
+# Allow access to login.php through /admin/ while keeping it hidden
+RewriteRule ^login$ login.php [L,QSA]
+
+# Redirect from /admin/login.php?pages=login to /admin/login
+RewriteCond %{QUERY_STRING} ^pages=login$
+RewriteRule ^login\.php$ /admin/login [R=301,L]
