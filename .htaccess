@@ -7,3 +7,6 @@ RewriteRule ^$ login.php [L]
 # Block direct access to login.php
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /login\.php\ HTTP/ [NC]
 RewriteRule ^login\.php$ / [R=302,L]
+
+# This works SOME of the time to redirect to https
+Header always set Content-Security-Policy "upgrade-insecure-requests;"
