@@ -7,10 +7,3 @@ RewriteRule ^$ login.php [L]
 # Block direct access to login.php
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /login\.php\ HTTP/ [NC]
 RewriteRule ^login\.php$ / [R=302,L]
-
-# Security headers (optional)
-Header set Content-Security-Policy "default-src 'self'"
-Header set X-Content-Type-Options "nosniff"
-Header set X-Frame-Options "DENY"
-Header set X-XSS-Protection "1; mode=block"
-Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
