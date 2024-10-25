@@ -105,7 +105,7 @@ if ($error || $error_attempts) {
 </head>
 <style>
 body {
-    background-image: url('img/received_1185064586170879.jpeg');
+    background-image: url('../img/received_1185064586170879.jpeg');
     background-attachment: fixed;
     background-position: center center;
     background-repeat: no-repeat;
