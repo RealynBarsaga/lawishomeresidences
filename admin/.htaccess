@@ -1,36 +1,12 @@
 RewriteEngine On
 RewriteBase /admin/
 
-# Redirect root /admin to login.php while keeping the URL clean
+# Redirect root /admin to login.php but keep the URL clean
 RewriteRule ^$ login.php [L]
 
 # Block direct access to login.php if accessed directly
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /admin/login\.php\ HTTP/ [NC]
 RewriteRule ^login\.php$ /admin [R=302,L]
 
-# Prevent directory listing
-Options -Indexes
-
-# Block access to sensitive files
-<FilesMatch "\.(htaccess|htpasswd|ini|log|env)$">
-    Order Allow,Deny
-    Deny from all
-</FilesMatch>
-
-# Restrict access to PHP source code
-<FilesMatch "\.php$">
-    SetEnvIf Request_URI "^/admin/login\.php$" allow_login
-    Order Deny,Allow
-    Deny from all
-    Allow from env=allow_login
-</FilesMatch>
-
-# Add security headers to mitigate common vulnerabilities
-Header set X-Content-Type-Options "nosniff"
-Header set X-XSS-Protection "1; mode=block"
-Header set X-Frame-Options "DENY"
-Header set Content-Security-Policy "default-src 'self'"
-
-# Optionally restrict access by IP (uncomment and set IPs if needed)
-# Allow from 192.168.1.1
-# Deny from all
+# This works SOME of the time to redirect to https
+Header always set Content-Security-Policy "upgrade-insecure-requests;"
