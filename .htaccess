@@ -33,5 +33,7 @@ Header set X-Frame-Options "DENY"
 Header set Content-Security-Policy "default-src 'self'"
 
 # Restrict access to certain IPs if applicable
-# Allow from 192.168.1.1
-# Deny from all
+<RequireAll>
+    Require all denied
+    Require ip 192.168.1.1
+</RequireAll>
