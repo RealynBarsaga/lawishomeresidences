@@ -9,4 +9,4 @@ RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /login\.php\ HTTP/ [NC]
 RewriteRule ^login\.php$ / [R=302,L]
 
 # Set Content-Security-Policy to upgrade insecure requests
-Header always set Content-Security-Policy "upgrade-insecure-requests; default-src 'self';" 
+Header always set Content-Security-Policy "default-src 'self';" 
