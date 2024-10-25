@@ -58,6 +58,8 @@
                                             (SELECT id, name, dateRecorded, barangay, report_type FROM tblrecidency)
                                             UNION
                                             (SELECT id, name, dateRecorded, barangay, report_type FROM tblindigency)
+                                            UNION
+                                            (SELECT id, name, dateRecorded, barangay, report_type FROM tblcertificate)
                                         ");
                                         
                                         // Check for query errors

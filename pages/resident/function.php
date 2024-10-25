@@ -4,7 +4,6 @@ if (isset($_POST['btn_add'])) {
     // Set Content Security Policy
     header("Content-Security-Policy: script-src 'self';");
 
-    
     // Sanitize input data
     $txt_lname = htmlspecialchars(stripslashes(trim($_POST['txt_lname'])), ENT_QUOTES, 'UTF-8');
     $txt_fname = htmlspecialchars(stripslashes(trim($_POST['txt_fname'])), ENT_QUOTES, 'UTF-8');
@@ -12,18 +11,18 @@ if (isset($_POST['btn_add'])) {
     $ddl_gender = htmlspecialchars(stripslashes(trim($_POST['ddl_gender'])), ENT_QUOTES, 'UTF-8');
     $txt_bdate = htmlspecialchars(stripslashes(trim($_POST['txt_bdate'])), ENT_QUOTES, 'UTF-8');
     $txt_bplace = htmlspecialchars(stripslashes(trim($_POST['txt_bplace'])), ENT_QUOTES, 'UTF-8');
-    
+
     // Calculate age based on birthdate
     $dateOfBirth = DateTime::createFromFormat('Y-m-d', $txt_bdate);
     $today = new DateTime('today');
-    
+
     if ($dateOfBirth && $dateOfBirth <= $today) { // Ensure valid date and not in the future
         $diff = $today->diff($dateOfBirth);
         $txt_age = $diff->y; // Get the age in years
     } else {
         $txt_age = 0; // Invalid or future birthdate
     }
-    
+
     // Continue with other sanitized form data
     $txt_brgy = htmlspecialchars(stripslashes(trim($_POST['txt_brgy'])), ENT_QUOTES, 'UTF-8');
     $txt_purok = htmlspecialchars(stripslashes(trim($_POST['txt_purok'])), ENT_QUOTES, 'UTF-8');
@@ -37,14 +36,13 @@ if (isset($_POST['btn_add'])) {
     $txt_lightning = htmlspecialchars(stripslashes(trim($_POST['txt_lightning'])), ENT_QUOTES, 'UTF-8');
     $txt_faddress = htmlspecialchars(stripslashes(trim($_POST['txt_faddress'])), ENT_QUOTES, 'UTF-8');
 
-
     $name = basename($_FILES['txt_image']['name']);
     $temp = $_FILES['txt_image']['tmp_name'];
     $imagetype = $_FILES['txt_image']['type'];
     $size = $_FILES['txt_image']['size'];
 
     $milliseconds = round(microtime(true) * 1000);
-    $image = $milliseconds . '_' . $name;
+    $txt_image = $milliseconds . '_' . $name;
 
     if (isset($_SESSION['role'])) {
         $action = 'Added Resident named of ' . $txt_fname . ' ' . $txt_mname . ' ' . $txt_lname;
@@ -57,50 +55,18 @@ if (isset($_POST['btn_add'])) {
     if ($ct == 0) {
         if ($name != "") {
             if (($imagetype == "image/jpeg" || $imagetype == "image/png" || $imagetype == "image/bmp") && $size <= 2048000) {
-                if (move_uploaded_file($temp, 'image/' . $image)) {
-                    $txt_image = $image;
+                if (move_uploaded_file($temp, 'image/' . $txt_image)) {
+                    // Insert resident's data
                     $query = mysqli_query($con, "INSERT INTO tbltabagak (
-                                        lname,
-                                        fname,
-                                        mname,
-                                        bdate,
-                                        bplace,
-                                        age,
-                                        barangay,
-                                        purok,
-                                        totalhousehold,
-                                        civilstatus,
-                                        householdnum,
-                                        religion,
-                                        nationality,
-                                        gender,
-                                        houseOwnershipStatus,
-                                        landOwnershipStatus,
-                                        lightningFacilities,
-                                        formerAddress,
-                                        image
-                                    ) 
-                                    VALUES (
-                                        '$txt_lname', 
-                                        '$txt_fname', 
-                                        '$txt_mname',  
-                                        '$txt_bdate', 
-                                        '$txt_bplace',
-                                        '$txt_age',
-                                        '$txt_brgy',
-                                        '$txt_purok',
-                                        '$txt_householdmem',
-                                        '$txt_cstatus',
-                                        '$txt_householdnum',
-                                        '$txt_religion',
-                                        '$txt_national',
-                                        '$ddl_gender',
-                                        '$ddl_hos',
-                                        '$ddl_los', 
-                                        '$txt_lightning',  
-                                        '$txt_faddress', 
-                                        '$txt_image'
-                                    )") or die('Error: ' . mysqli_error($con));
+                        lname, fname, mname, bdate, bplace, age, barangay, purok, 
+                        totalhousehold, civilstatus, householdnum, religion, nationality, 
+                        gender, houseOwnershipStatus, landOwnershipStatus, lightningFacilities, 
+                        formerAddress, image) VALUES (
+                        '$txt_lname', '$txt_fname', '$txt_mname', '$txt_bdate', '$txt_bplace', 
+                        '$txt_age', '$txt_brgy', '$txt_purok', '$txt_householdmem', 
+                        '$txt_cstatus', '$txt_householdnum', '$txt_religion', '$txt_national', 
+                        '$ddl_gender', '$ddl_hos', '$ddl_los', '$txt_lightning', '$txt_faddress', 
+                        '$txt_image')") or die('Error: ' . mysqli_error($con));
                 } else {
                     // Handle file move error
                 }
@@ -110,48 +76,17 @@ if (isset($_POST['btn_add'])) {
             }
         } else {
             $txt_image = 'default.png';
+            // Insert resident's data without image
             $query = mysqli_query($con, "INSERT INTO tbltabagak (
-                                        lname,
-                                        fname,
-                                        mname,
-                                        bdate,
-                                        bplace,
-                                        age,
-                                        barangay,
-                                        purok,
-                                        totalhousehold,
-                                        civilstatus,
-                                        householdnum,
-                                        religion,
-                                        nationality,
-                                        gender,
-                                        houseOwnershipStatus,
-                                        landOwnershipStatus,
-                                        lightningFacilities,
-                                        formerAddress,
-                                        image
-                                    ) 
-                                    VALUES (
-                                        '$txt_lname', 
-                                        '$txt_fname', 
-                                        '$txt_mname',  
-                                        '$txt_bdate', 
-                                        '$txt_bplace',
-                                        '$txt_age',
-                                        '$txt_brgy',
-                                        '$txt_purok',
-                                        '$txt_householdmem',
-                                        '$txt_cstatus',
-                                        '$txt_householdnum',
-                                        '$txt_religion',
-                                        '$txt_national',
-                                        '$ddl_gender',
-                                        '$ddl_hos',
-                                        '$ddl_los', 
-                                        '$txt_lightning',  
-                                        '$txt_faddress', 
-                                        '$txt_image'
-                                    )") or die('Error: ' . mysqli_error($con));
+                lname, fname, mname, bdate, bplace, age, barangay, purok, 
+                totalhousehold, civilstatus, householdnum, religion, nationality, 
+                gender, houseOwnershipStatus, landOwnershipStatus, lightningFacilities, 
+                formerAddress, image) VALUES (
+                '$txt_lname', '$txt_fname', '$txt_mname', '$txt_bdate', '$txt_bplace', 
+                '$txt_age', '$txt_brgy', '$txt_purok', '$txt_householdmem', 
+                '$txt_cstatus', '$txt_householdnum', '$txt_religion', '$txt_national', 
+                '$ddl_gender', '$ddl_hos', '$ddl_los', '$txt_lightning', '$txt_faddress', 
+                '$txt_image')") or die('Error: ' . mysqli_error($con));
         }
 
         if ($query == true) {
@@ -163,6 +98,7 @@ if (isset($_POST['btn_add'])) {
         header("location: " . $_SERVER['REQUEST_URI']);
     }
 }
+
 
 // Handle form submission for editing a resident
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_save'])) {
@@ -190,10 +126,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_save'])) {
     $lightning = htmlspecialchars(stripslashes(trim($_POST['txt_edit_lightning'])), ENT_QUOTES, 'UTF-8');
     $formerAddress = htmlspecialchars(stripslashes(trim($_POST['txt_edit_faddress'])), ENT_QUOTES, 'UTF-8');
     
-    // Validate essential fields (example)
-    if (empty($id) || empty($lname) || empty($fname)) {
-        die('Required fields are missing.');
-    }
     
     // Handle image upload
     $image = $_FILES['txt_edit_image']['name'];

@@ -52,10 +52,21 @@
 
                                 // Purok options for each barangay
                                 $puroks = [
-                                    "Tabagak" => ["Lamon-Lamon", "Tangege", "Lawihan", "Lower-Bangus", "Upper-Bangus"],
-                                    "Bunakan" => ["Purok A", "Purok B"],
+                                    "Tabagak" => ["Lamon-Lamon", "Tangigue", "Lawihan", "Lower-Bangus", "Upper-Bangus"],
+                                    "Bunakan" => ["Bilabid", "Helinggero", "Kamaisan", "Kalubian", "Samonite"],
                                     /* "Kodia" => ["Purok X", "Purok Y", "Purok Z"], */
-                                    "Tugas" => ["Purok", "Puroks"],
+                                    /* "Talangnan" => ["",], */
+                                    /*  "Poblacion" => ["",], */
+                                    "Maalat" => ["Neem Tree", "Talisay", "Kabakhawan", "Mahogany", "Gmelina"],
+                                    "Pili" => ["Malinawon", "Mahigugmaon", "Matinabangun", "Maabtikon", "Malipayon", "Mauswagon"],
+                                    /* "Kaongkod" => ["Purok", "Puroks"], */
+                                    /* "Mancilang" => ["Purok", "Puroks"], */
+                                    /* "Kangwayan" => ["Purok", "Puroks"], */
+                                    /* "Kangwayan" => ["Purok", "Puroks"], */
+                                    /* "Tugas" => ["Purok", "Puroks"], */
+                                    /* "Malbago" => ["Purok", "Puroks"], */
+                                    "Tarong" => ["Orchids", "Gumamela", "Santan", "Rose", "Vietnam Rose", "Kumintang", "Sunflower", "Daisy"],
+                                    /* "San Agustin" => ["Purok", "Puroks"], */
                                     // Add purok options for other barangays
                                 ];
                                 ?>
@@ -116,7 +127,6 @@
                                         <option>Care Taker</option>
                                     </select>
                                 </div>
-
                             </div>
 
                             <div class="col-md-6 col-sm-12">
@@ -142,7 +152,16 @@
                                     <label class="control-label">Total Household Members:</label>
                                     <input name="txt_householdmem" class="form-control input-sm" type="number" min="1" placeholder="Total Household Members" required/>
                                 </div>
-
+                                <!-- Household Members Section -->
+                               <!--  <h4 style="margin-left: -13px;font-weight: bold;">Household Members</h4>
+                                <div id="members">
+                                    <div>
+                                        <input type="text" name="member_name[]" placeholder="Member Name" required style="margin-left: -13px;">
+                                        <input type="number" name="member_age[]" placeholder="Member Age" required>
+                                        <input type="text" name="member_relationship[]" placeholder="Relationship" required style="margin-left: -13px;margin-top: 10px;">
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-secondary btn-sm" onclick="addMember()" style="margin-top: 10px;margin-left: -13px;background-color: #3c8dbc;border-color: #367fa9;color:white;">Add Another Member</button> -->
                                 <!-- Nationality -->
                                 <div class="form-group">
                                     <label class="control-label">Nationality:</label>
@@ -192,6 +211,19 @@
     </form>
 </div>
 <script type="text/javascript">
+   /*  // Function to add household member fields
+    function addMember() {
+        var membersDiv = document.getElementById('members');
+        var newMember = document.createElement('div');
+        newMember.innerHTML = `
+            <br>
+            <input type="text" name="member_name[]" placeholder="Member Name" required style="margin-left: -13px;">
+            <input type="number" name="member_age[]" placeholder="Member Age" required>
+            <input type="text" name="member_relationship[]" placeholder="Relationship" required style="margin-left: -13px;margin-top: 10px;">
+        `;
+        membersDiv.appendChild(newMember);
+    } */
+
     $(document).ready(function() {
  
         var timeOut = null; // this used for hold few seconds to made ajax request

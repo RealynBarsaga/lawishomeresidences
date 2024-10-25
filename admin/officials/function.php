@@ -11,32 +11,7 @@ if (isset($_POST['btn_add'])) {
     $txt_address = htmlspecialchars(stripslashes(trim($_POST['txt_address'])), ENT_QUOTES, 'UTF-8');
     $txt_sterm = htmlspecialchars(stripslashes(trim($_POST['txt_sterm'])), ENT_QUOTES, 'UTF-8');
     $txt_eterm = htmlspecialchars(stripslashes(trim($_POST['txt_eterm'])), ENT_QUOTES, 'UTF-8');
-    
-    // Basic Validation
-    if (empty($ddl_pos) || empty($txt_cname) || empty($txt_contact) || 
-        empty($txt_address) || empty($txt_sterm) || empty($txt_eterm)) {
-        die('Required fields are missing.');
-    }
-    
-    // Validate contact number (assuming it should be numeric and 10-12 digits long)
-    if (!preg_match('/^[0-9]{10,12}$/', $txt_contact)) {
-        die('Invalid contact number. It must be between 10 and 12 digits.');
-    }
-    
-    // Validate name (allowing letters, spaces, and some punctuation)
-    if (!preg_match('/^[a-zA-Z\s.,-]+$/', $txt_cname)) {
-        die('Invalid name format. Only letters, spaces, and certain punctuation are allowed.');
-    }
-    
-    // Validate address (allowing alphanumeric characters, spaces, and basic punctuation)
-    if (!preg_match('/^[a-zA-Z0-9\s.,-]+$/', $txt_address)) {
-        die('Invalid address format. Only alphanumeric characters and basic punctuation are allowed.');
-    }
-    
-    // Validate start and end terms (assuming they are formatted correctly)
-    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $txt_sterm) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $txt_eterm)) {
-        die('Invalid term format. Please use YYYY-MM-DD.');
-    }
+
 
     // Handle file upload
     $name = basename($_FILES['image']['name']);
@@ -101,47 +76,30 @@ if (isset($_POST['btn_save'])) {
     $txt_edit_address = htmlspecialchars(stripslashes(trim($_POST['txt_edit_address'])), ENT_QUOTES, 'UTF-8');
     $txt_edit_sterm = htmlspecialchars(stripslashes(trim($_POST['txt_edit_sterm'])), ENT_QUOTES, 'UTF-8');
     $txt_edit_eterm = htmlspecialchars(stripslashes(trim($_POST['txt_edit_eterm'])), ENT_QUOTES, 'UTF-8');
-    
-    // Basic Validation
-    if (empty($id) || empty($txt_edit_cname) || empty($txt_edit_contact) || 
-        empty($txt_edit_address) || empty($txt_edit_sterm) || empty($txt_edit_eterm)) {
-        die('Required fields are missing.');
-    }
-    
-    // Validate contact number (assuming it should be numeric and 10-12 digits long)
-    if (!preg_match('/^[0-9]{10,12}$/', $txt_edit_contact)) {
-        die('Invalid contact number. It must be between 10 and 12 digits.');
-    }
-    
-    // Validate name (allowing letters, spaces, and some punctuation)
-    if (!preg_match('/^[a-zA-Z\s.,-]+$/', $txt_edit_cname)) {
-        die('Invalid name format. Only letters, spaces, and certain punctuation are allowed.');
-    }
-    
-    // Validate address (allowing alphanumeric characters, spaces, and basic punctuation)
-    if (!preg_match('/^[a-zA-Z0-9\s.,-]+$/', $txt_edit_address)) {
-        die('Invalid address format. Only alphanumeric characters and basic punctuation are allowed.');
-    }
-    
-    // Validate start and end terms (assuming they are formatted correctly)
-    if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $txt_edit_sterm) || !preg_match('/^\d{4}-\d{2}-\d{2}$/', $txt_edit_eterm)) {
-        die('Invalid term format. Please use YYYY-MM-DD.');
-    }
 
     // Handle image upload
     $image = $_FILES['txt_edit_image']['name'];
     if ($image) {
-        $target_dir = "../image/";
-        $target_file = $target_dir . basename($_FILES["txt_edit_image"]["name"]);
-        move_uploaded_file($_FILES["txt_edit_image"]["tmp_name"], $target_file);
+        $target_dir = "image/";
+        $target_file = $target_dir . basename($image);
+        
+        if (move_uploaded_file($_FILES["txt_edit_image"]["tmp_name"], $target_file)) {
+            // Image upload successful
+        } else {
+            // Handle error
+            echo "Sorry, there was an error uploading your file.";
+            exit();
+        }
     } else {
+        // Get existing image if no new image is uploaded
         $edit_query = mysqli_query($con, "SELECT image FROM tblmadofficial WHERE id='$id'");
-        $erow = mysqli_fetch_array($edit_query);
-        $image = $erow['image'];
-    }
-    if ($edit_query == true) {
-        $_SESSION['edited'] = 1;
-        header("location: " . $_SERVER['REQUEST_URI']);
+        if ($edit_query) {
+            $row = mysqli_fetch_array($edit_query);
+            $image = $row['image'];
+        } else {
+            // Handle query error
+            die('Error fetching existing image: ' . mysqli_error($con));
+        }
     }
 
     // Update official's information in the database
@@ -156,6 +114,12 @@ if (isset($_POST['btn_save'])) {
 
     // Redirect after successful update
     if ($update_query) {
+        // Log the action only after a successful update
+        if (isset($_SESSION['role'])) {
+            $action = 'Update Official named ' . $txt_edit_cname;
+            $iquery = mysqli_query($con, "INSERT INTO tbllogs (user, logdate, action) VALUES ('Administrator', NOW(), '$action')");
+        }
+
         $_SESSION['edited'] = 1;
         header("location: " . $_SERVER['REQUEST_URI']);
         exit();

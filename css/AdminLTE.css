@@ -2742,9 +2742,6 @@ Component: timeline
   margin: 0 1px;
   background: #444;
 }
-.skin-black .left-side {
-  background: #333;
-}
 .skin-black .sidebar a {
   color: #eee;
 }

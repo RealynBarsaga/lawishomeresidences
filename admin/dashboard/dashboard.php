@@ -11,48 +11,62 @@
 <head>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
+<style>
+.info-box {
+    display: block;
+    min-height: 125px;
+    background: #fff;
+    width: 92%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+    border-radius: 2px;
+    margin-bottom: 15px;
+}
+.info-box-text {
+    text-transform: none;
+    font-weight: 100;
+}
+.chart-container {
+    margin-left: 400px;
+    margin-top: 100px; /* Adjust as needed */
+}
+.chart-containers {
+    margin-left: 403px;
+    margin-top: -322px;
+    display: flex;
+    align-items: center;
+    width: 28%;
+    height: 300px;
+    background: rgb(255, 255, 255);
+    box-sizing: border-box;
+}
+.canvas#myPieChart {
+    display: block;
+    box-sizing: border-box;
+    height: 307px;
+    width: 380px;
+}
+.chart-contain {
+    margin-left: 715px;
+    margin-top: -322px;
+    display: flex;
+    align-items: center;
+    width: 28%;
+    height: 300px;
+    background: rgb(255, 255, 255);
+    box-sizing: border-box;
+}
+.canvas#PieChart {
+    display: block;
+    box-sizing: border-box;
+    height: 307px;
+    width: 380px;
+}
+</style>
 <body class="skin-black">
     <?php
     include "../../admin/connection.php";
     include('../../admin/header.php');
     ?>
-    <style>
-        .info-box {
-            display: block;
-            min-height: 125px;
-            background: #fff;
-            width: 92%;
-            box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-            border-radius: 2px;
-            margin-bottom: 15px;
-        }
-        .info-box-text {
-            text-transform: none;
-            font-weight: 100;
-        }
-        .chart-container {
-            margin-left: 400px;
-            margin-top: 100px; /* Adjust as needed */
-        }
-        .chart-containers {
-            margin-left: 509px;
-            margin-top: -304px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            width: 48%;
-            height: 300px;
-            background: rgb(255, 255, 255);
-            box-sizing: border-box;
-            padding: -8px;       
-        }
-        canvas#myPieChart { /* Fixed the CSS issue here */
-            display: block;
-            box-sizing: border-box;
-            height: 307px;
-            width: 380px;
-        }
-    </style>
     <div class="wrapper row-offcanvas row-offcanvas-left">
         <?php include('../../admin/sidebar-left.php'); ?>
 
@@ -60,17 +74,19 @@
             <section class="content-header">
                 <h1>Dashboard</h1>
             </section>
+
             <section class="content">
                 <div class="row">
                     <div class="box">
                         <!-- Info Boxes -->
                         <?php
                         $info_boxes = [
-                            ['label' => 'Madridejos Officials', 'icon' => 'fa-user', 'color' => '#00c0ef', 'query' => "SELECT * FROM tblMadofficial", 'link' => '../../officials/officials.php'],
-                            ['label' => 'Total Barangay', 'icon' => 'fa-university', 'color' => '#007256', 'query' => "SELECT * FROM tblstaff", 'link' => '../../staff/staff.php'],
-                            ['label' => 'Total Permit', 'icon' => 'fa-file', 'color' => '#bd1e24', 'query' => "SELECT * FROM tblpermit", 'link' => '../../permit/permit.php'],
-                            ['label' => 'Total Household', 'icon' => 'fa-users', 'color' => '#e5c707', 'query' => "SELECT * FROM tblhousehold", 'link' => '../../householdlist/householdlist.php']
+                            ['label' => 'Madridejos Officials', 'icon' => 'fa-user', 'color' => '#00c0ef', 'query' => "SELECT * FROM tblMadofficial", 'link' => '../officials/officials.php'],
+                            ['label' => 'Total Barangay', 'icon' => 'fa-university', 'color' => '#007256', 'query' => "SELECT * FROM tblstaff", 'link' => '../staff/staff.php'],
+                            ['label' => 'Total Permit', 'icon' => 'fa-file', 'color' => '#bd1e24', 'query' => "SELECT * FROM tblpermit", 'link' => '../permit/permit.php'],
+                            ['label' => 'Total Household', 'icon' => 'fa-users', 'color' => '#e5c707', 'query' => "SELECT * FROM tblhousehold", 'link' => '../householdlist/householdlist.php']
                         ];
+
                         foreach ($info_boxes as $box) {
                             $q = mysqli_query($con, $box['query']);
                             $num_rows = mysqli_num_rows($q);
@@ -90,18 +106,24 @@
                                         More Info <i class="fa fa-arrow-circle-right"></i>
                                     </a>
                                 </div>
+
                             </div>
                         </div>
                         <?php } ?>
                     </div><!-- /.box -->
                     <!-- Bar Chart -->
                     <div class="chart-container" style="margin-left: 22px;">
-                        <canvas id="myBarChart" width="100" height="30" style="max-width: 45%;background: #fff;"></canvas>
+                        <canvas id="myBarChart" width="100" height="30" style="max-width: 35%;background: #fff; box-shadow: 2px 5px 9px #888888;"></canvas>
                     </div>
 
                     <!-- Pie Chart -->
-                    <div class="chart-containers">
+                    <div class="chart-containers" style="box-shadow: 2px 5px 9px #888888;">
                         <canvas id="myPieChart"></canvas>
+                    </div>
+
+                    <!-- Pie Chart -->
+                    <div class="chart-contain" style="box-shadow: 2px 5px 9px #888888;">
+                        <canvas id="PieChart"></canvas>
                     </div>
                 </div><!-- /.row -->
             </section><!-- /.content -->
@@ -114,7 +136,7 @@
     $counts = [];
 
     foreach ($barangays as $barangay) {
-        $q = mysqli_query($con, "SELECT * FROM tblhousehold WHERE barangay = '$barangay'"); // Corrected table name
+        $q = mysqli_query($con, "SELECT * FROM tbltabagak WHERE barangay = '$barangay'");
         $counts[] = mysqli_num_rows($q);
     }
     ?>
@@ -158,58 +180,128 @@
                 }
             }
         });
+</script>
+<?php
+// Count males and females per barangay
+$barangays = ['Tabagak', 'Bunakan', 'Kodia', 'Talangnan', 'Poblacion', 'Maalat', 'Pili', 'Kaongkod', 'Mancilang', 'Kangwayan', 'Tugas', 'Malbago', 'Tarong', 'San Agustin'];
+$maleCounts = [];
+$femaleCounts = [];
 
-        // Pie chart
-        const pieCtx = document.getElementById('myPieChart').getContext('2d');
-        const myPieChart = new Chart(pieCtx, {
-        type: 'pie',
-        data: {
-            labels: <?= json_encode($barangays) ?>,
-            datasets: [{
-                label: 'Households',
-                data: <?= json_encode($counts) ?>,
-                backgroundColor: [
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56',
-                    '#4BC0C0',
-                    '#9966FF',
-                    '#FF9F40',
-                    '#FF6384',
-                    '#36A2EB',
-                    '#FFCE56',
-                    '#4BC0C0',
-                    '#9966FF',
-                    '#FF9F40',
-                    '#FF6384',
-                    '#36A2EB'
-                ],
-                hoverOffset: 4
-            }]
-        },
-        options: {
-            responsive: true,
-            plugins: {
-                legend: {
-                    position: 'left', // Position the legend on the right
-                    labels: {
-                        boxWidth: 15, // Make legend boxes smaller
-                        padding: 6,  // Spacing between legend items
-                        font: {
-                            size: 10 // Adjust font size if necessary
-                        }
-                    }
+// Assuming you also want to count females
+foreach ($barangays as $barangay) {
+    // Count males
+    $q_male = mysqli_query($con, "SELECT * FROM tbltabagak WHERE barangay = '$barangay' AND gender = 'Male'");
+    $maleCounts[] = mysqli_num_rows($q_male);
+
+    // Count females
+    $q_female = mysqli_query($con, "SELECT * FROM tbltabagak WHERE barangay = '$barangay' AND gender = 'Female'");
+    $femaleCounts[] = mysqli_num_rows($q_female);
+}
+?>
+
+<script>
+// Pie chart for Male Distribution
+const pieCtxMale = document.getElementById('myPieChart').getContext('2d');
+const myPieChart = new Chart(pieCtxMale, {
+    type: 'pie',
+    data: {
+        labels: <?= json_encode($barangays) ?>,
+        datasets: [
+            {
+                label: 'Male',
+                data: <?= json_encode($maleCounts) ?>, // Male counts
+                backgroundColor: '#36A2EB',
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Male Distribution by Barangay',
+                font: {
+                    size: 17
                 },
-                title: {
-                    display: true,
-                    text: 'Households Distribution by Barangay',
+                padding: {
+                   top: 2 // Adjust top padding as needed
+                }
+            },
+            legend: {
+                position: 'left',
+                labels: {
+                    boxWidth: 15,
+                    usePointStyle: true,
+                    padding: 6,
                     font: {
-                        size: 18
+                        size: 10
                     }
                 }
             }
+        },
+        onClick: (evt) => {
+            const activePoints = myPieChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, false);
+            if (activePoints.length) {
+                const chartIndex = activePoints[0].index;
+                const barangay = <?= json_encode($barangays) ?>[chartIndex];
+                const maleCount = <?= json_encode($maleCounts) ?>[chartIndex];
+                // Optionally, handle click event here (e.g., display alert)
+            }
         }
-    });
-    </script>
+    }
+});
+
+// Pie chart for Female Distribution
+const pieCtxFemale = document.getElementById('PieChart').getContext('2d');
+const PieChart = new Chart(pieCtxFemale, {
+    type: 'pie',
+    data: {
+        labels: <?= json_encode($barangays) ?>,
+        datasets: [
+            {
+                label: 'Female',
+                data: <?= json_encode($femaleCounts) ?>, // Female counts
+                backgroundColor: '#FF6384',
+            }
+        ]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            title: {
+                display: true,
+                text: 'Female Distribution by Barangay',
+                font: {
+                    size: 17
+                },
+                padding: {
+                   top: 2 // Adjust top padding as needed
+                }
+            },
+            legend: {
+                position: 'left',
+                labels: {
+                    boxWidth: 15,
+                    usePointStyle: true,
+                    padding: 6,
+                    font: {
+                        size: 10
+                    }
+                }
+            }
+        },
+        onClick: (evt) => {
+            const activePoints = PieChart.getElementsAtEventForMode(evt, 'nearest', { intersect: true }, false);
+            if (activePoints.length) {
+                const chartIndex = activePoints[0].index;
+                const barangay = <?= json_encode($barangays) ?>[chartIndex];
+                const femaleCount = <?= json_encode($femaleCounts) ?>[chartIndex];
+                // Optionally, handle click event here (e.g., display alert)
+            }
+        }
+    }
+});
+</script>
+<?php include "../../admin/footer.php"; ?>
 </body>
 </html>

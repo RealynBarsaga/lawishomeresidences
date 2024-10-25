@@ -82,6 +82,7 @@ echo '<div id="editModal'.$row['id'].'" class="modal fade" role="dialog">
                         <div class="form-group">
                             <label class="control-label">Civil Status:</label>
                             <select name="txt_edit_cstatus" class="form-control input-sm" style="width: 405px;">
+                                <option value="'.$erow['civilstatus'].'">'.$erow['civilstatus'].'</option>
                                 <option value="Single" '.($erow['civilstatus'] == 'Single' ? 'selected' : '').'>Single</option>
                                 <option value="Married" '.($erow['civilstatus'] == 'Married' ? 'selected' : '').'>Married</option>
                                 <option value="Widowed" '.($erow['civilstatus'] == 'Widowed' ? 'selected' : '').'>Widowed</option>
@@ -96,6 +97,7 @@ echo '<div id="editModal'.$row['id'].'" class="modal fade" role="dialog">
                         <div class="form-group">
                             <label class="control-label">Land Ownership Status:</label>
                             <select name="ddl_edit_los" class="form-control input-sm">
+                                <option value="'.$erow['landOwnershipStatus'].'">'.$erow['landOwnershipStatus'].'</option>
                                 <option>Owned</option>
                                 <option>Landless</option>
                                 <option>Tenant</option>
@@ -108,6 +110,7 @@ echo '<div id="editModal'.$row['id'].'" class="modal fade" role="dialog">
                         <div class="form-group">
                             <label class="control-label">Gender:</label>
                             <select name="ddl_edit_gender" class="form-control input-sm">
+                                <option value="'.$erow['gender'].'" selected="">'.$erow['gender'].'</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                             </select>
@@ -131,6 +134,7 @@ echo '<div id="editModal'.$row['id'].'" class="modal fade" role="dialog">
                         <div class="form-group">
                             <label class="control-label">House Ownership Status:</label>
                             <select name="ddl_edit_hos" class="form-control input-sm">
+                                <option value="'.$erow['houseOwnershipStatus'].'" selected>'.$erow['houseOwnershipStatus'].'</option>
                                 <option value="Own Home">Own Home</option>
                                 <option value="Rent">Rent</option>
                                 <option value="Live with Parents/Relatives">Live with Parents/Relatives</option>
@@ -140,8 +144,9 @@ echo '<div id="editModal'.$row['id'].'" class="modal fade" role="dialog">
                         <div class="form-group">
                             <label class="control-label">Lightning Facilities:</label>
                             <select name="txt_edit_lightning" class="form-control input-sm input-size" style="width: 405px;">
-                                <option>Electric</option>
-                                <option>Lamp</option>
+                                <option value="'.$erow['lightningFacilities'].'" selected>'.$erow['lightningFacilities'].'</option>
+                                <option value="Electric">Electric</option>
+                                <option value="Lamp">Lamp</option>
                             </select>
                         </div>
 

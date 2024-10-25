@@ -41,9 +41,9 @@ $email = '';
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
     .btn {
-        background: linear-gradient(184deg, rgba(200, 0, 0, 1) 40%, rgba(50, 50, 50, 1) 92%);
-        border: none;
-        color: white;
+        background-image: url('img/bg.jpg');
+        border: 1px solid #000;
+        color: #fff;
         width: 100%;
         border-radius: 15px;
         padding: 10px;
@@ -51,9 +51,8 @@ $email = '';
         cursor: pointer;
     }
     .btn:hover {
-        background: linear-gradient(184deg, rgba(200,0,0,1) 40%, rgba(50,50,50,1) 92%);
-        border: none;
-        color: white;
+        border: 1px solid #000;
+        color: #fff;
         cursor: pointer;
     }
     .back-link {
@@ -89,7 +88,7 @@ $email = '';
                         <button type="submit" name="reset" class="btn">Send Reset Link</button>
                     </div>
                     <div class="back-link">
-                        <a href="..">Login</a>
+                        <a href="login.php?pages=login">Login</a>
                     </div>
                 </form>
             </div>

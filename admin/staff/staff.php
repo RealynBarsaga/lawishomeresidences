@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
 <head>
     <?php
     session_start();
@@ -46,11 +45,11 @@
                                 </button>  
                                 <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">
                                     <i class="fa fa-trash-o" aria-hidden="true"></i> Delete
-                                </button> 
+                                </button>
                             </div>                                
                         </div><!-- /.box-header -->
                         <div class="box-body table-responsive">
-                            <form method="post" enctype="multipart/form-data">
+                            <form method="post">
                                 <table id="table" class="table table-bordered table-striped">
                                     <thead>
                                         <tr>
@@ -71,11 +70,11 @@
                                         while ($row = mysqli_fetch_array($squery)) {
                                             echo '
                                             <tr>
-                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . htmlspecialchars($row['id']) . '" /></td>
+                                                <td><input type="checkbox" name="chk_delete[]" class="chk_delete" value="' . $row['id'] . '" /></td>
                                                 <td>' . htmlspecialchars($row['name']) . '</td>
                                                 <td>' . htmlspecialchars($row['username']) . '</td>
                                                 <td>
-                                                    <button class="btn btn-primary btn-sm" data-target="#editModal' . htmlspecialchars($row['id']) . '" data-toggle="modal">
+                                                    <button class="btn btn-primary btn-sm" data-target="#editModal' . $row['id'] . '" data-toggle="modal">
                                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                                     </button>
                                                 </td>
