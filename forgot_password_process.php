@@ -63,7 +63,7 @@ if (empty($error_message)) {
         $mail->setFrom('sevillejogilbert15@gmail.com', 'lawishomeresidences.com');
         $mail->addAddress($email);
 
-        $code = substr(str_shuffle('1234567890QWERTYUIOPASDFGHJKLZXCVBNM'), 0, 10);
+        $code = substr(str_shuffle('1234567890QWERTYUIOPASDFGHJKLZXCVBNMqwertyuiopasdfghjklzxcvbnm'), 0, 10);
 
         // Email content
         $mail->isHTML(true);
