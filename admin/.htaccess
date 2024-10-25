@@ -10,4 +10,4 @@ RewriteRule ^login\.php$ /admin [R=302,L]
 
 # Remove trailing slash from /admin/
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^admin/$ /admin [R=301,L]
+RewriteRule ^admin\$ /admin [R=301,L]
