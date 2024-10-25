@@ -6,7 +6,7 @@ RewriteRule ^$ login.php [L]
 
 # Redirect to HTTPS
 RewriteCond %{HTTPS} off
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteRule ^ https://lawishomeresidences.com/ [L,R=301]
 
 # Block direct access to login.php
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /login\.php\ HTTP/ [NC]
