@@ -1,9 +1,37 @@
 RewriteEngine On
 RewriteBase /
 
-# Redirect root to login.php
+# Redirect root to login.php while keeping URL clean
 RewriteRule ^$ login.php [L]
 
-# Block direct access to login.php
+# Block direct access to login.php if accessed directly
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /login\.php\ HTTP/ [NC]
 RewriteRule ^login\.php$ / [R=302,L]
+
+# Additional security measures
+# Ensure no directory listings are allowed
+Options -Indexes
+
+# Block access to sensitive files
+<FilesMatch "\.(htaccess|htpasswd|ini|log|env)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Prevent access to php source code
+<FilesMatch "\.php$">
+    SetEnvIf Request_URI "^/login\.php$" allow_login
+    Order Deny,Allow
+    Deny from all
+    Allow from env=allow_login
+</FilesMatch>
+
+# Add headers for security
+Header set X-Content-Type-Options "nosniff"
+Header set X-XSS-Protection "1; mode=block"
+Header set X-Frame-Options "DENY"
+Header set Content-Security-Policy "default-src 'self'"
+
+# Restrict access to certain IPs if applicable
+# Allow from 192.168.1.1
+# Deny from all
