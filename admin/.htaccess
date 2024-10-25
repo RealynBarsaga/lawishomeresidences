@@ -1,4 +1,4 @@
-RRewriteEngine On
+RewriteEngine On
 RewriteBase /admin/
 
 # Redirect root /admin to login.php but keep the URL clean
@@ -9,5 +9,9 @@ RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /admin/login\.php\ HTTP/ [NC]
 RewriteRule ^login\.php$ /admin [R=302,L]
 
 # Remove trailing slash from /admin/
+RewriteCond %{REQUEST_URI} ^/admin/$
+RewriteRule ^admin/$ /admin [R=301,L]
+
+# Ensure /admin/ points to /admin without trailing slash
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^admin\$ /admin [R=301,L]
+RewriteRule ^admin/$ /admin [R=301,L]
