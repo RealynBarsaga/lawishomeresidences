@@ -12,10 +12,6 @@ RewriteRule ^login\.php$ / [R=302,L]
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
-# Allow access only through GET and POST methods
-RewriteCond %{REQUEST_METHOD} !^(GET|POST)$
-RewriteRule ^login\.php$ - [R=405,L]
-
 # Security headers (optional)
 Header set Content-Security-Policy "default-src 'self'"
 Header set X-Content-Type-Options "nosniff"
