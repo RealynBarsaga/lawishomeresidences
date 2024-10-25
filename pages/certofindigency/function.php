@@ -1,8 +1,5 @@
 <?php
 if(isset($_POST['btn_add'])){
-    // Set Content Security Policy
-    header("Content-Security-Policy: script-src 'self';");
-    
     // Sanitize inputs
     $txt_name = htmlspecialchars(stripslashes(trim($_POST['txt_name'])), ENT_QUOTES, 'UTF-8');
     $ddl_gender = htmlspecialchars(stripslashes(trim($_POST['ddl_gender'])), ENT_QUOTES, 'UTF-8');
@@ -41,9 +38,6 @@ if(isset($_POST['btn_add'])){
 
 if(isset($_POST['btn_save']))
 {
-    // Set Content Security Policy
-    header("Content-Security-Policy: script-src 'self';");
-    
     // Sanitize inputs
     $txt_edit_resident = htmlspecialchars(stripslashes(trim($_POST['txt_edit_resident'])), ENT_QUOTES, 'UTF-8');
     $ddl_edit_gender = htmlspecialchars(stripslashes(trim($_POST['ddl_edit_gender'])), ENT_QUOTES, 'UTF-8');

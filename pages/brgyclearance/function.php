@@ -1,8 +1,5 @@
 <?php
 if (isset($_POST['btn_add'])) {
-    // Set Content Security Policy
-    header("Content-Security-Policy: script-src 'self';");
-    
     // Sanitize inputs
     $txt_cnum = htmlspecialchars(stripslashes(trim($_POST['txt_cnum'])), ENT_QUOTES, 'UTF-8');
     $txt_name = htmlspecialchars(stripslashes(trim($_POST['txt_name'])), ENT_QUOTES, 'UTF-8');
@@ -112,8 +109,6 @@ if(isset($_POST['btn_disapprove']))
 }
 
 if(isset($_POST['btn_save'])) {
-   // Set Content Security Policy
-   header("Content-Security-Policy: script-src 'self';");
    
     // Sanitize inputs
     $txt_id = htmlspecialchars(stripslashes(trim($_POST['hidden_id'])), ENT_QUOTES, 'UTF-8');

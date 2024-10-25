@@ -4,9 +4,16 @@ RewriteBase /
 # Redirect root to login.php
 RewriteRule ^$ login.php [L]
 
-# Block direct access to login.php
+# Block direct access to login.php unless authenticated
 RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /login\.php\ HTTP/ [NC]
 RewriteRule ^login\.php$ / [R=302,L]
 
-# This works SOME of the time to redirect to https
-Header always set Content-Security-Policy "upgrade-insecure-requests;"
+# Force HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# Security headers
+Header always set Content-Security-Policy "upgrade-insecure-requests; default-src 'self'; script-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self';"
+Header always set X-Content-Type-Options "nosniff"
+Header always set X-Frame-Options "DENY"
+Header always set X-XSS-Protection "1; mode=block"
