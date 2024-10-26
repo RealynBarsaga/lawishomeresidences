@@ -1,8 +1,3 @@
-<style>
-.skin-black .left-side {
-  background: rgb(51, 51, 51);
-}
-</style>
 <?php
 	echo '
 	<aside class="left-side sidebar-offcanvas">
@@ -31,7 +26,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="../brgyclearance/brgyclearance.php?page=brgyclearance">
+                                <a href="../clearance/clearance.php?page=clearance">
                                     <i class="fa fa-file"></i> <span>Barangay Clearance</span>
                                 </a>
                             </li>
@@ -45,14 +40,9 @@
                                     <i class="fa fa-file"></i> <span>Certificate Of Indigency</span>
                                 </a>
                             </li>
-                            <li>
-                                <a href="../brgycertificate/brgycertificate.php?page=brgycertificate">
-                                    <i class="fa fa-file"></i> <span>Barangay Certificate</span>
-                                </a>
-                            </li>
                         </ul>
                 </section>
                 <!-- /.sidebar -->
-            </aside>
+        </aside>
 	';
 ?>

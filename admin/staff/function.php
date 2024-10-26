@@ -1,10 +1,13 @@
 <?php
 if (isset($_POST['btn_add'])) {
-    $txt_name = htmlspecialchars(stripslashes(trim($_POST['txt_name'])), ENT_QUOTES, 'UTF-8');
-    $txt_uname = htmlspecialchars(stripslashes(trim($_POST['txt_uname'])), ENT_QUOTES, 'UTF-8');
-    $txt_email = htmlspecialchars(stripslashes(trim($_POST['txt_email'])), ENT_QUOTES, 'UTF-8');
-    $txt_pass = htmlspecialchars(stripslashes(trim($_POST['txt_pass'])), ENT_QUOTES, 'UTF-8');
-    $txt_compass = htmlspecialchars(stripslashes(trim($_POST['txt_compass'])), ENT_QUOTES, 'UTF-8');
+    // Set Content Security Policy
+    header("Content-Security-Policy: script-src 'self';");
+
+    $txt_name = htmlspecialchars(stripslashes(trim($_POST['txt_name'])));
+    $txt_uname = htmlspecialchars(stripslashes(trim($_POST['txt_uname'])));
+    $txt_email = htmlspecialchars(stripslashes(trim($_POST['txt_email'])));
+    $txt_pass = htmlspecialchars(stripslashes(trim($_POST['txt_pass'])));
+    $txt_compass = htmlspecialchars(stripslashes(trim($_POST['txt_compass'])));
     $filename = date("mdGis") . ".png";
     $tmp_name = $_FILES['logo']['tmp_name'];
     $folder = "./logo/" . $filename;
@@ -37,12 +40,15 @@ if (isset($_POST['btn_add'])) {
 }
 
 if (isset($_POST['btn_save'])) {
-    $txt_id = htmlspecialchars(stripslashes(trim($_POST['hidden_id'])), ENT_QUOTES, 'UTF-8');
-    $txt_edit_name = htmlspecialchars(stripslashes(trim($_POST['txt_edit_name'])), ENT_QUOTES, 'UTF-8');
-    $txt_edit_uname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_uname'])), ENT_QUOTES, 'UTF-8');
-    $txt_edit_email = htmlspecialchars(stripslashes(trim($_POST['txt_edit_email'])), ENT_QUOTES, 'UTF-8');
-    $txt_edit_pass = htmlspecialchars(stripslashes(trim($_POST['txt_edit_pass'])), ENT_QUOTES, 'UTF-8');
-    $txt_edit_compass = htmlspecialchars(stripslashes(trim($_POST['txt_edit_compass'])), ENT_QUOTES, 'UTF-8');
+    // Set Content Security Policy
+    header("Content-Security-Policy: script-src 'self';");
+
+    $txt_id = htmlspecialchars(stripslashes(trim($_POST['hidden_id'])));
+    $txt_edit_name = htmlspecialchars(stripslashes(trim($_POST['txt_edit_name'])));
+    $txt_edit_uname = htmlspecialchars(stripslashes(trim($_POST['txt_edit_uname'])));
+    $txt_edit_email = htmlspecialchars(stripslashes(trim($_POST['txt_edit_email'])));
+    $txt_edit_pass = htmlspecialchars(stripslashes(trim($_POST['txt_edit_pass'])));
+    $txt_edit_compass = htmlspecialchars(stripslashes(trim($_POST['txt_edit_compass'])));
 
     // Log the action if the user has the appropriate role
     if (isset($_SESSION['role'])) {
@@ -94,22 +100,24 @@ if (isset($_POST['btn_save'])) {
     }
 }
 
-if(isset($_POST['btn_delete']))
-{
-    if(isset($_POST['chk_delete']))
-    {
-        foreach($_POST['chk_delete'] as $value)
-        {
-            $delete_query = mysqli_query($con,"DELETE from tblstaff where id = '$value' ") or die('Error: ' . mysqli_error($con));
-                    
-            if($delete_query == true)
-            {
+if(isset($_POST['btn_delete'])){
+    if(isset($_POST['chk_delete'])){
+        $stmt = $con->prepare("DELETE FROM tblstaff WHERE id = ?");
+        foreach($_POST['chk_delete'] as $id){
+            // Ensure the ID is an integer
+            $id = intval($id);
+            
+            // Bind the parameter and execute the query
+            $stmt->bind_param("i", $id);
+            $stmt->execute();
+            
+            if($stmt->affected_rows > 0){
                 $_SESSION['delete'] = 1;
                 header("location: ".$_SERVER['REQUEST_URI']);
-                exit();
+                exit(); // Ensure no further code is executed after redirection
             }
         }
+        $stmt->close();
     }
 }
-
 ?>

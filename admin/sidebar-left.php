@@ -1,8 +1,3 @@
-<style>
-.skin-black .left-side {
-  background: rgb(51, 51, 51);
-}
-</style>
 <?php
 	echo '
 	<aside class="left-side sidebar-offcanvas">
@@ -11,17 +6,17 @@
                     <!-- sidebar menu: : style can be found in sidebar.less -->
                     <ul class="sidebar-menu">
                             <li>
-                                <a href="../../admin/dashboard/dashboard.php?page=dashboard">
+                                <a href="../dashboard/dashboard.php?page=dashboard">
                                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="../../admin/officials/officials.php?page=officials">
+                                <a href="../officials/officials.php?page=officials">
                                     <i class="fa fa-user"></i> <span>Madridejos Officials</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="../../admin/staff/staff.php?page=staff">
+                                <a href="../staff/staff.php?page=staff">
                                     <i class="fa fa-university"></i> <span>List Of Barangay</span>
                                 </a>
                             </li>

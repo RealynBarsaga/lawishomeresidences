@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
     <?php
     session_start();
@@ -66,17 +67,7 @@
                                     </thead>
                                     <tbody>
                                         <?php
-                                            $squery = mysqli_query($con, "SELECT id, 
-                                            sPosition,
-                                            completeName,
-                                            pcontact,
-                                            paddress,
-                                            termStart,
-                                            termEnd,
-                                            Status,
-                                            barangay,
-                                            image
-                                            FROM tblbrgyofficial  WHERE barangay = '$off_barangay'");
+                                            $squery = mysqli_query($con, "SELECT * FROM tblbrgyofficial WHERE barangay = '$off_barangay'");
                                             while ($row = mysqli_fetch_array($squery)) {
                                                 $editModalId = 'editModal' . $row['id'];
                                                 $endModalId = 'endModal' . $row['id'];
@@ -89,7 +80,7 @@
                                                     <td>' . htmlspecialchars($row['sPosition']) . '</td>
                                                     <td>' . htmlspecialchars($row['completeName']) . '</td>
                                                     <td>' . htmlspecialchars($row['pcontact']) . '</td>
-                                                    <td>' . htmlspecialchars($row['paddress']) . ' Madridejos Cebu</td>
+                                                    <td>' . htmlspecialchars($row['paddress']) . '</td>
                                                     <td>' . htmlspecialchars($row['termStart']) . '</td>
                                                     <td>' . htmlspecialchars($row['termEnd']) . '</td>
                                                     <td>

@@ -1,3 +1,30 @@
+<style>
+    .form-group {
+        position: relative;
+    }
+
+    /* Style for the eye icon */
+    .input-group-text {
+        position: absolute;
+        top: 50%;
+        right: 10px; /* Adjust as needed */
+        transform: translateY(-50%);
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        font-size: 16px; /* Adjust size as needed */
+        color: #aaa; /* Light color for the icon */
+    }
+
+    .input-group-text:hover {
+        color: #333; /* Darken on hover */
+    }
+
+    .text-danger {
+        font-size: 11px;
+    }
+</style>
+
 <!-- ========================= MODAL ======================= -->
 <div id="addModal" class="modal fade">
     <form method="post" enctype="multipart/form-data">
@@ -47,29 +74,28 @@
                                 <input name="txt_email" class="form-control input-sm" type="email" placeholder="Ex: juan@sample.com" required/>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group" style="position: relative;">
                                 <label>Password:</label>
-                                <div class="input-group">
-                                    <input name="txt_pass" class="form-control input-sm" id="txt_pass" type="password" placeholder="************" required 
-                                        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$"
-                                        title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character." />
-                                    <span class="input-group-addon eye-icon" id="togglePassword1">
-                                        <i class="fa fa-eye" aria-hidden="true"></i>
-                                    </span>
-                                </div>
+                                <input name="txt_pass" class="form-control input-sm" type="password" id="txt_pass" placeholder="************" required 
+                                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$"
+                                    title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character." />
+                                
+                                <!-- Positioning the eye icon absolutely within the form group -->
+                                <span class="input-group-text" style="position: absolute; top: 50%; right: 10px; transform: translateY(-50%); cursor: pointer;">
+                                    <i class="fa fa-eye" id="togglePassword"></i>
+                                </span>
                             </div>
 
                             <div class="form-group">
                                 <label>Confirm Password:</label>
-                                <div class="input-group">
-                                    <input name="txt_compass" class="form-control input-sm" type="password" id="txt_compass" placeholder="************" required 
-                                        pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$" 
-                                        title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character." />
-                                    <span class="input-group-addon eye-icon" id="togglePassword2">
-                                        <i class="fa fa-eye" aria-hidden="true"></i>
-                                    </span>
-                                </div>
+                                <input name="txt_compass" class="form-control input-sm" type="password" id="txt_compass" placeholder="************" required 
+                                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$" 
+                                    title="Password must be at least 10 characters long, contain at least one uppercase letter, one number, and one special character." />
+                                <span class="input-group-text">
+                                    <i class="fa fa-eye" id="togglePassword1" style="margin-top: 148%;"></i>
+                                </span>
                             </div>
+
                             <div id="password_error" class="text-danger"></div> <!-- Error message -->
                         </div>
                     </div>
@@ -86,7 +112,7 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        var timeOut = null;
+        var timeOut = null; // this is used for holding a few seconds to make an ajax request
         var loading_html = '<img src="../../img/ajax-loader.gif" style="height: 20px; width: 20px;"/>';
 
         // Check username availability
@@ -129,18 +155,41 @@
         });
 
         // Toggle password visibility
-        $('#togglePassword1').click(function() {
-            const passwordInput = $('#txt_pass');
-            const type = passwordInput.attr('type') === 'password' ? 'text' : 'password';
-            passwordInput.attr('type', type);
-            $(this).find('i').toggleClass('fa-eye fa-eye-slash');
-        });
-
-        $('#togglePassword2').click(function() {
-            const confirmPasswordInput = $('#txt_compass');
-            const type = confirmPasswordInput.attr('type') === 'password' ? 'text' : 'password';
-            confirmPasswordInput.attr('type', type);
-            $(this).find('i').toggleClass('fa-eye fa-eye-slash');
-        });
+        function togglePasswordVisibility(toggleElement, passwordElement) {
+            toggleElement.addEventListener('click', function() {
+                const isPassword = passwordElement.getAttribute('type') === 'password';
+                passwordElement.setAttribute('type', isPassword ? 'text' : 'password');
+                
+                // Toggle the eye icon classes based on password visibility
+                if (isPassword) {
+                    this.classList.remove('fa-eye');   // Remove the eye icon class
+                    this.classList.add('fa-eye-slash'); // Add the eye-slash icon class
+                } else {
+                    this.classList.remove('fa-eye-slash'); // Remove the eye-slash icon class
+                    this.classList.add('fa-eye');          // Add the eye icon class
+                }
+            });
+        }
+        
+        // Apply the function to both password fields
+        togglePasswordVisibility(document.getElementById('togglePassword'), document.getElementById('txt_pass'));
+        togglePasswordVisibility(document.getElementById('togglePassword1'), document.getElementById('txt_compass'));
     });
+
+
+    // Toggle password visibility function
+document.getElementById('togglePassword').addEventListener('click', function() {
+    var passwordInput = document.getElementById('txt_pass');
+    
+    // Check if the password input is of type 'password', then toggle it to 'text'
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text';
+        this.classList.remove('fa-eye');
+        this.classList.add('fa-eye-slash');
+    } else {
+        passwordInput.type = 'password';
+        this.classList.remove('fa-eye-slash');
+        this.classList.add('fa-eye');
+    }
+});
 </script>

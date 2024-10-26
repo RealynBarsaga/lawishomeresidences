@@ -17,7 +17,7 @@
                                         <option selected="" disabled="">-- Select Positions -- </option>
                                         <option value="Captain">Barangay Captain</option>
                                         <option value="Kagawad">Barangay Kagawad</option>
-                                        <option value="SK Chairman/Chairperson">SK Chairman/Chairperson</option>
+                                        <option value="SK Chairman">SK Chairman</option>
                                         <option value="Secretary">Barangay Secretary</option>
                                         <option value="Treasurer">Barangay Treasurer</option>
                                     </select>
@@ -34,33 +34,10 @@
                                     <label>Contact #:</label>
                                     <input name="txt_contact" id="txt_contact" class="form-control input-sm" type="text" placeholder="Contact #" maxlength="11" pattern="^\d{11}$" required />
                                 </div>
-                                <!-- Barangay -->
-                                <?php
-                                // Assuming the barangay of the logged-in user is stored in the session
-                                $off_barangay = $_SESSION['barangay']; // Change 'barangay' to whatever key you use
-                                
-                                // Available barangay options
-                                $barangays = [
-                                    "Tabagak", "Bunakan", "Kodia", "Talangnan", "Poblacion", "Maalat", 
-                                    "Pili", "Kaongkod", "Mancilang", "Kangwayan", "Tugas", "Malbago", 
-                                    "Tarong", "San Agustin"
-                                ];
-                                ?>
                                 <div class="form-group">
                                     <label>Address:</label>
-                                    <select name="txt_address" class="form-control input-sm" required>
-                                        <option value="" disabled selected>Select Address</option>
-                                        <?php foreach($barangays as $barangay): ?>
-                                            <option value="<?= $barangay ?>"  
-                                                style="<?= ($barangay == $off_barangay) ? 'color: #000000;' : 'color: gray;' ?>" 
-                                                <?= ($barangay == $off_barangay) ? '' : 'disabled' ?>
-                                                >
-                                                <?= $barangay ?>
-                                            </option>
-                                        <?php endforeach; ?>
-                                    </select>
+                                    <input name="txt_address" class="form-control input-sm" type="text" placeholder="Ex.Talangnan, Madridejos, Cebu" required/>
                                 </div>
-
                                 <div class="form-group">
                                     <label>Start Term:</label>
                                     <input id="txt_sterm" name="txt_sterm" class="form-control input-sm" type="date" placeholder="Start Term" required/>
