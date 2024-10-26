@@ -809,7 +809,7 @@ header h2 {
 </style>
 <body class="skin-black">
 <div class="container" style="margin-top: -5px;">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="col-md-4">
         <div class="panel">
             <div class="panel-body">
             <div style="text-align:center;margin-top:-28px;">
