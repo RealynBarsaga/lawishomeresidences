@@ -199,7 +199,9 @@ body {
     }
 
     .container {
-        padding: 10px;
+        max-width: 1368px;
+        padding-right: 24px;
+        padding-left: 24px;
     }
 
     .panel {
