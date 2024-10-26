@@ -140,7 +140,7 @@ body {
     background-attachment: fixed;
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: 30% 100%; /* Ensures the background image covers the entire container */
+    background-size: 100% 100%; /* Ensures the background image covers the entire container */
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.6); /* Optional: Add a dark overlay to improve readability */
     padding: 20px;
