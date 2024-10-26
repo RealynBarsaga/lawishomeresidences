@@ -133,18 +133,18 @@ body {
     padding: 15px; /* Add padding to the container */
 }
 .panel {
-    height: 451px;
+    height: 455px;
     min-height: 370px;
-    width: 372px;
-    background-image: url(img/bg.jpg);
+    width: 345px;
+    background-image: url('img/bg.jpg');
     background-attachment: fixed;
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: 87% 100%;
-    border-radius: 13px;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-size: 30% 100%; /* Ensures the background image covers the entire container */
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.6); /* Optional: Add a dark overlay to improve readability */
     padding: 20px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); /* Add shadow for a modern look */
 }
 .panel-title {
     color: white;
@@ -187,21 +187,27 @@ body {
 .alert {
     position: relative;
 }
-@media (max-width: 767px) {
-        .panel-body {
-            padding: 20px;
-        }
-        .form-control {
-            width: 100%;
-        }
-        .modal-content, .modal-content1, .modal-content2 {
-            width: 90%;
-            margin: auto;
-        }
-        .wrapper {
-            text-align: center;
-        }
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    body {
+        background-size: cover; /* Keep background image filling the screen */
     }
+
+    .btn {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .container {
+        padding: 10px;
+    }
+
+    .panel {
+        padding: 10px;
+        background-size: contain;
+        width: 100%;
+    }
+}
 /* Cookies Cite */
 * {
   margin: 0;
@@ -379,20 +385,19 @@ header h2 {
     justify-content: center;
     align-items: center;
 }
-
-/* Modal content styling */
 .modal-content1 {
     background: linear-gradient(135deg, #ffdddd, #f7f7f7); /* Soft red gradient for error */
-    padding: 30px; /* Spacious padding */
-    border-radius: 15px; /* Rounded corners */
+    padding: 30px; /* Same spacious padding */
+    border-radius: 15px; /* Same rounded corners */
     text-align: center;
-    width: 90%; /* Adjusted for responsiveness */
-    max-width: 400px; /* Set a maximum width */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Shadow effect */
+    width: 350px; /* Same width */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Same shadow effect */
     position: relative;
-    animation: modalFadeIn 0.5s ease; /* Fade-in effect */
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 220px;
+    animation: modalFadeIn 0.5s ease; /* Same smooth fade-in */
 }
-
 /* Fade-in animation */
 @keyframes modalFadeIn {
     from {
@@ -404,13 +409,11 @@ header h2 {
         transform: scale(1);
     }
 }
-
 /* Add a subtle border */
 .modal-content1 {
     border: 2px solid #e0e0e0; /* Soft border */
 }
-
-/* Close button styling */
+/* Optional: Close button */
 .modal-content1 .close-btn {
     position: absolute;
     top: 10px;
@@ -422,35 +425,29 @@ header h2 {
     color: #666;
     transition: color 0.3s ease;
 }
-
 .modal-content1 .close-btn:hover {
     color: #ff5c5c; /* Change color on hover */
 }
-
-/* Increase spacing between elements */
+/* Optional: Increase spacing between elements */
 .modal-content1 p {
-    margin-bottom: 25px; /* Margin for better spacing */
+    margin-bottom: 25px; /* Increased margin for better spacing */
     font-size: 16px; /* Slightly larger text */
 }
-
-/* OK button styling */
 .modal-content1 .btn-ok1 {
     background-color: #d9534f; /* Red color for error */
     color: white;
     border: none;
     padding: 12px 25px;
-    border-radius: 25px; /* Rounded button */
+    border-radius: 25px; /* More rounded button */
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Transition effects */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
 }
-
 .modal-content1 .btn-ok1:hover {
     background-color: #c9302c; /* Darker red on hover */
     transform: scale(1.05); /* Slight zoom on hover */
 }
-
-/* Subtle footer */
+/* Optional: Add a subtle footer */
 .modal-content1::after {
     content: "Powered by Madridejos HRMS";
     display: block;
@@ -458,7 +455,6 @@ header h2 {
     color: #aaa;
     margin-top: 20px;
 }
-
 /* Error modal title */
 .modal-title1 {
     font-size: 18px;
@@ -466,47 +462,25 @@ header h2 {
     margin-bottom: 10px;
     color: #d9534f; /* Red color for error */
 }
-
-/* Responsive adjustments */
-@media (max-width: 576px) {
-    .modal-content1 {
-        padding: 20px; /* Less padding on smaller screens */
-    }
-
-    .modal-content1 p {
-        font-size: 14px; /* Smaller font size */
-    }
-
-    .modal-title1 {
-        font-size: 16px; /* Smaller title font size */
-    }
-
-    .modal-content1 .btn-ok1 {
-        padding: 10px 20px; /* Smaller button padding */
-        font-size: 14px; /* Smaller button font size */
-    }
+.btn-ok1 {
+    background-color: #d9534f; /* Red color for error */
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 25px; /* More rounded button */
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
-
-/* Additional responsiveness for even smaller devices */
-@media (max-width: 400px) {
-    .modal-content1 {
-        padding: 15px; /* Further reduced padding */
-    }
-
-    .modal-title1 {
-        font-size: 14px; /* Even smaller title font size */
-    }
-
-    .modal-content1 .btn-ok1 {
-        padding: 8px 15px; /* Further reduced button padding */
-        font-size: 12px; /* Smaller button font size */
-    }
+.btn-ok1:hover {
+    background-color: #c9302c;
+    transform: scale(1.05); /* Slight zoom on hover */
 }
-
-/* Add space between text and button */
+/* Add some space between the text and the button */
 .modal1 p {
     margin-bottom: 25px;
 }
+
 
 /* Modal styles */
 .modal2 {
@@ -865,12 +839,12 @@ header h2 {
                 </div>
                 <form role="form" method="post" onsubmit="return validateRecaptcha()">
                     <div class="form-group" style="border-radius:1px; border: 25px;">
-                        <label for="txt_username" style="color:#fff;font-weight: lighter;">Email</label>
+                        <label for="txt_username" style="color:#fff;margin-left: -8px;font-weight: lighter;">Email</label>
                         <input type="email" class="form-control" name="txt_username"
-                               placeholder="jose@gmail.com" required value="<?php echo $username_or_email ?>" style="margin-top: -5px;width: 300px;margin-left: -3px;">
+                               placeholder="jose@gmail.com" required value="<?php echo $username_or_email ?>" style="margin-top: -5px;width: 300px;margin-left: -11px;">
 
-                        <label for="txt_password" style="color:#fff;font-weight: lighter;">Password</label>
-                        <div style="position: relative; width: 300px; margin-left: -3px;">
+                        <label for="txt_password" style="color:#fff;margin-left: -8px;font-weight: lighter;">Password</label>
+                        <div style="position: relative; width: 300px; margin-left: -11px;">
                             <input type="password" class="form-control" name="txt_password" id="txt_password"
                                    placeholder="************" required style="padding-right: 40px; margin-top: -4px; width: 100%;"
                                    pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{10,}$"
@@ -881,14 +855,14 @@ header h2 {
                                 <i class="fa fa-eye"></i>
                             </span>
                         </div>
-                        <div class="form-group" style="margin-top: 5px; width: 3px; margin-left: -3px; transform: scale(0.99); transform-origin: 0 0;">
+                        <div class="form-group" style="margin-top: 5px; width: 3px; margin-left: -11px; transform: scale(0.99); transform-origin: 0 0;">
                             <div class="g-recaptcha" data-sitekey="6Lc2slYqAAAAACs0mn07_8egSpnyY3BMELOexgRb"></div>
                         </div>
-                        <p id="captcha-error" style="font-size:10px;margin-top: -17px;margin-left: -3px;color:#ed4337;display: none;">
+                        <p id="captcha-error" style="font-size:10px;margin-top: -17px;margin-left: -11px;color:#ed4337;display: none;">
                           Please verify that you are not a robot
                         </p>
                     </div>
-                    <button type="submit" id="btn_login" class="btn btn-sm" name="btn_login" style="margin-left: -3px;font-size: 18px;margin-top: -11px;">Login</button>
+                    <button type="submit" id="btn_login" class="btn btn-sm" name="btn_login" style="margin-left: -12px;font-size: 18px;margin-top: -11px;">Login</button>
                 </form>
                 <!-- Forgot password link -->
                 <div class="forgot-password" style="margin-top: 1.9px; margin-left: 82px;">
@@ -924,7 +898,7 @@ header h2 {
                 <?php if ($error): ?>
                 <!-- Error Modal structure -->
                 <div id="error-modal1" class="modal1" style="display: block;">
-                    <div class="modal-content1">
+                    <div class="modal-content1" style="margin-left:479px;">
                         <span class="modal-title1">Error</span>
                         <p>Invalid account. Please try again.</p>
                         <button id="error-ok-button1" class="btn-ok1">OK</button>
