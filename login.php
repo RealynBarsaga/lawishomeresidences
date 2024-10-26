@@ -189,25 +189,10 @@ body {
 }
 /* Responsive adjustments */
 @media (max-width: 768px) {
-    body {
-        background-size: cover; /* Keep background image filling the screen */
-    }
-
-    .btn {
-        margin-left: 0;
-        width: 100%;
-    }
-
     .container {
         max-width: 1368px;
         padding-right: 24px;
         padding-left: 24px;
-    }
-
-    .panel {
-        padding: 10px;
-        background-size: contain;
-        width: 100%;
     }
 }
 /* Cookies Cite */
