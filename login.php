@@ -104,18 +104,6 @@ if ($error || $error_attempts) {
     <script src="script.js" defer></script>
 </head>
 <style>
-/* General Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: "Poppins", sans-serif;
-}
-
-html, body {
-    height: 100%;
-    min-height: 100vh;
-}
 body {
     background-image: url('img/received_1185064586170879.jpeg');
     background-attachment: fixed;
@@ -123,9 +111,14 @@ body {
     background-repeat: no-repeat;
     background-size: cover; /* Ensures the background image covers the entire container */
     height: 100vh; /* Makes sure the body takes up the full height of the viewport */
+    margin: 0;
+    padding: 0;
     display: flex;
     align-items: center; /* Vertically centers the content */
     justify-content: center; /* Horizontally centers the content */
+}
+html {
+    height: 100%; /* Ensures the HTML covers the full height */
 }
 .container {
     max-width: 1061px;
@@ -136,11 +129,12 @@ body {
     height: 455px;
     min-height: 370px;
     width: 345px;
+    margin-left: 0px;
     background-image: url('img/bg.jpg');
     background-attachment: fixed;
     background-position: center center;
     background-repeat: no-repeat;
-    background-size: 100% 100%; /* Ensures the background image covers the entire container */
+    background-size: 30% 100%; /* Ensures the background image covers the entire container */
     border-radius: 10px;
     background-color: rgba(0, 0, 0, 0.6); /* Optional: Add a dark overlay to improve readability */
     padding: 20px;
@@ -160,7 +154,7 @@ body {
     width: 300px;
     height: 40px;
     border-radius: 15px;
-    color: #000;
+    color: #000000;
     cursor: pointer;
     background: transparent;
     border: 1px solid #000;
@@ -189,10 +183,23 @@ body {
 }
 /* Responsive adjustments */
 @media (max-width: 768px) {
+    body {
+        background-size: cover; /* Keep background image filling the screen */
+    }
+
+    .btn {
+        margin-left: 0;
+        width: 109%;
+    }
+
     .container {
-        max-width: 1368px;
-        padding-right: 24px;
-        padding-left: 24px;
+        padding: 10px;
+    }
+
+    .panel {
+        padding: 10px;
+        background-size: contain;
+        width: 100%;
     }
 }
 /* Cookies Cite */
@@ -208,6 +215,7 @@ body {
 .wrapper {
   position: fixed;
   bottom: 26px;
+  min-height: 36%;
   right: -370px;
   max-width: 345px;
   width: 100%;
@@ -809,7 +817,7 @@ header h2 {
 </style>
 <body class="skin-black">
 <div class="container" style="margin-top: -5px;">
-    <div>
+    <div class="col-md-4 col-md-offset-4">
         <div class="panel">
             <div class="panel-body">
             <div style="text-align:center;margin-top:-28px;">
