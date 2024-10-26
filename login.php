@@ -833,11 +833,11 @@ header h2 {
                 </div>
                 <form role="form" method="post" onsubmit="return validateRecaptcha()">
                     <div class="form-group" style="border-radius:1px; border: 25px;">
-                        <label for="txt_username" style="color:#fff;margin-left: -8px;font-weight: lighter;">Email</label>
+                        <label for="txt_username" style="color:#fff;font-weight: lighter;">Email</label>
                         <input type="email" class="form-control" name="txt_username"
                                placeholder="jose@gmail.com" required value="<?php echo $username_or_email ?>" style="margin-top: -5px;width: 300px;margin-left: -3px;">
 
-                        <label for="txt_password" style="color:#fff;margin-left: -8px;font-weight: lighter;">Password</label>
+                        <label for="txt_password" style="color:#fff;font-weight: lighter;">Password</label>
                         <div style="position: relative; width: 300px; margin-left: -3px;">
                             <input type="password" class="form-control" name="txt_password" id="txt_password"
                                    placeholder="************" required style="padding-right: 40px; margin-top: -4px; width: 100%;"
