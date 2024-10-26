@@ -379,19 +379,20 @@ header h2 {
     justify-content: center;
     align-items: center;
 }
+
+/* Modal content styling */
 .modal-content1 {
     background: linear-gradient(135deg, #ffdddd, #f7f7f7); /* Soft red gradient for error */
-    padding: 30px; /* Same spacious padding */
-    border-radius: 15px; /* Same rounded corners */
+    padding: 30px; /* Spacious padding */
+    border-radius: 15px; /* Rounded corners */
     text-align: center;
-    width: 350px; /* Same width */
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Same shadow effect */
+    width: 90%; /* Adjusted for responsiveness */
+    max-width: 400px; /* Set a maximum width */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Shadow effect */
     position: relative;
-    margin-left: auto;
-    margin-right: auto;
-    margin-top: 220px;
-    animation: modalFadeIn 0.5s ease; /* Same smooth fade-in */
+    animation: modalFadeIn 0.5s ease; /* Fade-in effect */
 }
+
 /* Fade-in animation */
 @keyframes modalFadeIn {
     from {
@@ -403,11 +404,13 @@ header h2 {
         transform: scale(1);
     }
 }
+
 /* Add a subtle border */
 .modal-content1 {
     border: 2px solid #e0e0e0; /* Soft border */
 }
-/* Optional: Close button */
+
+/* Close button styling */
 .modal-content1 .close-btn {
     position: absolute;
     top: 10px;
@@ -419,29 +422,35 @@ header h2 {
     color: #666;
     transition: color 0.3s ease;
 }
+
 .modal-content1 .close-btn:hover {
     color: #ff5c5c; /* Change color on hover */
 }
-/* Optional: Increase spacing between elements */
+
+/* Increase spacing between elements */
 .modal-content1 p {
-    margin-bottom: 25px; /* Increased margin for better spacing */
+    margin-bottom: 25px; /* Margin for better spacing */
     font-size: 16px; /* Slightly larger text */
 }
+
+/* OK button styling */
 .modal-content1 .btn-ok1 {
     background-color: #d9534f; /* Red color for error */
     color: white;
     border: none;
     padding: 12px 25px;
-    border-radius: 25px; /* More rounded button */
+    border-radius: 25px; /* Rounded button */
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transition for hover effects */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transition effects */
 }
+
 .modal-content1 .btn-ok1:hover {
     background-color: #c9302c; /* Darker red on hover */
     transform: scale(1.05); /* Slight zoom on hover */
 }
-/* Optional: Add a subtle footer */
+
+/* Subtle footer */
 .modal-content1::after {
     content: "Powered by Madridejos HRMS";
     display: block;
@@ -449,6 +458,7 @@ header h2 {
     color: #aaa;
     margin-top: 20px;
 }
+
 /* Error modal title */
 .modal-title1 {
     font-size: 18px;
@@ -456,25 +466,47 @@ header h2 {
     margin-bottom: 10px;
     color: #d9534f; /* Red color for error */
 }
-.btn-ok1 {
-    background-color: #d9534f; /* Red color for error */
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 25px; /* More rounded button */
-    cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+    .modal-content1 {
+        padding: 20px; /* Less padding on smaller screens */
+    }
+
+    .modal-content1 p {
+        font-size: 14px; /* Smaller font size */
+    }
+
+    .modal-title1 {
+        font-size: 16px; /* Smaller title font size */
+    }
+
+    .modal-content1 .btn-ok1 {
+        padding: 10px 20px; /* Smaller button padding */
+        font-size: 14px; /* Smaller button font size */
+    }
 }
-.btn-ok1:hover {
-    background-color: #c9302c;
-    transform: scale(1.05); /* Slight zoom on hover */
+
+/* Additional responsiveness for even smaller devices */
+@media (max-width: 400px) {
+    .modal-content1 {
+        padding: 15px; /* Further reduced padding */
+    }
+
+    .modal-title1 {
+        font-size: 14px; /* Even smaller title font size */
+    }
+
+    .modal-content1 .btn-ok1 {
+        padding: 8px 15px; /* Further reduced button padding */
+        font-size: 12px; /* Smaller button font size */
+    }
 }
-/* Add some space between the text and the button */
+
+/* Add space between text and button */
 .modal1 p {
     margin-bottom: 25px;
 }
-
 
 /* Modal styles */
 .modal2 {
@@ -892,7 +924,7 @@ header h2 {
                 <?php if ($error): ?>
                 <!-- Error Modal structure -->
                 <div id="error-modal1" class="modal1" style="display: block;">
-                    <div class="modal-content1" style="margin-left:479px;">
+                    <div class="modal-content1">
                         <span class="modal-title1">Error</span>
                         <p>Invalid account. Please try again.</p>
                         <button id="error-ok-button1" class="btn-ok1">OK</button>
