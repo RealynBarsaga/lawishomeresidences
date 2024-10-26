@@ -849,14 +849,14 @@ header h2 {
                                 <i class="fa fa-eye"></i>
                             </span>
                         </div>
-                        <div class="form-group" style="margin-top: 5px; width: 3px; margin-left: -11px; transform: scale(0.99); transform-origin: 0 0;">
+                        <div class="form-group" style="margin-top: 5px; width: 3px; margin-left: -3px; transform: scale(0.99); transform-origin: 0 0;">
                             <div class="g-recaptcha" data-sitekey="6Lc2slYqAAAAACs0mn07_8egSpnyY3BMELOexgRb"></div>
                         </div>
-                        <p id="captcha-error" style="font-size:10px;margin-top: -17px;margin-left: -11px;color:#ed4337;display: none;">
+                        <p id="captcha-error" style="font-size:10px;margin-top: -17px;margin-left: -3px;color:#ed4337;display: none;">
                           Please verify that you are not a robot
                         </p>
                     </div>
-                    <button type="submit" id="btn_login" class="btn btn-sm" name="btn_login" style="margin-left: -12px;font-size: 18px;margin-top: -11px;">Login</button>
+                    <button type="submit" id="btn_login" class="btn btn-sm" name="btn_login" style="margin-left: -3px;font-size: 18px;margin-top: -11px;">Login</button>
                 </form>
                 <!-- Forgot password link -->
                 <div class="forgot-password" style="margin-top: 1.9px; margin-left: 82px;">
