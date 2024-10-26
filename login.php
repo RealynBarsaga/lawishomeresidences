@@ -187,27 +187,21 @@ body {
 .alert {
     position: relative;
 }
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    body {
-        background-size: cover; /* Keep background image filling the screen */
+@media (max-width: 767px) {
+        .panel-body {
+            padding: 20px;
+        }
+        .form-control {
+            width: 100%;
+        }
+        .modal-content, .modal-content1, .modal-content2 {
+            width: 90%;
+            margin: auto;
+        }
+        .wrapper {
+            text-align: center;
+        }
     }
-
-    .btn {
-        margin-left: 0;
-        width: 100%;
-    }
-
-    .container {
-        padding: 10px;
-    }
-
-    .panel {
-        padding: 10px;
-        background-size: contain;
-        width: 100%;
-    }
-}
 /* Cookies Cite */
 * {
   margin: 0;
